@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Container = styled.div`
-  border: 1px solid ${({ theme: { colors } }) => colors.grey + "55"};
+  border: 2px solid ${({ theme: { colors } }) => colors.grey + "55"};
   border-radius: 0.5rem;
   width: 100%;
   padding: ${({ theme: { spaces } }) => spaces.sm};
