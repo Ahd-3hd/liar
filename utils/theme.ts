@@ -31,9 +31,9 @@ export interface BreakPoints {
 export const fontSizes: FontSizes = {
   xs: "10px",
   sm: "12px",
-  md: "14px",
-  lg: "16px",
-  xl: "20px",
+  md: "16px",
+  lg: "24px",
+  xl: "32px",
 };
 
 export const breakpoints: BreakPoints = {
