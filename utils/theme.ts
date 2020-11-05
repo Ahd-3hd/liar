@@ -78,6 +78,7 @@ export interface Theme {
   fontSizes: FontSizes;
   breakpoints: BreakPoints;
   spaces: Space;
+  fontWeights: FontWeights;
 }
 
 const theme: Theme = {
