@@ -1,9 +1,16 @@
-import Head from 'next/head'
+import Head from "next/head";
+import { Wrapper } from "../styles/Home.style";
+import NewQuestion from "../components/NewQuestion";
 
 export default function Home() {
   return (
-    <div>
-      Let the games begin
-    </div>
-  )
+    <>
+      <Head>
+        <title>Home</title>
+      </Head>
+      <Wrapper>
+        <NewQuestion />
+      </Wrapper>
+    </>
+  );
 }

@@ -13,6 +13,6 @@ export const Container = styled.div`
   border: 2px solid ${({ theme: { colors } }) => colors.grey + "55"};
   border-radius: 0.5rem;
   width: 100%;
-  padding: ${({ theme: { spaces } }) => spaces.sm};
+  padding: ${({ theme: { spaces } }) => spaces.md};
   padding-bottom: 0;
 `;

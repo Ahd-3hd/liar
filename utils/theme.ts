@@ -25,6 +25,7 @@ export interface Colors {
   blue: string;
   white: string;
   grey: string;
+  text: string;
 }
 
 export interface BreakPoints {
@@ -66,11 +67,12 @@ export const spaces: Space = {
 
 export const colors = {
   black: "#231F20",
-  red: "#F14747",
+  red: "#FF83CB",
   blue: "#8CCFFA",
   white: "#ffffff",
   grey: "#EEEEEE",
   darkblue: "#1F44A4",
+  text: "#333555",
 };
 
 export interface Theme {

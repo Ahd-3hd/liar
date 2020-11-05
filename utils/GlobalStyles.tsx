@@ -5,6 +5,7 @@ export default createGlobalStyle`
         box-sizing:border-box;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        font-family: inherit;
     }
     body{
         margin:0;
