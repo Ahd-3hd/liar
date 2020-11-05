@@ -49,6 +49,27 @@ export const NewQuestionButton = styled.button`
   padding: ${({ theme: { spaces } }) => spaces.sm};
   border: none;
   margin-bottom: -1rem;
+  position: relative;
+  ::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: ${({ theme: { colors } }) => colors.blue};
+    z-index: -1;
+    border-radius: 100%;
+    transform: translateX(-3px);
+  }
+  ::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: ${({ theme: { colors } }) => colors.red};
+    z-index: -1;
+    border-radius: 100%;
+    transform: translateX(3px);
+  }
   > svg {
     width: 90%;
   }
