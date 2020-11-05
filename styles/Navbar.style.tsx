@@ -50,6 +50,7 @@ export const NewQuestionButton = styled.button`
   border: none;
   margin-bottom: -1rem;
   position: relative;
+  cursor: pointer;
   ::before {
     content: "";
     position: absolute;
@@ -59,6 +60,7 @@ export const NewQuestionButton = styled.button`
     z-index: -1;
     border-radius: 100%;
     transform: translateX(-3px);
+    transition: 0.3s;
   }
   ::after {
     content: "";
@@ -69,6 +71,15 @@ export const NewQuestionButton = styled.button`
     z-index: -1;
     border-radius: 100%;
     transform: translateX(3px);
+    transition: 0.3s;
+  }
+  :hover {
+    ::before {
+      transform: translateX(3px);
+    }
+    ::after {
+      transform: translateX(-3px);
+    }
   }
   > svg {
     width: 90%;
