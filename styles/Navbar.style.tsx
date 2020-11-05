@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Navbarbg from "../utils/svg/Navbg.svg";
 import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
+import HomeIcon from "../utils/svg/HomeIcon.svg";
+import UserIcon from "../utils/svg/UserIcon.svg";
 
 export const Nav = styled.nav`
   position: fixed;
@@ -18,9 +20,8 @@ export const SvgContainer = styled.div`
   justify-content: center;
   > svg {
     position: absolute;
-    bottom: -1.5rem;
-    width: 80%;
-    height: 100%;
+    bottom: 0rem;
+    height: 50%;
   }
   .bg1 {
     transform: translateX(-5px);
@@ -37,10 +38,10 @@ export const SvgContainer = styled.div`
 export const NewQuestionButton = styled.button`
   background: ${({ theme: { colors } }) => colors.black};
   width: 8vw;
-  max-width: 60px;
-  max-height: 60px;
-  min-height: 50px;
-  min-width: 50px;
+  max-width: 70px;
+  max-height: 70px;
+  min-height: 60px;
+  min-width: 60px;
   height: 8vw;
   display: flex;
   align-items: center;
@@ -48,7 +49,7 @@ export const NewQuestionButton = styled.button`
   border-radius: 8vw;
   padding: ${({ theme: { spaces } }) => spaces.sm};
   border: none;
-  margin-bottom: -1rem;
+  margin-bottom: -3.5rem;
   position: relative;
   cursor: pointer;
   ::before {
@@ -84,12 +85,25 @@ export const NewQuestionButton = styled.button`
   > svg {
     width: 90%;
   }
-  @media (max-width: ${({ theme: { breakpoints } }) => breakpoints.sm}) {
-    width: 35px;
-    height: 35px;
-    min-height: 35px;
-    min-width: 35px;
-    margin-bottom: -1rem;
+`;
+export const NavBarButtonHome = styled.button`
+  background: transparent;
+  border: none;
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  svg {
+    max-width: 2rem;
+  }
+`;
+export const NavBarButtonProfile = styled.button`
+  background: transparent;
+  border: none;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  svg {
+    max-width: 2rem;
   }
 `;
 export default function NavContainer() {
@@ -103,6 +117,12 @@ export default function NavContainer() {
           <NewQuestionIcon />
         </NewQuestionButton>
       </SvgContainer>
+      <NavBarButtonHome>
+        <HomeIcon />
+      </NavBarButtonHome>
+      <NavBarButtonProfile>
+        <UserIcon />
+      </NavBarButtonProfile>
     </Nav>
   );
 }
