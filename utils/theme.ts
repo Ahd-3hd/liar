@@ -13,6 +13,12 @@ export interface FontSizes {
   lg: string;
   xl: string;
 }
+export interface FontWeights {
+  thin: string;
+  normal: string;
+  medium: string;
+  bold: string;
+}
 export interface Colors {
   black: string;
   red: string;
@@ -34,6 +40,13 @@ export const fontSizes: FontSizes = {
   md: "16px",
   lg: "24px",
   xl: "32px",
+};
+
+export const fontWeights: FontWeights = {
+  thin: "400",
+  normal: "500",
+  medium: "600",
+  bold: "700",
 };
 
 export const breakpoints: BreakPoints = {
@@ -72,6 +85,7 @@ const theme: Theme = {
   fontSizes,
   breakpoints,
   spaces,
+  fontWeights,
 };
 
 export default theme;
