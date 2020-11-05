@@ -11,6 +11,8 @@ export const Button = styled.button`
   position: relative;
   transform-style: preserve-3d;
   border-radius: 0.3rem;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
+  letter-spacing: 1px;
   cursor: pointer;
   ::before {
     content: "";
