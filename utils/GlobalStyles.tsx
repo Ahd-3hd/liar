@@ -10,5 +10,8 @@ export default createGlobalStyle`
         margin:0;
         font-size:16px;
         font-family: 'Poppins', sans-serif;
+        background: radial-gradient(67.33% 101.9% at 51.53% 32.67%, rgba(255, 255, 255, 0) 0%, ${({
+          theme: { colors },
+        }) => colors.grey} 100%);
     }
 `;
