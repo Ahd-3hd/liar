@@ -15,8 +15,8 @@ export const NewsFeedCard = styled(Card)`
 export const NewsFeedPosterSection = styled.div`
   display: flex;
   align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 `;
-export const NewsFeedCommentsSection = styled.div``;
 export const AvatarContainer = styled.div`
   margin-right: 1rem;
 `;
@@ -28,8 +28,39 @@ export const PostContainer = styled.div``;
 export const PosterName = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
+  margin: 0;
 `;
 export const PosterQuestion = styled.p`
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
   line-height: 140%;
+`;
+
+export const NewsFeedCommentsSection = styled.div``;
+export const CommentorAvatarContainer = styled.div`
+  margin-right: 1rem;
+`;
+export const CommentorAvatar = styled.img`
+  width: 100%;
+  max-width: 60px;
+`;
+export const CommentorContainer = styled.div``;
+export const CommentorName = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
+  margin: 0;
+`;
+export const Comment = styled.p`
+  font-size: 15px;
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
+  line-height: 140%;
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  background: ${({ theme: { colors } }) => colors.grey + "55"};
+  border-radius: 0.5rem;
+  margin: ${({ theme: { spaces } }) => spaces.sm} 0;
+`;
+
+export const CommentContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding-top: ${({ theme: { spaces } }) => spaces.sm};
 `;

@@ -10,6 +10,12 @@ import {
   PosterName,
   PosterQuestion,
   AvatarContainer,
+  CommentorAvatarContainer,
+  CommentorAvatar,
+  CommentorContainer,
+  CommentorName,
+  Comment,
+  CommentContainer,
 } from "../styles/NewsFeed.style";
 
 export default function NewsFeed() {
@@ -29,7 +35,63 @@ export default function NewsFeed() {
               </PosterQuestion>
             </PostContainer>
           </NewsFeedPosterSection>
-          <NewsFeedCommentsSection></NewsFeedCommentsSection>
+          <NewsFeedCommentsSection>
+            <CommentContainer>
+              <CommentorAvatarContainer>
+                <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+              </CommentorAvatarContainer>
+              <CommentorContainer>
+                <CommentorName>Smith Duck</CommentorName>
+                <Comment>
+                  Hello, this is a comment to this question that you just asked!
+                </Comment>
+              </CommentorContainer>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentorAvatarContainer>
+                <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+              </CommentorAvatarContainer>
+              <CommentorContainer>
+                <CommentorName>Smith Duck</CommentorName>
+                <Comment>
+                  Hello, this is a comment to this question that you just asked!
+                </Comment>
+              </CommentorContainer>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentorAvatarContainer>
+                <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+              </CommentorAvatarContainer>
+              <CommentorContainer>
+                <CommentorName>Smith Duck</CommentorName>
+                <Comment>
+                  Hello, this is a comment to this question that you just asked!
+                </Comment>
+              </CommentorContainer>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentorAvatarContainer>
+                <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+              </CommentorAvatarContainer>
+              <CommentorContainer>
+                <CommentorName>Smith Duck</CommentorName>
+                <Comment>
+                  Hello, this is a comment to this question that you just asked!
+                </Comment>
+              </CommentorContainer>
+            </CommentContainer>
+            <CommentContainer>
+              <CommentorAvatarContainer>
+                <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+              </CommentorAvatarContainer>
+              <CommentorContainer>
+                <CommentorName>Smith Duck</CommentorName>
+                <Comment>
+                  Hello, this is a comment to this question that you just asked!
+                </Comment>
+              </CommentorContainer>
+            </CommentContainer>
+          </NewsFeedCommentsSection>
         </NewsFeedCard>
       </CardsContainer>
     </Wrapper>

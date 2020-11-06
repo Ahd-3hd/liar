@@ -16,4 +16,5 @@ export const Container = styled.div`
   padding: ${({ theme: { spaces } }) => spaces.md};
   padding-bottom: 0;
   position: relative;
+  margin-bottom: 7rem;
 `;
