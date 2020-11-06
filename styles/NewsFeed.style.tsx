@@ -43,7 +43,9 @@ export const CommentorAvatar = styled.img`
   width: 100%;
   max-width: 60px;
 `;
-export const CommentorContainer = styled.div``;
+export const CommentorContainer = styled.div`
+  flex: 1;
+`;
 export const CommentorName = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
@@ -64,3 +66,23 @@ export const CommentContainer = styled.div`
   align-items: flex-start;
   padding-top: ${({ theme: { spaces } }) => spaces.sm};
 `;
+
+export const CommentComponent = ({
+  commentorName,
+  commentText,
+}: {
+  commentorName: string;
+  commentText: string;
+}) => {
+  return (
+    <CommentContainer>
+      <CommentorAvatarContainer>
+        <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+      </CommentorAvatarContainer>
+      <CommentorContainer>
+        <CommentorName>{commentorName}</CommentorName>
+        <Comment>{commentText}</Comment>
+      </CommentorContainer>
+    </CommentContainer>
+  );
+};
