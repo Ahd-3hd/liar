@@ -10,6 +10,7 @@ export const Title = styled.p`
 export const CardsContainer = styled.div``;
 export const NewsFeedCard = styled(Card)`
   padding: 0.5rem;
+  margin: ${({ theme: { spaces } }) => spaces.lg} 0;
   color: ${({ theme: { colors } }) => colors.text};
 `;
 export const NewsFeedPosterSection = styled.div`
