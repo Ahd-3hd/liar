@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+import { useState } from "react";
 import {
   Wrapper,
   TitleContainer,
@@ -17,36 +17,64 @@ import {
 import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
 import NewQuestion from "../../utils/svg/NewQuestion.svg";
 export default function Friends() {
+  const [isRequest, setIsRequest] = useState(true);
   return (
     <>
       <Head>
-        <title>Friends</title>
+        <title>{isRequest ? "Friend Requests" : "Friends"}</title>
       </Head>
       <Wrapper>
         <TitleContainer>
-          <Title>My Friends - 17</Title>
-          <ViewRequestsLink>View Requests</ViewRequestsLink>
+          <Title>{isRequest ? "Requests" : "My Friends - 17"}</Title>
+          {!isRequest && <ViewRequestsLink>View Requests</ViewRequestsLink>}
         </TitleContainer>
-        {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
-          <FriendCardsContainer key={friend}>
-            <FriendCard>
-              <FriendAvatarContainer>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendAvatarContainer>
-              <FriendDetails>
-                <FriendName>John Doe</FriendName>
-                <FriendButtons>
-                  <FriendButton danger>
-                    <RemoveIcon />
-                  </FriendButton>
-                  <FriendButton>
-                    <NewQuestion />
-                  </FriendButton>
-                </FriendButtons>
-              </FriendDetails>
-            </FriendCard>
-          </FriendCardsContainer>
-        ))}
+        {isRequest ? (
+          <>
+            {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
+              <FriendCardsContainer key={friend}>
+                <FriendCard>
+                  <FriendAvatarContainer>
+                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                  </FriendAvatarContainer>
+                  <FriendDetails>
+                    <FriendName>John Doe</FriendName>
+                    <FriendButtons>
+                      <FriendButton danger>
+                        <RemoveIcon />
+                      </FriendButton>
+                      <FriendButton>
+                        <NewQuestion />
+                      </FriendButton>
+                    </FriendButtons>
+                  </FriendDetails>
+                </FriendCard>
+              </FriendCardsContainer>
+            ))}
+          </>
+        ) : (
+          <>
+            {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
+              <FriendCardsContainer key={friend}>
+                <FriendCard>
+                  <FriendAvatarContainer>
+                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                  </FriendAvatarContainer>
+                  <FriendDetails>
+                    <FriendName>John Doe</FriendName>
+                    <FriendButtons>
+                      <FriendButton danger>
+                        <RemoveIcon />
+                      </FriendButton>
+                      <FriendButton>
+                        <NewQuestion />
+                      </FriendButton>
+                    </FriendButtons>
+                  </FriendDetails>
+                </FriendCard>
+              </FriendCardsContainer>
+            ))}
+          </>
+        )}
       </Wrapper>
     </>
   );
