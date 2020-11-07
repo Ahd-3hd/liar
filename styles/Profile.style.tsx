@@ -32,10 +32,22 @@ export const FriendsInnerContainer = styled.div<{ slidePos: number }>`
 export const SlideButton = styled.button<{ direction: string }>`
   position: absolute;
   top: 50%;
-  ${({ direction }) =>
-    direction === "left" ? "left: 0.5rem;" : "right: 0.5rem"};
+  ${({ direction }) => (direction === "left" ? "left: 0rem;" : "right: 0rem")};
   transform: translateY(-50%);
   z-index: 2;
+  border: none;
+  background: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  color: ${({ theme: { colors } }) => colors.white};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
+  opacity: 0.2;
+  transition: 0.4s;
+  :hover,
+  :active {
+    opacity: 0.8;
+    cursor: pointer;
+  }
 `;
 export const FriendLink = styled.a`
   margin: 0 ${({ theme: { spaces } }) => spaces.md};
