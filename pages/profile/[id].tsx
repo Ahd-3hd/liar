@@ -37,6 +37,8 @@ export default function Profile() {
     13,
     14,
   ]);
+  // some components depends on whether the viewed user is the same as the current user
+  const [isCurrentUser] = useState(false);
   return (
     <>
       <Head>
@@ -82,16 +84,18 @@ export default function Profile() {
               <CaretRight />
             </SlideButton>
           </FriendsContainer>
-          <Link href="profile/1/friends" passHref>
-            <FriendsPageLink>
-              Friends
-              <br />
-              Page
-            </FriendsPageLink>
-          </Link>
+          {isCurrentUser && (
+            <Link href="profile/1/friends" passHref>
+              <FriendsPageLink>
+                Friends
+                <br />
+                Page
+              </FriendsPageLink>
+            </Link>
+          )}
         </FriendsWrapper>
 
-        <NewsFeed title="My wall" />
+        <NewsFeed title={isCurrentUser ? "My wall" : `John Doe's Wall`} />
       </Wrapper>
     </>
   );
