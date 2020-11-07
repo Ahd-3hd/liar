@@ -23,6 +23,7 @@ export interface Colors {
   black: string;
   red: string;
   blue: string;
+  darkblue: string;
   white: string;
   grey: string;
   text: string;
@@ -69,9 +70,9 @@ export const colors = {
   black: "#231F20",
   red: "#FF83CB",
   blue: "#8CCFFA",
+  darkblue: "#1F44A4",
   white: "#ffffff",
   grey: "#EEEEEE",
-  darkblue: "#1F44A4",
   text: "#333555",
 };
 
