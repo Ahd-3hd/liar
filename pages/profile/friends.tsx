@@ -26,7 +26,19 @@ export default function Friends() {
       <Wrapper>
         <TitleContainer>
           <Title>{isRequest ? "Requests" : "My Friends - 17"}</Title>
-          {!isRequest && <ViewRequestsLink>View Requests</ViewRequestsLink>}
+          {isRequest ? (
+            <ViewRequestsLink
+              onClick={() => setIsRequest((prevState) => !prevState)}
+            >
+              Back
+            </ViewRequestsLink>
+          ) : (
+            <ViewRequestsLink
+              onClick={() => setIsRequest((prevState) => !prevState)}
+            >
+              View Requests
+            </ViewRequestsLink>
+          )}
         </TitleContainer>
         {isRequest ? (
           <>
