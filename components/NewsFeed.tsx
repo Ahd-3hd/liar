@@ -13,10 +13,10 @@ import {
   CommentComponent,
 } from "../styles/NewsFeed.style";
 
-export default function NewsFeed() {
+export default function NewsFeed({ title }: { title: string }) {
   return (
     <Wrapper>
-      <Title>Newsfeed</Title>
+      <Title>{title}</Title>
       <CardsContainer>
         <NewsFeedCard>
           <NewsFeedPosterSection>
