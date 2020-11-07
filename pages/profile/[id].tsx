@@ -73,7 +73,7 @@ export default function Profile() {
             <SlideButton
               direction="right"
               onClick={() => {
-                if (slideIndex >= 0) {
+                if (slideIndex > 0) {
                   setSlidePos((prevState) => prevState + 60);
                   setSlideIndex((prevState) => (prevState -= 1));
                 }
