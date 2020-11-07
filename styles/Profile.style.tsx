@@ -53,7 +53,7 @@ export const SlideButton = styled.button<{ direction: string }>`
   }
 `;
 export const FriendLink = styled.a`
-  margin: 0 ${({ theme: { spaces } }) => spaces.md};
+  margin: 0 ${({ theme: { spaces } }) => spaces.sm};
 `;
 export const FriendAvatar = styled.img`
   max-width: 60px;

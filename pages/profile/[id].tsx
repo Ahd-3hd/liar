@@ -20,6 +20,23 @@ import CaretRight from "../../utils/svg/CaretRight.svg";
 
 export default function Profile() {
   const [slidePos, setSlidePos] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [friendList] = useState([
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+  ]);
   return (
     <>
       <Head>
@@ -34,12 +51,18 @@ export default function Profile() {
           <FriendsContainer>
             <SlideButton
               direction="left"
-              onClick={() => setSlidePos((prevState) => prevState - 100)}
+              onClick={() => {
+                if (slideIndex <= friendList.length - 5) {
+                  setSlidePos((prevState) => prevState - 60);
+                  setSlideIndex((prevState) => (prevState += 1));
+                  console.log(slideIndex);
+                }
+              }}
             >
               <CaretLeft />
             </SlideButton>
             <FriendsInnerContainer slidePos={slidePos}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((friend) => (
+              {friendList.map((friend) => (
                 <Link href={`/profile/${friend}`} passHref key={friend}>
                   <FriendLink>
                     <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
@@ -49,7 +72,12 @@ export default function Profile() {
             </FriendsInnerContainer>
             <SlideButton
               direction="right"
-              onClick={() => setSlidePos((prevState) => prevState + 100)}
+              onClick={() => {
+                if (slideIndex >= 0) {
+                  setSlidePos((prevState) => prevState + 60);
+                  setSlideIndex((prevState) => (prevState -= 1));
+                }
+              }}
             >
               <CaretRight />
             </SlideButton>
