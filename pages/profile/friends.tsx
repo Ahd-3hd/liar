@@ -5,8 +5,17 @@ import {
   TitleContainer,
   Title,
   ViewRequestsLink,
+  FriendCard,
+  FriendCardsContainer,
+  FriendAvatarContainer,
+  FriendAvatar,
+  FriendDetails,
+  FriendName,
+  FriendButtons,
+  FriendButton,
 } from "../../styles/Friends.style";
-
+import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
+import NewQuestion from "../../utils/svg/NewQuestion.svg";
 export default function Friends() {
   return (
     <>
@@ -20,6 +29,26 @@ export default function Friends() {
             <ViewRequestsLink>View Requests</ViewRequestsLink>
           </Link>
         </TitleContainer>
+        {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
+          <FriendCardsContainer>
+            <FriendCard>
+              <FriendAvatarContainer>
+                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+              </FriendAvatarContainer>
+              <FriendDetails>
+                <FriendName>John Doe</FriendName>
+                <FriendButtons>
+                  <FriendButton danger>
+                    <RemoveIcon />
+                  </FriendButton>
+                  <FriendButton>
+                    <NewQuestion />
+                  </FriendButton>
+                </FriendButtons>
+              </FriendDetails>
+            </FriendCard>
+          </FriendCardsContainer>
+        ))}
       </Wrapper>
     </>
   );

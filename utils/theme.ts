@@ -27,6 +27,7 @@ export interface Colors {
   white: string;
   grey: string;
   text: string;
+  darkred: string;
 }
 
 export interface BreakPoints {
@@ -74,6 +75,7 @@ export const colors = {
   white: "#ffffff",
   grey: "#EEEEEE",
   text: "#333555",
+  darkred: "#F14747",
 };
 
 export interface Theme {
