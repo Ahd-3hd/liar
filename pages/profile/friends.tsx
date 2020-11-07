@@ -16,8 +16,9 @@ import {
 } from "../../styles/Friends.style";
 import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
 import NewQuestion from "../../utils/svg/NewQuestion.svg";
+import AddFriendIcon from "../../utils/svg/AddFriendIcon.svg";
 export default function Friends() {
-  const [isRequest, setIsRequest] = useState(true);
+  const [isRequest, setIsRequest] = useState(false);
   return (
     <>
       <Head>
@@ -55,7 +56,7 @@ export default function Friends() {
                         <RemoveIcon />
                       </FriendButton>
                       <FriendButton>
-                        <NewQuestion />
+                        <AddFriendIcon />
                       </FriendButton>
                     </FriendButtons>
                   </FriendDetails>
