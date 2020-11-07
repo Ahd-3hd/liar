@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
+import { Button } from "../../components/Buttons";
 
 export default function FriendProfile() {
   const [slidePos, setSlidePos] = useState(0);
@@ -45,6 +46,7 @@ export default function FriendProfile() {
         <UserInfoContainer>
           <UserAvatar src="/static/img/avatar.png" alt="avatar" />
           <Username>John Doe</Username>
+          <Button style={{ marginBottom: "1rem" }}>Add Friend</Button>
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
