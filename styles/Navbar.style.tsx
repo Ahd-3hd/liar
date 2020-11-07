@@ -3,7 +3,7 @@ import Navbarbg from "../utils/svg/Navbg.svg";
 import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
 import HomeIcon from "../utils/svg/HomeIcon.svg";
 import UserIcon from "../utils/svg/UserIcon.svg";
-
+import Link from "next/link";
 export const Nav = styled.nav`
   position: fixed;
   bottom: 0;
@@ -86,7 +86,7 @@ export const NewQuestionButton = styled.button`
     width: 90%;
   }
 `;
-export const NavBarButtonHome = styled.button`
+export const NavBarButtonHome = styled.a`
   background: transparent;
   border: none;
   position: absolute;
@@ -96,7 +96,7 @@ export const NavBarButtonHome = styled.button`
     max-width: 2rem;
   }
 `;
-export const NavBarButtonProfile = styled.button`
+export const NavBarButtonProfile = styled.a`
   background: transparent;
   border: none;
   position: absolute;
@@ -117,12 +117,16 @@ export default function NavContainer() {
           <NewQuestionIcon />
         </NewQuestionButton>
       </SvgContainer>
-      <NavBarButtonHome>
-        <HomeIcon />
-      </NavBarButtonHome>
-      <NavBarButtonProfile>
-        <UserIcon />
-      </NavBarButtonProfile>
+      <Link href="/" passHref>
+        <NavBarButtonHome>
+          <HomeIcon />
+        </NavBarButtonHome>
+      </Link>
+      <Link href="/profile/1" passHref>
+        <NavBarButtonProfile>
+          <UserIcon />
+        </NavBarButtonProfile>
+      </Link>
     </Nav>
   );
 }
