@@ -122,7 +122,7 @@ export default function NavContainer() {
           <HomeIcon />
         </NavBarButtonHome>
       </Link>
-      <Link href="/profile/1" passHref>
+      <Link href="/profile/" passHref>
         <NavBarButtonProfile>
           <UserIcon />
         </NavBarButtonProfile>

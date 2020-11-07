@@ -7,6 +7,7 @@ import {
   FriendsContainer,
   FriendLink,
   FriendAvatar,
+  FriendsPageLink,
   FriendsInnerContainer,
   SlideButton,
 } from "../../styles/Profile.style";
@@ -17,7 +18,7 @@ import { useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
 
-export default function FriendProfile() {
+export default function Profile() {
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [friendList] = useState([
@@ -81,9 +82,16 @@ export default function FriendProfile() {
               <CaretRight />
             </SlideButton>
           </FriendsContainer>
+          <Link href="profile/1/friends" passHref>
+            <FriendsPageLink>
+              Friends
+              <br />
+              Page
+            </FriendsPageLink>
+          </Link>
         </FriendsWrapper>
 
-        <NewsFeed title={"John Doe's Wall"} />
+        <NewsFeed title="My wall" />
       </Wrapper>
     </>
   );
