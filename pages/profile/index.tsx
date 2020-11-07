@@ -82,7 +82,7 @@ export default function Profile() {
               <CaretRight />
             </SlideButton>
           </FriendsContainer>
-          <Link href="profile/1/friends" passHref>
+          <Link href="profile/friends" passHref>
             <FriendsPageLink>
               Friends
               <br />
