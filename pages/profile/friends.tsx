@@ -25,9 +25,7 @@ export default function Friends() {
       <Wrapper>
         <TitleContainer>
           <Title>My Friends - 17</Title>
-          <Link href="/friends/requests/" passHref>
-            <ViewRequestsLink>View Requests</ViewRequestsLink>
-          </Link>
+          <ViewRequestsLink>View Requests</ViewRequestsLink>
         </TitleContainer>
         {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
           <FriendCardsContainer key={friend}>

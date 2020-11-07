@@ -16,7 +16,11 @@ export const Title = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
   color: ${({ theme: { colors } }) => colors.text};
 `;
-export const ViewRequestsLink = styled.a`
+export const ViewRequestsLink = styled.button`
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: inherit;
   text-decoration: none;
   cursor: pointer;
   color: ${({ theme: { colors } }) => colors.darkblue};
