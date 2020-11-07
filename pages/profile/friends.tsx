@@ -30,7 +30,7 @@ export default function Friends() {
           </Link>
         </TitleContainer>
         {[1, 2, 3, 4, 5, 6, 7].map((friend) => (
-          <FriendCardsContainer>
+          <FriendCardsContainer key={friend}>
             <FriendCard>
               <FriendAvatarContainer>
                 <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
