@@ -8,6 +8,8 @@ import {
   FriendLink,
   FriendAvatar,
   FriendsPageLink,
+  FriendsInnerContainer,
+  SlideButton,
 } from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
@@ -26,31 +28,17 @@ export default function Profile() {
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
-            <Link href="profile/2" passHref>
-              <FriendLink>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendLink>
-            </Link>
-            <Link href="profile/3" passHref>
-              <FriendLink>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendLink>
-            </Link>
-            <Link href="profile/4" passHref>
-              <FriendLink>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendLink>
-            </Link>
-            <Link href="profile/4" passHref>
-              <FriendLink>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendLink>
-            </Link>
-            <Link href="profile/4" passHref>
-              <FriendLink>
-                <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
-              </FriendLink>
-            </Link>
+            <SlideButton direction="left">{"<"}</SlideButton>
+            <FriendsInnerContainer>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((friend) => (
+                <Link href={`/profile/${friend}`} passHref key={friend}>
+                  <FriendLink>
+                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                  </FriendLink>
+                </Link>
+              ))}
+            </FriendsInnerContainer>
+            <SlideButton direction="right">{">"}</SlideButton>
           </FriendsContainer>
           <Link href="profile/1/friends" passHref>
             <FriendsPageLink>

@@ -21,8 +21,19 @@ export const FriendsWrapper = styled.div`
 `;
 export const FriendsContainer = styled.div`
   flex: 1;
-  display: flex;
   overflow-x: hidden;
+  position: relative;
+`;
+export const FriendsInnerContainer = styled.div`
+  display: flex;
+`;
+export const SlideButton = styled.button<{ direction: string }>`
+  position: absolute;
+  top: 50%;
+  ${({ direction }) =>
+    direction === "left" ? "left: 0.5rem;" : "right: 0.5rem"};
+  transform: translateY(-50%);
+  z-index: 2;
 `;
 export const FriendLink = styled.a`
   margin: 0 ${({ theme: { spaces } }) => spaces.md};
