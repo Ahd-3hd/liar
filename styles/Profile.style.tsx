@@ -38,11 +38,14 @@ export const SlideButton = styled.button<{ direction: string }>`
   border: none;
   background: rgba(0, 0, 0, 0.4);
   height: 100%;
-  color: ${({ theme: { colors } }) => colors.white};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
   opacity: 0.2;
   transition: 0.4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  > svg {
+    width: 20px;
+  }
   :hover,
   :active {
     opacity: 0.8;
