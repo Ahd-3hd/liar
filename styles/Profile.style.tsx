@@ -23,6 +23,7 @@ export const FriendsContainer = styled.div`
   flex: 1;
   overflow-x: hidden;
   position: relative;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
 `;
 export const FriendsInnerContainer = styled.div<{ slidePos: number }>`
   display: flex;
