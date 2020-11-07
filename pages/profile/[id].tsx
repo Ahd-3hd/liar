@@ -14,8 +14,10 @@ import {
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Profile() {
+  const [slidePos, setSlidePos] = useState(0);
   return (
     <>
       <Head>
@@ -28,8 +30,13 @@ export default function Profile() {
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
-            <SlideButton direction="left">{"<"}</SlideButton>
-            <FriendsInnerContainer>
+            <SlideButton
+              direction="left"
+              onClick={() => setSlidePos((prevState) => prevState - 100)}
+            >
+              {"<"}
+            </SlideButton>
+            <FriendsInnerContainer slidePos={slidePos}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((friend) => (
                 <Link href={`/profile/${friend}`} passHref key={friend}>
                   <FriendLink>
@@ -38,7 +45,12 @@ export default function Profile() {
                 </Link>
               ))}
             </FriendsInnerContainer>
-            <SlideButton direction="right">{">"}</SlideButton>
+            <SlideButton
+              direction="right"
+              onClick={() => setSlidePos((prevState) => prevState + 100)}
+            >
+              {">"}
+            </SlideButton>
           </FriendsContainer>
           <Link href="profile/1/friends" passHref>
             <FriendsPageLink>

@@ -24,8 +24,10 @@ export const FriendsContainer = styled.div`
   overflow-x: hidden;
   position: relative;
 `;
-export const FriendsInnerContainer = styled.div`
+export const FriendsInnerContainer = styled.div<{ slidePos: number }>`
   display: flex;
+  transform: translateX(${({ slidePos }) => slidePos}px);
+  transition: transform 0.4s ease-in;
 `;
 export const SlideButton = styled.button<{ direction: string }>`
   position: absolute;
