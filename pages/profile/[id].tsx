@@ -10,15 +10,18 @@ import {
   FriendsInnerContainer,
   SlideButton,
 } from "../../styles/Profile.style";
+
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
 import { Button } from "../../components/Buttons";
+import postsContext from "../../context/postsContext";
 
 export default function FriendProfile() {
+  const context = useContext(postsContext);
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [friendList] = useState([
@@ -85,7 +88,7 @@ export default function FriendProfile() {
           </FriendsContainer>
         </FriendsWrapper>
 
-        <NewsFeed title={"John Doe's Wall"} />
+        <NewsFeed title={"John Doe's Wall"} posts={context.posts} />
       </Wrapper>
     </>
   );
