@@ -17,8 +17,11 @@ import Link from "next/link";
 import { useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
+import { useContext } from "react";
+import postsContext from "../../context/postsContext";
 
 export default function Profile() {
+  const context = useContext(postsContext);
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [friendList] = useState([
@@ -91,7 +94,7 @@ export default function Profile() {
           </Link>
         </FriendsWrapper>
 
-        <NewsFeed title="My wall" />
+        <NewsFeed title="My wall" posts={context.posts} />
       </Wrapper>
     </>
   );

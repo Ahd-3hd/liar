@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Wrapper,
   TitleContainer,
@@ -17,8 +17,12 @@ import {
 import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
 import NewQuestion from "../../utils/svg/NewQuestion.svg";
 import AddFriendIcon from "../../utils/svg/AddFriendIcon.svg";
+import postsContext from "../../context/postsContext";
+
 export default function Friends() {
+  const context = useContext(postsContext);
   const [isRequest, setIsRequest] = useState(false);
+  console.log(context);
   return (
     <>
       <Head>

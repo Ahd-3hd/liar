@@ -13,65 +13,40 @@ import {
   CommentComponent,
 } from "../styles/NewsFeed.style";
 
-export default function NewsFeed({ title }: { title: string }) {
+export default function NewsFeed({
+  title,
+  posts,
+}: {
+  title: string;
+  posts: any;
+}) {
+  console.log(posts);
   return (
     <Wrapper>
       <Title>{title}</Title>
       <CardsContainer>
-        <NewsFeedCard>
-          <NewsFeedPosterSection>
-            <AvatarContainer>
-              <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
-            </AvatarContainer>
-            <PostContainer>
-              <PosterName>john Doe</PosterName>
-              <PosterQuestion>
-                Tell me what you want what you really really want?
-              </PosterQuestion>
-            </PostContainer>
-          </NewsFeedPosterSection>
-          <NewsFeedCommentsSection>
-            <CommentComponent
-              commentorName="John doe"
-              commentText="dis is da first comment yo!"
-            />
-            <CommentComponent
-              commentorName="Smith Bro"
-              commentText="dis is da second comment yo! ,dis is da second comment yo! ,dis is da second comment yo!"
-            />
-            <CommentComponent
-              commentorName="Karen Fo"
-              commentText="dis is da third comment yo!"
-            />
-          </NewsFeedCommentsSection>
-        </NewsFeedCard>
-        <NewsFeedCard>
-          <NewsFeedPosterSection>
-            <AvatarContainer>
-              <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
-            </AvatarContainer>
-            <PostContainer>
-              <PosterName>john Doe</PosterName>
-              <PosterQuestion>
-                Tell me what you want what you really really want?
-              </PosterQuestion>
-            </PostContainer>
-          </NewsFeedPosterSection>
-          <NewsFeedCommentsSection>
-            <CommentComponent
-              commentorName="John doe"
-              commentText="dis is da first comment yo!"
-            />
-            <CommentComponent
-              commentorName="Smith Bro"
-              commentText="dis is da second comment yo! ,dis is da second comment yo! ,dis is da second comment yo!"
-            />
-            <CommentComponent
-              commentorName="Karen Fo"
-              commentText="dis is da third comment yo!"
-            />
-          </NewsFeedCommentsSection>
-        </NewsFeedCard>
+        {posts.map((post: any) => (
+          <NewsFeedCard key={post.postId}>
+            <NewsFeedPosterSection>
+              <AvatarContainer>
+                <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
+              </AvatarContainer>
+              <PostContainer>
+                <PosterName>{post.userId}</PosterName>
+                <PosterQuestion>{post.realQuestion}</PosterQuestion>
+              </PostContainer>
+            </NewsFeedPosterSection>
+            <NewsFeedCommentsSection>
+              {post.comments?.map((comment: any) => (
+                <CommentComponent
+                  commentorName={comment.userId}
+                  commentText={comment.text}
+                  key={comment.commentId}
+                />
+              ))}
+            </NewsFeedCommentsSection>
+          </NewsFeedCard>
+        ))}
       </CardsContainer>
     </Wrapper>
   );
