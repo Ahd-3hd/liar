@@ -11,6 +11,7 @@ import {
   PosterQuestion,
   AvatarContainer,
   CommentComponent,
+  NoComments,
 } from "../styles/NewsFeed.style";
 
 export default function NewsFeed({
@@ -37,13 +38,17 @@ export default function NewsFeed({
               </PostContainer>
             </NewsFeedPosterSection>
             <NewsFeedCommentsSection>
-              {post.comments?.map((comment: any) => (
-                <CommentComponent
-                  commentorName={comment.userId}
-                  commentText={comment.text}
-                  key={comment.commentId}
-                />
-              ))}
+              {post.comments.length === 0 ? (
+                <NoComments>There's no answers yet</NoComments>
+              ) : (
+                post.comments.map((comment: any) => (
+                  <CommentComponent
+                    commentorName={comment.userId}
+                    commentText={comment.text}
+                    key={comment.commentId}
+                  />
+                ))
+              )}
             </NewsFeedCommentsSection>
           </NewsFeedCard>
         ))}

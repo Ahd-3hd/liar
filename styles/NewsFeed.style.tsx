@@ -68,6 +68,13 @@ export const CommentContainer = styled.div`
   padding-top: ${({ theme: { spaces } }) => spaces.sm};
 `;
 
+export const NoComments = styled.p`
+  text-align: center;
+  padding: ${({ theme: { spaces } }) => `${spaces.md} ${spaces.sm}`};
+  background: ${({ theme: { colors } }) => colors.grey};
+  border-radius: 0.4rem;
+`;
+
 export const CommentComponent = ({
   commentorName,
   commentText,
