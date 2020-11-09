@@ -11,6 +11,7 @@ import {
   PosterQuestion,
   AvatarContainer,
   CommentComponent,
+  NoComments,
 } from "../styles/NewsFeed.style";
 import { useSelector } from "react-redux";
 import { IPost } from "../interfaces/posts";
@@ -35,13 +36,17 @@ export default function NewsFeed({ title }: { title: string }) {
                 </PostContainer>
               </NewsFeedPosterSection>
               <NewsFeedCommentsSection>
-                {post.comments.map((comment) => (
-                  <CommentComponent
-                    key={comment.id}
-                    commentorName="John doe"
-                    commentText="dis is da first comment yo!"
-                  />
-                ))}
+                {post.comments.length === 0 ? (
+                  <NoComments>Be the first to answer this question</NoComments>
+                ) : (
+                  post.comments.map((comment) => (
+                    <CommentComponent
+                      key={comment.id}
+                      commentorName="John doe"
+                      commentText="dis is da first comment yo!"
+                    />
+                  ))
+                )}
               </NewsFeedCommentsSection>
             </NewsFeedCard>
           );

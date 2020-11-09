@@ -15,6 +15,14 @@ const initialState = [
       },
     ],
   },
+  {
+    id: 2,
+    username: "John Doe",
+    realQuestion: "this is the real question",
+    fakeQuestion: "this is the fake question",
+    isRevealed: false,
+    comments: [],
+  },
 ];
 
 const postsReducer = (state = initialState, action: Action) => {

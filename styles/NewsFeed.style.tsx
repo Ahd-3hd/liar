@@ -61,6 +61,11 @@ export const Comment = styled.p`
   border-radius: 0.5rem;
   margin: ${({ theme: { spaces } }) => spaces.sm} 0;
 `;
+export const NoComments = styled.p`
+  text-align: center;
+  background: ${({ theme: { colors } }) => colors.grey};
+  padding: ${({ theme: { spaces } }) => spaces.md} 0;
+`;
 
 export const CommentContainer = styled.div`
   display: flex;
