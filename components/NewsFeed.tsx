@@ -23,13 +23,20 @@ import {
 } from "../styles/NewsFeed.style";
 import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
-import { useState } from "react";
-import { ADD_COMMENT, TOGGLE_REVEAL } from "../redux/types";
+import { useEffect, useState } from "react";
+import { ADD_COMMENT, FETCH_POSTS, TOGGLE_REVEAL } from "../redux/types";
 
 export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
+
+  useEffect(() => {
+    dispatch({
+      type: FETCH_POSTS,
+      payload: null,
+    });
+  }, []);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
