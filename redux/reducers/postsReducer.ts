@@ -1,5 +1,5 @@
 import { IPost } from "../../interfaces/posts";
-import { ADD_COMMENT, ADD_POST } from "../types";
+import { ADD_COMMENT, ADD_POST, TOGGLE_REVEAL } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
 const initialState: IPost[] = [];
@@ -10,7 +10,7 @@ const postsReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case ADD_POST:
+    case ADD_POST: {
       return [
         ...state,
         {
@@ -22,7 +22,8 @@ const postsReducer = (
           comments: [],
         },
       ];
-    case ADD_COMMENT:
+    }
+    case ADD_COMMENT: {
       const copyState = [...state];
       const postIndex = copyState.findIndex(
         (item) => item.id === payload.postId
@@ -33,6 +34,19 @@ const postsReducer = (
         text: payload.commentText,
       });
       return [...copyState];
+    }
+    case TOGGLE_REVEAL: {
+      const copyState = [...state];
+      const newState = copyState.map((item) =>
+        item.id === payload.postId
+          ? {
+              ...item,
+              isRevealed: !item.isRevealed,
+            }
+          : item
+      );
+      return newState;
+    }
     default:
       return state;
   }
