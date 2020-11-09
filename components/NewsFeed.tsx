@@ -12,6 +12,8 @@ import {
   AvatarContainer,
   CommentComponent,
   NoComments,
+  NameRevealContainer,
+  RevealButton,
 } from "../styles/NewsFeed.style";
 import { useSelector } from "react-redux";
 import { IPost } from "../interfaces/posts";
@@ -31,8 +33,15 @@ export default function NewsFeed({ title }: { title: string }) {
                   <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
                 </AvatarContainer>
                 <PostContainer>
-                  <PosterName>{post.username}</PosterName>
-                  <PosterQuestion>{post.fakeQuestion}</PosterQuestion>
+                  <NameRevealContainer>
+                    <PosterName>{post.username}</PosterName>
+                    <RevealButton isRevealed={post.isRevealed}>
+                      {post.isRevealed ? "Hide" : "Reveal"}
+                    </RevealButton>
+                  </NameRevealContainer>
+                  <PosterQuestion>
+                    {post.isRevealed ? post.realQuestion : post.fakeQuestion}
+                  </PosterQuestion>
                 </PostContainer>
               </NewsFeedPosterSection>
               <NewsFeedCommentsSection>

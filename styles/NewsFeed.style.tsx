@@ -25,7 +25,23 @@ export const PosterAvatar = styled.img`
   width: 100%;
   max-width: 100px;
 `;
-export const PostContainer = styled.div``;
+export const PostContainer = styled.div`
+  width: 100%;
+`;
+export const NameRevealContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const RevealButton = styled.button<{ isRevealed: boolean }>`
+  border: none;
+  background: ${({ theme: { colors }, isRevealed }) =>
+    isRevealed ? colors.darkred : colors.black};
+  color: ${({ theme: { colors } }) => colors.white};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  border-radius: 0.3rem;
+  cursor: pointer;
+`;
 export const PosterName = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};

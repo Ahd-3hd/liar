@@ -6,7 +6,7 @@ const initialState = [
     username: "Ahd",
     realQuestion: "this is the real question",
     fakeQuestion: "this is the fake question",
-    isRevealed: false,
+    isRevealed: true,
     comments: [
       {
         id: 1,
