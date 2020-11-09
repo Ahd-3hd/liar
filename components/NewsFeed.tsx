@@ -23,12 +23,13 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useState } from "react";
-import { ADD_COMMENT } from "../redux/types";
+import { ADD_COMMENT, TOGGLE_REVEAL } from "../redux/types";
 
 export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
+
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
     id: number
@@ -39,6 +40,15 @@ export default function NewsFeed({ title }: { title: string }) {
       payload: {
         commentText,
         postId: id,
+      },
+    });
+  };
+  const handleToggleReveal = (postId: number, isRevealed: boolean) => {
+    dispatch({
+      type: TOGGLE_REVEAL,
+      payload: {
+        postId: postId,
+        isRevealed: isRevealed,
       },
     });
   };
@@ -56,7 +66,12 @@ export default function NewsFeed({ title }: { title: string }) {
                 <PostContainer>
                   <NameRevealContainer>
                     <PosterName>{post.username}</PosterName>
-                    <RevealButton isRevealed={post.isRevealed}>
+                    <RevealButton
+                      isRevealed={post.isRevealed}
+                      onClick={() =>
+                        handleToggleReveal(post.id, post.isRevealed)
+                      }
+                    >
                       {post.isRevealed ? "Hide" : "Reveal"}
                     </RevealButton>
                   </NameRevealContainer>
