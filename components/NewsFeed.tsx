@@ -14,6 +14,11 @@ import {
   NoComments,
   NameRevealContainer,
   RevealButton,
+  NewCommentContainer,
+  TextArea,
+  UserCommentAvatarContainer,
+  UserCommentAvatar,
+  CommentContainer,
 } from "../styles/NewsFeed.style";
 import { useSelector } from "react-redux";
 import { IPost } from "../interfaces/posts";
@@ -57,6 +62,15 @@ export default function NewsFeed({ title }: { title: string }) {
                   ))
                 )}
               </NewsFeedCommentsSection>
+              <NewCommentContainer>
+                <UserCommentAvatarContainer>
+                  <UserCommentAvatar
+                    src="/static/img/avatar.png"
+                    alt="avatar"
+                  />
+                </UserCommentAvatarContainer>
+                <TextArea placeholder="write your answer..." />
+              </NewCommentContainer>
             </NewsFeedCard>
           );
         })}

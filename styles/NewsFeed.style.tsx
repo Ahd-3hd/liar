@@ -83,6 +83,37 @@ export const NoComments = styled.p`
   padding: ${({ theme: { spaces } }) => spaces.md} 0;
 `;
 
+export const NewCommentContainer = styled.form`
+  display: flex;
+  align-items: flex-start;
+  margin: ${({ theme: { spaces } }) => spaces.sm};
+`;
+
+export const TextArea = styled.textarea`
+  flex: 9;
+  resize: none;
+  height: 4em;
+  border-radius: 0.3rem;
+  border: 1px solid ${({ theme: { colors } }) => colors.grey + "77"};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.text};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
+
+  :focus {
+    outline: none;
+    border: 1px solid ${({ theme: { colors } }) => colors.blue + "77"};
+    box-shadow: 0px 0px 10px ${({ theme: { colors } }) => colors.blue + "22"};
+    transition: 0.3s;
+  }
+`;
+export const UserCommentAvatarContainer = styled.div`
+  flex: 1;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+export const UserCommentAvatar = styled.img`
+  width: 100%;
+`;
 export const CommentContainer = styled.div`
   display: flex;
   align-items: flex-start;
