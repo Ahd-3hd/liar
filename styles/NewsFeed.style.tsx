@@ -85,7 +85,7 @@ export const NoComments = styled.p`
 
 export const NewCommentContainer = styled.form`
   display: flex;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   margin: ${({ theme: { spaces } }) => spaces.sm};
 `;
 
@@ -119,7 +119,13 @@ export const CommentContainer = styled.div`
   align-items: flex-start;
   padding-top: ${({ theme: { spaces } }) => spaces.sm};
 `;
-
+export const CommentSubmitButton = styled.button`
+  background: ${({ theme: { colors } }) => colors.darkblue};
+  border: none;
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.white};
+  cursor: pointer;
+`;
 export const CommentComponent = ({
   commentorName,
   commentText,

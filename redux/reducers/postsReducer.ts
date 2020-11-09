@@ -1,35 +1,12 @@
 import { IPost } from "../../interfaces/posts";
-import { ADD_POST } from "../types";
+import { ADD_COMMENT, ADD_POST } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-const initialState = [
-  {
-    id: 1,
-    username: "Ahd",
-    realQuestion: "this is the real question",
-    fakeQuestion: "this is the fake question",
-    isRevealed: true,
-    comments: [
-      {
-        id: 1,
-        username: "John Doe",
-        text: "hello, this is a comment",
-      },
-    ],
-  },
-  {
-    id: 2,
-    username: "John Doe",
-    realQuestion: "this is the real question",
-    fakeQuestion: "this is the fake question",
-    isRevealed: false,
-    comments: [],
-  },
-];
+const initialState: IPost[] = [];
 
 const postsReducer = (
   state = initialState,
-  action: { type: string; payload: IPost }
+  action: { type: string; payload: any }
 ) => {
   const { type, payload } = action;
   switch (type) {
@@ -45,6 +22,17 @@ const postsReducer = (
           comments: [],
         },
       ];
+    case ADD_COMMENT:
+      const copyState = [...state];
+      const postIndex = copyState.findIndex(
+        (item) => item.id === payload.postId
+      );
+      copyState[postIndex].comments.push({
+        id: uuidv4(),
+        username: "ahd",
+        text: payload.commentText,
+      });
+      return [...copyState];
     default:
       return state;
   }

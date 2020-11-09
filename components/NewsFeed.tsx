@@ -18,14 +18,30 @@ import {
   TextArea,
   UserCommentAvatarContainer,
   UserCommentAvatar,
-  CommentContainer,
+  CommentSubmitButton,
 } from "../styles/NewsFeed.style";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
+import { useState } from "react";
+import { ADD_COMMENT } from "../redux/types";
 
 export default function NewsFeed({ title }: { title: string }) {
+  const [commentText, setCommentText] = useState("");
+  const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
-  console.log({ posts });
+  const handleCommentSubmit = (
+    e: { preventDefault: () => void },
+    id: number
+  ) => {
+    e.preventDefault();
+    dispatch({
+      type: ADD_COMMENT,
+      payload: {
+        commentText,
+        postId: id,
+      },
+    });
+  };
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -56,20 +72,26 @@ export default function NewsFeed({ title }: { title: string }) {
                   post.comments.map((comment) => (
                     <CommentComponent
                       key={comment.id}
-                      commentorName="John doe"
-                      commentText="dis is da first comment yo!"
+                      commentorName={comment.username}
+                      commentText={comment.text}
                     />
                   ))
                 )}
               </NewsFeedCommentsSection>
-              <NewCommentContainer>
+              <NewCommentContainer
+                onSubmit={(e) => handleCommentSubmit(e, post.id)}
+              >
                 <UserCommentAvatarContainer>
                   <UserCommentAvatar
                     src="/static/img/avatar.png"
                     alt="avatar"
                   />
                 </UserCommentAvatarContainer>
-                <TextArea placeholder="write your answer..." />
+                <TextArea
+                  placeholder="write your answer..."
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+                <CommentSubmitButton type="submit">SEND</CommentSubmitButton>
               </NewCommentContainer>
             </NewsFeedCard>
           );
