@@ -43,6 +43,7 @@ export default function NewsFeed({ title }: { title: string }) {
         postId: id,
       },
     });
+    setCommentText("");
   };
   const handleToggleReveal = (postId: number, isRevealed: boolean) => {
     dispatch({
@@ -109,6 +110,7 @@ export default function NewsFeed({ title }: { title: string }) {
                   <TextArea
                     placeholder="write your answer..."
                     onChange={(e) => setCommentText(e.target.value)}
+                    value={commentText}
                   />
                   <CommentSubmitButton type="submit">SEND</CommentSubmitButton>
                 </NewCommentContainer>

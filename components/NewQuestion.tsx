@@ -24,6 +24,10 @@ export default function NewQuestion() {
       type: ADD_POST,
       payload: postData,
     });
+    setPostData({
+      realQuestion: "",
+      fakeQuestion: "",
+    });
   };
 
   return (
@@ -38,6 +42,7 @@ export default function NewQuestion() {
                 fakeQuestion: e.target.value,
               }))
             }
+            value={postData.fakeQuestion}
           />
           <QuestionImg src="/static/img/smile.png" alt="fake" />
         </QuestionGroup>
@@ -50,6 +55,7 @@ export default function NewQuestion() {
                 realQuestion: e.target.value,
               }))
             }
+            value={postData.realQuestion}
           />
           <QuestionImg src="/static/img/xd.png" alt="fake" />
         </QuestionGroup>
