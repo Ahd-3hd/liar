@@ -33,7 +33,7 @@ export default function NewsFeed({ title }: { title: string }) {
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
-    id: number
+    id: string
   ) => {
     e.preventDefault();
     dispatch({
@@ -45,7 +45,7 @@ export default function NewsFeed({ title }: { title: string }) {
     });
     setCommentText("");
   };
-  const handleToggleReveal = (postId: number, isRevealed: boolean) => {
+  const handleToggleReveal = (postId: string, isRevealed: boolean) => {
     dispatch({
       type: TOGGLE_REVEAL,
       payload: {
@@ -68,7 +68,7 @@ export default function NewsFeed({ title }: { title: string }) {
                   </AvatarContainer>
                   <PostContainer>
                     <NameRevealContainer>
-                      <PosterName>{post.username}</PosterName>
+                      <PosterName>{post.userId}</PosterName>
                       <RevealButton
                         isRevealed={post.isRevealed}
                         onClick={() =>

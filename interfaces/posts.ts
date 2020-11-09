@@ -1,6 +1,6 @@
 export interface IPost {
-  id: number;
-  username: string;
+  id: string;
+  userId: string;
   realQuestion: string;
   fakeQuestion: string;
   isRevealed: boolean;

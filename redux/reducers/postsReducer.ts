@@ -1,8 +1,27 @@
 import { IPost } from "../../interfaces/posts";
 import { ADD_COMMENT, ADD_POST, TOGGLE_REVEAL } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import firebase from "../../config/config";
 
-const initialState: IPost[] = [];
+let initialState: IPost[] = [];
+const db = firebase.firestore();
+db.collection("posts")
+  .get()
+  .then((querySnapshot) => {
+    const newState: IPost[] = [];
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+      newState.push({
+        id: doc.id,
+        userId: doc.data().userid,
+        fakeQuestion: doc.data().fakeQuestion,
+        realQuestion: doc.data().realQuestion,
+        isRevealed: false,
+        comments: doc.data().comments,
+      });
+      initialState = newState;
+    });
+  });
 
 const postsReducer = (
   state = initialState,
@@ -15,7 +34,7 @@ const postsReducer = (
         ...state,
         {
           id: uuidv4(),
-          username: "ahd",
+          userId: "123",
           realQuestion: payload.realQuestion,
           fakeQuestion: payload.fakeQuestion,
           isRevealed: false,
