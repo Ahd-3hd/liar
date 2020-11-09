@@ -7,6 +7,11 @@ export const Title = styled.p`
   color: ${({ theme: { colors } }) => colors.text};
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
 `;
+export const NoPosts = styled.p`
+  text-align: center;
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors } }) => colors.grey};
+`;
 export const CardsContainer = styled.div``;
 export const NewsFeedCard = styled(Card)`
   padding: 0.5rem;
