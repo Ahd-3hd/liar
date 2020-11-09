@@ -25,7 +25,23 @@ export const PosterAvatar = styled.img`
   width: 100%;
   max-width: 100px;
 `;
-export const PostContainer = styled.div``;
+export const PostContainer = styled.div`
+  width: 100%;
+`;
+export const NameRevealContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const RevealButton = styled.button<{ isRevealed: boolean }>`
+  border: none;
+  background: ${({ theme: { colors }, isRevealed }) =>
+    isRevealed ? colors.darkred : colors.black};
+  color: ${({ theme: { colors } }) => colors.white};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  border-radius: 0.3rem;
+  cursor: pointer;
+`;
 export const PosterName = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
@@ -61,13 +77,55 @@ export const Comment = styled.p`
   border-radius: 0.5rem;
   margin: ${({ theme: { spaces } }) => spaces.sm} 0;
 `;
+export const NoComments = styled.p`
+  text-align: center;
+  background: ${({ theme: { colors } }) => colors.grey};
+  padding: ${({ theme: { spaces } }) => spaces.md} 0;
+`;
 
+export const NewCommentContainer = styled.form`
+  display: flex;
+  /* align-items: flex-start; */
+  margin: ${({ theme: { spaces } }) => spaces.sm};
+`;
+
+export const TextArea = styled.textarea`
+  flex: 9;
+  resize: none;
+  height: 4em;
+  border-radius: 0.3rem;
+  border: 1px solid ${({ theme: { colors } }) => colors.grey + "77"};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.text};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
+
+  :focus {
+    outline: none;
+    border: 1px solid ${({ theme: { colors } }) => colors.blue + "77"};
+    box-shadow: 0px 0px 10px ${({ theme: { colors } }) => colors.blue + "22"};
+    transition: 0.3s;
+  }
+`;
+export const UserCommentAvatarContainer = styled.div`
+  flex: 1;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+export const UserCommentAvatar = styled.img`
+  width: 100%;
+`;
 export const CommentContainer = styled.div`
   display: flex;
   align-items: flex-start;
   padding-top: ${({ theme: { spaces } }) => spaces.sm};
 `;
-
+export const CommentSubmitButton = styled.button`
+  background: ${({ theme: { colors } }) => colors.darkblue};
+  border: none;
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.white};
+  cursor: pointer;
+`;
 export const CommentComponent = ({
   commentorName,
   commentText,

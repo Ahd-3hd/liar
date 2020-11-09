@@ -11,67 +11,91 @@ import {
   PosterQuestion,
   AvatarContainer,
   CommentComponent,
+  NoComments,
+  NameRevealContainer,
+  RevealButton,
+  NewCommentContainer,
+  TextArea,
+  UserCommentAvatarContainer,
+  UserCommentAvatar,
+  CommentSubmitButton,
 } from "../styles/NewsFeed.style";
+import { useSelector, useDispatch } from "react-redux";
+import { IPost } from "../interfaces/posts";
+import { useState } from "react";
+import { ADD_COMMENT } from "../redux/types";
 
 export default function NewsFeed({ title }: { title: string }) {
+  const [commentText, setCommentText] = useState("");
+  const dispatch = useDispatch();
+  const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
+  const handleCommentSubmit = (
+    e: { preventDefault: () => void },
+    id: number
+  ) => {
+    e.preventDefault();
+    dispatch({
+      type: ADD_COMMENT,
+      payload: {
+        commentText,
+        postId: id,
+      },
+    });
+  };
   return (
     <Wrapper>
       <Title>{title}</Title>
       <CardsContainer>
-        <NewsFeedCard>
-          <NewsFeedPosterSection>
-            <AvatarContainer>
-              <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
-            </AvatarContainer>
-            <PostContainer>
-              <PosterName>john Doe</PosterName>
-              <PosterQuestion>
-                Tell me what you want what you really really want?
-              </PosterQuestion>
-            </PostContainer>
-          </NewsFeedPosterSection>
-          <NewsFeedCommentsSection>
-            <CommentComponent
-              commentorName="John doe"
-              commentText="dis is da first comment yo!"
-            />
-            <CommentComponent
-              commentorName="Smith Bro"
-              commentText="dis is da second comment yo! ,dis is da second comment yo! ,dis is da second comment yo!"
-            />
-            <CommentComponent
-              commentorName="Karen Fo"
-              commentText="dis is da third comment yo!"
-            />
-          </NewsFeedCommentsSection>
-        </NewsFeedCard>
-        <NewsFeedCard>
-          <NewsFeedPosterSection>
-            <AvatarContainer>
-              <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
-            </AvatarContainer>
-            <PostContainer>
-              <PosterName>john Doe</PosterName>
-              <PosterQuestion>
-                Tell me what you want what you really really want?
-              </PosterQuestion>
-            </PostContainer>
-          </NewsFeedPosterSection>
-          <NewsFeedCommentsSection>
-            <CommentComponent
-              commentorName="John doe"
-              commentText="dis is da first comment yo!"
-            />
-            <CommentComponent
-              commentorName="Smith Bro"
-              commentText="dis is da second comment yo! ,dis is da second comment yo! ,dis is da second comment yo!"
-            />
-            <CommentComponent
-              commentorName="Karen Fo"
-              commentText="dis is da third comment yo!"
-            />
-          </NewsFeedCommentsSection>
-        </NewsFeedCard>
+        {posts.map((post: IPost) => {
+          return (
+            <NewsFeedCard key={post.id}>
+              <NewsFeedPosterSection>
+                <AvatarContainer>
+                  <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
+                </AvatarContainer>
+                <PostContainer>
+                  <NameRevealContainer>
+                    <PosterName>{post.username}</PosterName>
+                    <RevealButton isRevealed={post.isRevealed}>
+                      {post.isRevealed ? "Hide" : "Reveal"}
+                    </RevealButton>
+                  </NameRevealContainer>
+                  <PosterQuestion>
+                    {post.isRevealed ? post.realQuestion : post.fakeQuestion}
+                  </PosterQuestion>
+                </PostContainer>
+              </NewsFeedPosterSection>
+              <NewsFeedCommentsSection>
+                {post.comments.length === 0 ? (
+                  <NoComments>Be the first to answer this question</NoComments>
+                ) : (
+                  post.comments.map((comment) => (
+                    <CommentComponent
+                      key={comment.id}
+                      commentorName={comment.username}
+                      commentText={comment.text}
+                    />
+                  ))
+                )}
+              </NewsFeedCommentsSection>
+              <NewCommentContainer
+                onSubmit={(e) => handleCommentSubmit(e, post.id)}
+              >
+                <UserCommentAvatarContainer>
+                  <UserCommentAvatar
+                    src="/static/img/avatar.png"
+                    alt="avatar"
+                  />
+                </UserCommentAvatarContainer>
+                <TextArea
+                  placeholder="write your answer..."
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+                <CommentSubmitButton type="submit">SEND</CommentSubmitButton>
+              </NewCommentContainer>
+            </NewsFeedCard>
+          );
+        })}
       </CardsContainer>
     </Wrapper>
   );
