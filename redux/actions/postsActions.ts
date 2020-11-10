@@ -1,6 +1,7 @@
 import { ADD_COMMENT, ADD_POST, FETCH_POSTS, TOGGLE_REVEAL } from "../types";
 import firebase from "../../config/config";
 import { IPost } from "../../interfaces/posts";
+import { v4 as uuidv4 } from "uuid";
 const db = firebase.firestore();
 
 export function fetchPosts() {
@@ -30,13 +31,6 @@ export function fetchPosts() {
 }
 
 export function addPost(postData: any) {
-  //   return (dispatch: any) =>
-  //     setTimeout(() => {
-  //       dispatch({
-  //         type: ADD_POST,
-  //         payload: postData,
-  //       });
-  //     }, 1000);
   return (dispatch: any) =>
     db
       .collection("posts")
@@ -47,20 +41,50 @@ export function addPost(postData: any) {
         isRevealed: false,
         comments: [],
       })
-      .then((_) => dispatch({ type: ADD_POST, payload: postData }))
+      .then((docRef) =>
+        dispatch({ type: ADD_POST, payload: { ...postData, id: docRef.id } })
+      )
       .catch((err) => console.log(err));
 }
 
 export function addComment(commentData: any) {
+  //   return (dispatch: any) =>
+  //     setTimeout(
+  //       () =>
+  //         dispatch({
+  //           type: ADD_COMMENT,
+  //           payload: commentData,
+  //         }),
+  //       1000
+  //     );
+
   return (dispatch: any) =>
-    setTimeout(
-      () =>
-        dispatch({
-          type: ADD_COMMENT,
-          payload: commentData,
+    db
+      .collection("posts")
+      .doc(commentData.postId)
+      .update({
+        comments: firebase.firestore.FieldValue.arrayUnion({
+          ...commentData,
+          username: "ahd",
+          id: uuidv4(),
         }),
-      1000
-    );
+      })
+      .then(() => {
+        db.collection("posts")
+          .doc(commentData.postId)
+          .get()
+          .then((doc) =>
+            dispatch({
+              type: ADD_COMMENT,
+              payload: {
+                ...doc.data(),
+                postId: commentData.postId,
+              },
+            })
+          )
+          .catch((er) => console.log(er));
+      })
+      .catch((err) => console.log(err));
 }
 
 export function toggleReveal(commentData: any) {

@@ -24,7 +24,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useEffect, useState } from "react";
-import { ADD_COMMENT, FETCH_POSTS, TOGGLE_REVEAL } from "../redux/types";
 import {
   addComment,
   toggleReveal,
@@ -95,7 +94,7 @@ export default function NewsFeed({ title }: { title: string }) {
                       <CommentComponent
                         key={comment.id}
                         commentorName={comment.username}
-                        commentText={comment.text}
+                        commentText={comment.commentText}
                       />
                     ))
                   )}

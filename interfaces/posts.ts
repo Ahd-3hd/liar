@@ -8,7 +8,7 @@ export interface IPost {
 }
 
 export interface IComment {
+  commentText: string;
   id: string;
   username: string;
-  text: string;
 }
