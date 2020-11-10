@@ -1,5 +1,5 @@
 import { IUser } from "../../interfaces/user";
-import { SIGN_IN } from "../types";
+import { SIGN_IN, SIGN_IN_ERROR } from "../types";
 
 const initialState: IUser = {
   userId: null,
@@ -15,6 +15,16 @@ const userReducer = (
   const { type, payload } = action;
   switch (type) {
     case SIGN_IN: {
+      console.log(payload);
+      return {
+        ...state,
+        isLoggedIn: true,
+        email: payload.email,
+        username: payload.email,
+        userId: payload.uid,
+      };
+    }
+    case SIGN_IN_ERROR: {
       console.log(payload);
       return state;
     }

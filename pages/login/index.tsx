@@ -10,24 +10,16 @@ import {
 import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signInWithEmailAndPassword } from "../../redux/actions/userActions";
-import { useSelector, useDispatch } from "react-redux";
-import { IUser } from "../../interfaces/user";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ currentUser }: { currentUser: IUser }) => currentUser
-  );
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    console.log(currentUser);
-  }, []);
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();

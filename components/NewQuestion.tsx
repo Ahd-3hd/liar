@@ -8,7 +8,6 @@ import { useState } from "react";
 import { Card } from "./Card";
 import { Button } from "./Buttons";
 import { useDispatch } from "react-redux";
-import { ADD_POST } from "../redux/types";
 import { addPost } from "../redux/actions/postsActions";
 
 export default function NewQuestion() {
