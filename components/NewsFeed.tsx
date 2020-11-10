@@ -25,19 +25,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useEffect, useState } from "react";
 import { ADD_COMMENT, FETCH_POSTS, TOGGLE_REVEAL } from "../redux/types";
-import { addComment, toggleReveal } from "../redux/actions/postsActions";
+import {
+  addComment,
+  toggleReveal,
+  fetchPosts,
+} from "../redux/actions/postsActions";
 
 export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
 
-  // useEffect(() => {
-  //   dispatch({
-  //     type: FETCH_POSTS,
-  //     payload: null,
-  //   });
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
@@ -53,13 +54,6 @@ export default function NewsFeed({ title }: { title: string }) {
     setCommentText("");
   };
   const handleToggleReveal = (postId: string, isRevealed: boolean) => {
-    // dispatch({
-    //   type: TOGGLE_REVEAL,
-    //   payload: {
-    //     postId: postId,
-    //     isRevealed: isRevealed,
-    //   },
-    // });
     dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
   };
   return (

@@ -1,10 +1,8 @@
 import { IPost } from "../../interfaces/posts";
 import { ADD_COMMENT, ADD_POST, TOGGLE_REVEAL, FETCH_POSTS } from "../types";
 import { v4 as uuidv4 } from "uuid";
-import firebase from "../../config/config";
 
 let initialState: IPost[] = [];
-const db = firebase.firestore();
 
 const postsReducer = (
   state = initialState,
@@ -12,26 +10,9 @@ const postsReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    // case FETCH_POSTS: {
-    //   let fetchedState: IPost[] = [];
-    //   db.collection("posts")
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const newState: IPost[] = [];
-    //       querySnapshot.forEach((doc) => {
-    //         newState.push({
-    //           id: doc.id,
-    //           userId: doc.data().userid,
-    //           fakeQuestion: doc.data().fakeQuestion,
-    //           realQuestion: doc.data().realQuestion,
-    //           isRevealed: false,
-    //           comments: doc.data().comments,
-    //         });
-    //         fetchedState = newState;
-    //       });
-    //     });
-    //   return fetchedState;
-    // }
+    case FETCH_POSTS: {
+      return [...payload];
+    }
     case ADD_POST: {
       return [
         ...state,
