@@ -1,6 +1,6 @@
 export interface IPost {
-  id: number;
-  username: string;
+  id: string;
+  userId: string;
   realQuestion: string;
   fakeQuestion: string;
   isRevealed: boolean;
@@ -8,7 +8,7 @@ export interface IPost {
 }
 
 export interface IComment {
+  commentText: string;
   id: string;
   username: string;
-  text: string;
 }

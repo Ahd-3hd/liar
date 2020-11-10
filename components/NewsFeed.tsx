@@ -23,36 +23,37 @@ import {
 } from "../styles/NewsFeed.style";
 import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
-import { useState } from "react";
-import { ADD_COMMENT, TOGGLE_REVEAL } from "../redux/types";
+import { useEffect, useState } from "react";
+import {
+  addComment,
+  toggleReveal,
+  fetchPosts,
+} from "../redux/actions/postsActions";
 
 export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
 
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
+
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
-    id: number
+    id: string
   ) => {
     e.preventDefault();
-    dispatch({
-      type: ADD_COMMENT,
-      payload: {
+    dispatch(
+      addComment({
         commentText,
         postId: id,
-      },
-    });
+      })
+    );
     setCommentText("");
   };
-  const handleToggleReveal = (postId: number, isRevealed: boolean) => {
-    dispatch({
-      type: TOGGLE_REVEAL,
-      payload: {
-        postId: postId,
-        isRevealed: isRevealed,
-      },
-    });
+  const handleToggleReveal = (postId: string, isRevealed: boolean) => {
+    dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
   };
   return (
     <Wrapper>
@@ -68,7 +69,7 @@ export default function NewsFeed({ title }: { title: string }) {
                   </AvatarContainer>
                   <PostContainer>
                     <NameRevealContainer>
-                      <PosterName>{post.username}</PosterName>
+                      <PosterName>{post.userId}</PosterName>
                       <RevealButton
                         isRevealed={post.isRevealed}
                         onClick={() =>
@@ -93,7 +94,7 @@ export default function NewsFeed({ title }: { title: string }) {
                       <CommentComponent
                         key={comment.id}
                         commentorName={comment.username}
-                        commentText={comment.text}
+                        commentText={comment.commentText}
                       />
                     ))
                   )}

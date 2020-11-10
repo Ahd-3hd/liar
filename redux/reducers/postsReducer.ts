@@ -1,8 +1,7 @@
 import { IPost } from "../../interfaces/posts";
-import { ADD_COMMENT, ADD_POST, TOGGLE_REVEAL } from "../types";
-import { v4 as uuidv4 } from "uuid";
+import { ADD_COMMENT, ADD_POST, TOGGLE_REVEAL, FETCH_POSTS } from "../types";
 
-const initialState: IPost[] = [];
+let initialState: IPost[] = [];
 
 const postsReducer = (
   state = initialState,
@@ -10,12 +9,15 @@ const postsReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
+    case FETCH_POSTS: {
+      return [...payload];
+    }
     case ADD_POST: {
       return [
         ...state,
         {
-          id: uuidv4(),
-          username: "ahd",
+          id: payload.id,
+          userId: "123",
           realQuestion: payload.realQuestion,
           fakeQuestion: payload.fakeQuestion,
           isRevealed: false,
@@ -24,15 +26,22 @@ const postsReducer = (
       ];
     }
     case ADD_COMMENT: {
+      console.log(payload);
       const copyState = [...state];
       const postIndex = copyState.findIndex(
         (item) => item.id === payload.postId
       );
-      copyState[postIndex].comments.push({
-        id: uuidv4(),
-        username: "ahd",
-        text: payload.commentText,
-      });
+      copyState[postIndex].comments = payload.comments;
+      // const copyState = [...payload];
+      // console.log(copyState);
+      // const postIndex = copyState.findIndex(
+      //   (item) => item.id === payload.postId
+      // );
+      // copyState[postIndex].comments.push({
+      //   id: uuidv4(),
+      //   username: "ahd",
+      //   text: payload.commentText,
+      // });
       return [...copyState];
     }
     case TOGGLE_REVEAL: {
