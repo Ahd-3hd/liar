@@ -12,26 +12,26 @@ const postsReducer = (
 ) => {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_POSTS: {
-      let fetchedState: IPost[] = [];
-      db.collection("posts")
-        .get()
-        .then((querySnapshot) => {
-          const newState: IPost[] = [];
-          querySnapshot.forEach((doc) => {
-            newState.push({
-              id: doc.id,
-              userId: doc.data().userid,
-              fakeQuestion: doc.data().fakeQuestion,
-              realQuestion: doc.data().realQuestion,
-              isRevealed: false,
-              comments: doc.data().comments,
-            });
-            fetchedState = newState;
-          });
-        });
-      return fetchedState;
-    }
+    // case FETCH_POSTS: {
+    //   let fetchedState: IPost[] = [];
+    //   db.collection("posts")
+    //     .get()
+    //     .then((querySnapshot) => {
+    //       const newState: IPost[] = [];
+    //       querySnapshot.forEach((doc) => {
+    //         newState.push({
+    //           id: doc.id,
+    //           userId: doc.data().userid,
+    //           fakeQuestion: doc.data().fakeQuestion,
+    //           realQuestion: doc.data().realQuestion,
+    //           isRevealed: false,
+    //           comments: doc.data().comments,
+    //         });
+    //         fetchedState = newState;
+    //       });
+    //     });
+    //   return fetchedState;
+    // }
     case ADD_POST: {
       return [
         ...state,

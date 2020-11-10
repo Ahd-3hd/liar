@@ -25,41 +25,42 @@ import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useEffect, useState } from "react";
 import { ADD_COMMENT, FETCH_POSTS, TOGGLE_REVEAL } from "../redux/types";
+import { addComment, toggleReveal } from "../redux/actions/postsActions";
 
 export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
 
-  useEffect(() => {
-    dispatch({
-      type: FETCH_POSTS,
-      payload: null,
-    });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: FETCH_POSTS,
+  //     payload: null,
+  //   });
+  // }, []);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
     id: string
   ) => {
     e.preventDefault();
-    dispatch({
-      type: ADD_COMMENT,
-      payload: {
+    dispatch(
+      addComment({
         commentText,
         postId: id,
-      },
-    });
+      })
+    );
     setCommentText("");
   };
   const handleToggleReveal = (postId: string, isRevealed: boolean) => {
-    dispatch({
-      type: TOGGLE_REVEAL,
-      payload: {
-        postId: postId,
-        isRevealed: isRevealed,
-      },
-    });
+    // dispatch({
+    //   type: TOGGLE_REVEAL,
+    //   payload: {
+    //     postId: postId,
+    //     isRevealed: isRevealed,
+    //   },
+    // });
+    dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
   };
   return (
     <Wrapper>

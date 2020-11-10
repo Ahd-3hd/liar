@@ -9,6 +9,7 @@ import { Card } from "./Card";
 import { Button } from "./Buttons";
 import { useDispatch } from "react-redux";
 import { ADD_POST } from "../redux/types";
+import { addPost } from "../redux/actions/postsActions";
 
 export default function NewQuestion() {
   const dispatch = useDispatch();
@@ -18,12 +19,9 @@ export default function NewQuestion() {
     fakeQuestion: "",
   });
 
-  const addPost = (e: { preventDefault: () => void }) => {
+  const addPostDispatch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch({
-      type: ADD_POST,
-      payload: postData,
-    });
+    dispatch(addPost(postData));
     setPostData({
       realQuestion: "",
       fakeQuestion: "",
@@ -32,7 +30,7 @@ export default function NewQuestion() {
 
   return (
     <Card>
-      <Form onSubmit={addPost}>
+      <Form onSubmit={addPostDispatch}>
         <QuestionGroup>
           <TextArea
             placeholder="Write the fake question"
