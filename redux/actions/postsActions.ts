@@ -9,6 +9,7 @@ export function fetchPosts() {
   return (dispatch: any) =>
     db
       .collection("posts")
+      .orderBy("createdAt", "desc")
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -40,6 +41,7 @@ export function addPost(postData: any) {
         fakeQuestion: postData.fakeQuestion,
         isRevealed: false,
         comments: [],
+        createdAt: firebase.firestore.Timestamp.now().seconds,
       })
       .then((docRef) =>
         dispatch({ type: ADD_POST, payload: { ...postData, id: docRef.id } })
