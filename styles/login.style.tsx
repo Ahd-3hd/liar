@@ -11,12 +11,12 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const InputGroup = styled.div`
+export const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin: ${({ theme: { spaces } }) => spaces.md} 0;
 `;
-const InputField = styled.input`
+export const InputField = styled.input`
   border-radius: 0.3rem;
   border: 1px solid ${({ theme: { colors } }) => colors.grey + "77"};
   padding: ${({ theme: { spaces } }) => spaces.sm};
@@ -31,7 +31,7 @@ const InputField = styled.input`
     transition: 0.3s;
   }
 `;
-const InputLabel = styled.label`
+export const InputLabel = styled.label`
   font-size: 0.75rem;
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
   color: ${({ theme: { colors } }) => colors.darkblue};
@@ -45,9 +45,3 @@ export const CreateAccountLink = styled.a`
   text-decoration: none;
   text-align: center;
 `;
-export const Input = ({ label, type }: { label: string; type: string }) => (
-  <InputGroup>
-    <InputLabel>{label}</InputLabel>
-    <InputField type={type} />
-  </InputGroup>
-);

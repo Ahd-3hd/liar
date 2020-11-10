@@ -50,16 +50,6 @@ export function addPost(postData: any) {
 }
 
 export function addComment(commentData: any) {
-  //   return (dispatch: any) =>
-  //     setTimeout(
-  //       () =>
-  //         dispatch({
-  //           type: ADD_COMMENT,
-  //           payload: commentData,
-  //         }),
-  //       1000
-  //     );
-
   return (dispatch: any) =>
     db
       .collection("posts")

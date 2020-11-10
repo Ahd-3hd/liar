@@ -32,16 +32,6 @@ const postsReducer = (
         (item) => item.id === payload.postId
       );
       copyState[postIndex].comments = payload.comments;
-      // const copyState = [...payload];
-      // console.log(copyState);
-      // const postIndex = copyState.findIndex(
-      //   (item) => item.id === payload.postId
-      // );
-      // copyState[postIndex].comments.push({
-      //   id: uuidv4(),
-      //   username: "ahd",
-      //   text: payload.commentText,
-      // });
       return [...copyState];
     }
     case TOGGLE_REVEAL: {
