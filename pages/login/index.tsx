@@ -10,15 +10,22 @@ import {
 import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
 import {
   clearCurrentUser,
   setCurrentUser,
 } from "../../redux/actions/authActions";
+import { useRouter } from "next/router";
+import { IUser } from "../../interfaces/user";
+
 export default function Login() {
+  const router = useRouter();
   const dispatch = useDispatch();
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -29,8 +36,13 @@ export default function Login() {
     auth
       .signInWithEmailAndPassword(userData.email, userData.password)
       .then((user) => dispatch(setCurrentUser(user)))
+      .then(() => router.push("/"))
       .catch((err) => dispatch(clearCurrentUser()));
   };
+
+  useEffect(() => {
+    if (currentUser) router.push("/");
+  });
 
   return (
     <>
