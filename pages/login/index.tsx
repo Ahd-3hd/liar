@@ -34,7 +34,11 @@ export default function Login() {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(userData.email, userData.password)
-      .then((user) => dispatch(setCurrentUser(user)))
+      .then((user) =>
+        dispatch(
+          setCurrentUser({ ...user, avatar: "https://i.pravatar.cc/300" })
+        )
+      )
       .then(() => router.push("/"))
       .catch((err) => dispatch(clearCurrentUser()));
   };

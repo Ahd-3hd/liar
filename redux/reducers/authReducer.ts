@@ -1,4 +1,8 @@
-import { SET_CURRENT_USER, CLEAR_CURRENT_USER } from "../types";
+import {
+  SET_CURRENT_USER,
+  CLEAR_CURRENT_USER,
+  SET_CURRENT_USER_SIGNUP,
+} from "../types";
 
 const initialState = {
   currentUser: null,
@@ -13,11 +17,13 @@ const authReducer = (
     case SET_CURRENT_USER: {
       return {
         ...state,
-        currentUser: {
-          email: payload.email,
-          userId: payload.uid,
-          username: payload.email,
-        },
+        currentUser: payload,
+      };
+    }
+    case SET_CURRENT_USER_SIGNUP: {
+      return {
+        ...state,
+        currentUser: payload,
       };
     }
     case CLEAR_CURRENT_USER: {

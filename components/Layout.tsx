@@ -15,7 +15,9 @@ const Layout = ({ children }: { children?: any }) => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged((user: any) => {
       if (user) {
-        dispatch(setCurrentUser(user));
+        dispatch(
+          setCurrentUser({ ...user, avatar: "https://i.pravatar.cc/300" })
+        );
       } else {
         dispatch(clearCurrentUser());
       }

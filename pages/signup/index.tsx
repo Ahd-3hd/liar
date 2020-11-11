@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
 import {
   clearCurrentUser,
-  setCurrentUser,
+  setCurrentUserSignup,
 } from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
 import firebase from "../../config/config";
@@ -35,7 +35,13 @@ export default function Signup() {
     auth
       .createUserWithEmailAndPassword(userData.email, userData.password)
       .then((user) => {
-        dispatch(setCurrentUser(user));
+        dispatch(
+          setCurrentUserSignup({
+            email: user?.user?.email,
+            userId: user?.user?.uid,
+            username: user?.user?.email,
+          })
+        );
       })
       .then(() => {
         firebase.firestore().collection("users").add({
