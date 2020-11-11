@@ -83,8 +83,5 @@ export function addComment(commentData: any) {
 
 export function toggleReveal(commentData: any) {
   return (dispatch: any) =>
-    setTimeout(
-      () => dispatch({ type: TOGGLE_REVEAL, payload: commentData }),
-      1000
-    );
+    dispatch({ type: TOGGLE_REVEAL, payload: commentData });
 }
