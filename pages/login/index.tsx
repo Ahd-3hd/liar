@@ -18,7 +18,6 @@ import {
   setCurrentUser,
 } from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
-import { IUser } from "../../interfaces/user";
 
 export default function Login() {
   const router = useRouter();

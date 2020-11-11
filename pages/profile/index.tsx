@@ -17,8 +17,12 @@ import Link from "next/link";
 import { useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Profile() {
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [friendList] = useState([
@@ -45,7 +49,7 @@ export default function Profile() {
       <Wrapper>
         <UserInfoContainer>
           <UserAvatar src="/static/img/avatar.png" alt="avatar" />
-          <Username>John Doe</Username>
+          <Username>{currentUser.email}</Username>
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>

@@ -26,7 +26,7 @@ export default function NewQuestion() {
     dispatch(
       addPost({
         ...postData,
-        userid: currentUser.username,
+        userid: currentUser.userId,
         email: currentUser.email,
       })
     );
