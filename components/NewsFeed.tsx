@@ -28,9 +28,19 @@ import {
   addComment,
   toggleReveal,
   fetchPosts,
+  fetchPostsCurrentUser,
+  fetchPostsUser,
 } from "../redux/actions/postsActions";
+import { useRouter } from "next/router";
 
-export default function NewsFeed({ title }: { title: string }) {
+export default function NewsFeed({
+  title,
+  page,
+}: {
+  title: string;
+  page: string;
+}) {
+  const router = useRouter();
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
@@ -38,7 +48,14 @@ export default function NewsFeed({ title }: { title: string }) {
     ({ auth }: { auth: any }) => auth.currentUser
   );
   useEffect(() => {
-    dispatch(fetchPosts());
+    if (page === "homepage") {
+      dispatch(fetchPosts());
+    } else if (page === "currentUser") {
+      dispatch(fetchPostsCurrentUser(currentUser.userId));
+    } else if (page === "userPage") {
+      //TODO this should be changed to user id from fb
+      dispatch(fetchPostsUser("ziQ1AXLYFEe7yzSo1zT2nWIdPvw1"));
+    }
   }, []);
 
   const handleCommentSubmit = (

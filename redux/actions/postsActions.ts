@@ -29,7 +29,68 @@ export function fetchPosts() {
           type: FETCH_POSTS,
           payload: newState,
         })
-      );
+      )
+      .catch((err) => console.log(err));
+}
+
+export function fetchPostsCurrentUser(userId: string) {
+  const newState: IPost[] = [];
+  return (dispatch: any) =>
+    db
+      .collection("posts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          newState.push({
+            id: doc.id,
+            userId: doc.data().userId,
+            email: doc.data().email,
+            fakeQuestion: doc.data().fakeQuestion,
+            realQuestion: doc.data().realQuestion,
+            isRevealed: false,
+            comments: doc.data().comments,
+          });
+        });
+      })
+      .then((_) =>
+        dispatch({
+          type: FETCH_POSTS,
+          payload: newState,
+        })
+      )
+      .catch((err) => console.log(err));
+}
+
+export function fetchPostsUser(userId: string) {
+  const newState: IPost[] = [];
+  return (dispatch: any) =>
+    db
+      .collection("posts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          newState.push({
+            id: doc.id,
+            userId: doc.data().userId,
+            email: doc.data().email,
+            fakeQuestion: doc.data().fakeQuestion,
+            realQuestion: doc.data().realQuestion,
+            isRevealed: false,
+            comments: doc.data().comments,
+          });
+        });
+      })
+      .then((_) =>
+        dispatch({
+          type: FETCH_POSTS,
+          payload: newState,
+        })
+      )
+      .catch((err) => console.log(err));
 }
 
 export function addPost(postData: any) {

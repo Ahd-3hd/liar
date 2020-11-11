@@ -96,7 +96,7 @@ export default function Profile() {
           </Link>
         </FriendsWrapper>
 
-        <NewsFeed title="My wall" />
+        <NewsFeed title="My wall" page="currentUser" />
       </Wrapper>
     </>
   );

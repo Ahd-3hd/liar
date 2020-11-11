@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
       <Wrapper>
         <NewQuestion />
-        <NewsFeed title="Newsfeed" />
+        <NewsFeed title="Newsfeed" page="homepage" />
       </Wrapper>
     </>
   );

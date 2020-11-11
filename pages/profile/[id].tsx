@@ -85,7 +85,7 @@ export default function FriendProfile() {
           </FriendsContainer>
         </FriendsWrapper>
 
-        <NewsFeed title={"John Doe's Wall"} />
+        <NewsFeed title="John Doe's Wall" page="userPage" />
       </Wrapper>
     </>
   );
