@@ -18,7 +18,7 @@ import {
   setCurrentUser,
 } from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
-
+import firebase from "../../config/config";
 export default function Signup() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -32,6 +32,20 @@ export default function Signup() {
 
   const handleSignup = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    auth
+      .createUserWithEmailAndPassword(userData.email, userData.password)
+      .then((user) => {
+        dispatch(setCurrentUser(user));
+      })
+      .then(() => {
+        firebase.firestore().collection("users").add({
+          avatar: "https://i.pravatar.cc/300",
+          email: auth?.currentUser?.email,
+          friends: [],
+        });
+      })
+      .then(() => router.push("/"))
+      .catch((err) => dispatch(clearCurrentUser()));
   };
 
   useEffect(() => {
