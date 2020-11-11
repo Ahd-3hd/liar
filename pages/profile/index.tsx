@@ -41,6 +41,7 @@ export default function Profile() {
     13,
     14,
   ]);
+  if (!currentUser) return <div>Must Log in</div>;
   return (
     <>
       <Head>
