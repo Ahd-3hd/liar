@@ -12,7 +12,13 @@ import Link from "next/link";
 import Head from "next/head";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-
+import { auth } from "../../config/config";
+import { SET_CURRENT_USER } from "../../redux/types";
+import firebase from "../../config/config";
+import {
+  clearCurrentUser,
+  setCurrentUser,
+} from "../../redux/actions/authActions";
 export default function Login() {
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({
@@ -22,6 +28,10 @@ export default function Login() {
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(userData.email, userData.password)
+      .then((user) => dispatch(setCurrentUser(user)))
+      .catch((err) => dispatch(clearCurrentUser()));
   };
 
   return (

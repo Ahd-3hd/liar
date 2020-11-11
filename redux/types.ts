@@ -2,3 +2,5 @@ export const ADD_POST = "ADD_POST";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const TOGGLE_REVEAL = "TOGGLE_REVEAL";
 export const FETCH_POSTS = "FETCH_POSTS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const CLEAR_CURRENT_USER = "CLEAR_CURRENT_USER";
