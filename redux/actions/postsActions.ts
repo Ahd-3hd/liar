@@ -15,7 +15,8 @@ export function fetchPosts() {
         querySnapshot.forEach((doc) => {
           newState.push({
             id: doc.id,
-            userId: doc.data().userid,
+            userId: doc.data().userId,
+            email: doc.data().email,
             fakeQuestion: doc.data().fakeQuestion,
             realQuestion: doc.data().realQuestion,
             isRevealed: false,
@@ -36,7 +37,8 @@ export function addPost(postData: any) {
     db
       .collection("posts")
       .add({
-        userId: "123",
+        userId: postData.userid,
+        email: postData.email,
         realQuestion: postData.realQuestion,
         fakeQuestion: postData.fakeQuestion,
         isRevealed: false,
@@ -57,7 +59,7 @@ export function addComment(commentData: any) {
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion({
           ...commentData,
-          username: "ahd",
+          username: commentData.email,
           id: uuidv4(),
         }),
       })

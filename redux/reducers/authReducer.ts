@@ -13,7 +13,11 @@ const authReducer = (
     case SET_CURRENT_USER: {
       return {
         ...state,
-        currentUser: payload,
+        currentUser: {
+          email: payload.email,
+          userId: payload.uid,
+          username: payload.email,
+        },
       };
     }
     case CLEAR_CURRENT_USER: {

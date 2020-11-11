@@ -1,4 +1,5 @@
 export interface IPost {
+  email: string;
   id: string;
   userId: string;
   realQuestion: string;

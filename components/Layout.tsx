@@ -3,8 +3,7 @@ import Navbar from "./Navbar";
 import { auth } from "../config/config";
 import { setCurrentUser, clearCurrentUser } from "../redux/actions/authActions";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Layout = ({ children }: { children?: any }) => {
   const currentUser = useSelector(
@@ -15,7 +14,6 @@ const Layout = ({ children }: { children?: any }) => {
   useEffect(() => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged((user: any) => {
-      console.log(user);
       if (user) {
         dispatch(setCurrentUser(user));
       } else {
@@ -23,7 +21,7 @@ const Layout = ({ children }: { children?: any }) => {
       }
     });
     return () => unsubscribeFromAuth();
-  }, [setCurrentUser, clearCurrentUser]);
+  }, []);
   return (
     <Wrapper>
       <Container>{children}</Container>

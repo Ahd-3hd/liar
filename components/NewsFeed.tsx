@@ -34,7 +34,9 @@ export default function NewsFeed({ title }: { title: string }) {
   const [commentText, setCommentText] = useState("");
   const dispatch = useDispatch();
   const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
-
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
   useEffect(() => {
     dispatch(fetchPosts());
   }, []);
@@ -48,6 +50,8 @@ export default function NewsFeed({ title }: { title: string }) {
       addComment({
         commentText,
         postId: id,
+        userid: currentUser.userId,
+        email: currentUser.email,
       })
     );
     setCommentText("");
@@ -69,7 +73,7 @@ export default function NewsFeed({ title }: { title: string }) {
                   </AvatarContainer>
                   <PostContainer>
                     <NameRevealContainer>
-                      <PosterName>{post.userId}</PosterName>
+                      <PosterName>{post.email}</PosterName>
                       <RevealButton
                         isRevealed={post.isRevealed}
                         onClick={() =>

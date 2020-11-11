@@ -13,8 +13,6 @@ import Head from "next/head";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { auth } from "../../config/config";
-import { SET_CURRENT_USER } from "../../redux/types";
-import firebase from "../../config/config";
 import {
   clearCurrentUser,
   setCurrentUser,

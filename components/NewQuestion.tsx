@@ -9,10 +9,13 @@ import { Card } from "./Card";
 import { Button } from "./Buttons";
 import { useDispatch } from "react-redux";
 import { addPost } from "../redux/actions/postsActions";
+import { useSelector } from "react-redux";
 
 export default function NewQuestion() {
   const dispatch = useDispatch();
-
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
   const [postData, setPostData] = useState({
     realQuestion: "",
     fakeQuestion: "",
@@ -20,7 +23,13 @@ export default function NewQuestion() {
 
   const addPostDispatch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch(addPost(postData));
+    dispatch(
+      addPost({
+        ...postData,
+        userid: currentUser.username,
+        email: currentUser.email,
+      })
+    );
     setPostData({
       realQuestion: "",
       fakeQuestion: "",
