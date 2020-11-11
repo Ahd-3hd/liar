@@ -11,7 +11,6 @@ import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 
 export default function Login() {
@@ -23,7 +22,6 @@ export default function Login() {
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch(signInWithEmailAndPassword(userData));
   };
 
   return (
