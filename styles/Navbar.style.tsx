@@ -7,6 +7,7 @@ import Link from "next/link";
 import { clearCurrentUser, setCurrentUser } from "../redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../config/config";
+import { useRouter } from "next/router";
 
 export const Nav = styled.nav`
   position: fixed;
@@ -111,12 +112,14 @@ export const NavBarButtonProfile = styled.a`
   }
 `;
 export default function NavContainer() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const handleSignout = () => {
-    auth
-      .signOut()
-      .then(() => dispatch(clearCurrentUser()))
-      .catch((err) => console.log(err));
+    // auth
+    //   .signOut()
+    //   .then(() => dispatch(clearCurrentUser()))
+    //   .catch((err) => console.log(err));
+    router.push("/").then(() => window.scrollTo(0, 0));
   };
   return (
     <Nav>
