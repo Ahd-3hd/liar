@@ -123,18 +123,25 @@ export default function NewsFeed({
                     ))
                   )}
                 </NewsFeedCommentsSection>
-                <NewCommentContainer
-                  onSubmit={(e) => handleCommentSubmit(e, post.id)}
-                >
-                  <UserCommentAvatarContainer>
-                    <UserCommentAvatar src={currentUser?.avatar} alt="avatar" />
-                  </UserCommentAvatarContainer>
-                  <TextArea
-                    placeholder="write your answer..."
-                    onChange={(e) => setCommentText(e.target.value)}
-                  />
-                  <CommentSubmitButton type="submit">SEND</CommentSubmitButton>
-                </NewCommentContainer>
+                {currentUser && (
+                  <NewCommentContainer
+                    onSubmit={(e) => handleCommentSubmit(e, post.id)}
+                  >
+                    <UserCommentAvatarContainer>
+                      <UserCommentAvatar
+                        src={currentUser?.avatar}
+                        alt="avatar"
+                      />
+                    </UserCommentAvatarContainer>
+                    <TextArea
+                      placeholder="write your answer..."
+                      onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <CommentSubmitButton type="submit">
+                      SEND
+                    </CommentSubmitButton>
+                  </NewCommentContainer>
+                )}
               </NewsFeedCard>
             );
           })
