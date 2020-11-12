@@ -4,24 +4,52 @@ import { auth } from "../config/config";
 import { setCurrentUser, clearCurrentUser } from "../redux/actions/authActions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import firebase from "../config/config";
 const Layout = ({ children }: { children?: any }) => {
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
+  // const currentUser = useSelector(
+  //   ({ auth }: { auth: any }) => auth.currentUser
+  // );
   const dispatch = useDispatch();
 
   useEffect(() => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged((user: any) => {
       if (user) {
-        dispatch(
-          setCurrentUser({
-            userId: user.uid,
-            email: user.email,
-            username: user.email,
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get()
+          .then((docSnapshot) => {
+            if (docSnapshot.exists) {
+              let loggedInUser = docSnapshot.data();
+              console.log("here", loggedInUser);
+              console.log(docSnapshot.id);
+              dispatch(
+                setCurrentUser({
+                  avatar: loggedInUser?.avatar,
+                  userId: docSnapshot.id,
+                  email: loggedInUser?.email,
+                  friends: loggedInUser?.friends,
+                })
+              );
+            } else {
+              firebase.firestore().collection("users").doc(user.uid).set({
+                avatar: "https://i.pravatar.cc/300",
+                email: user.email,
+                friends: [],
+              });
+              dispatch(
+                setCurrentUser({
+                  userId: user.uid,
+                  avatar: "https://i.pravatar.cc/300",
+                  email: user.email,
+                  friends: [],
+                })
+              );
+            }
           })
-        );
+          .catch((err) => console.log(err));
       } else {
         dispatch(clearCurrentUser());
       }

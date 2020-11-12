@@ -34,22 +34,6 @@ export default function Signup() {
     e.preventDefault();
     auth
       .createUserWithEmailAndPassword(userData.email, userData.password)
-      .then((user) => {
-        dispatch(
-          setCurrentUserSignup({
-            email: user?.user?.email,
-            userId: user?.user?.uid,
-            username: user?.user?.email,
-          })
-        );
-      })
-      .then(() => {
-        firebase.firestore().collection("users").add({
-          avatar: "https://i.pravatar.cc/300",
-          email: auth?.currentUser?.email,
-          friends: [],
-        });
-      })
       .then(() => router.push("/"))
       .catch((err) => dispatch(clearCurrentUser()));
   };

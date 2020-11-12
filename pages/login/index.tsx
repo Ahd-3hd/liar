@@ -34,18 +34,16 @@ export default function Login() {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(userData.email, userData.password)
-      .then((user) =>
-        dispatch(
-          setCurrentUser({ ...user, avatar: "https://i.pravatar.cc/300" })
-        )
-      )
-      .then(() => router.push("/"))
       .catch((err) => dispatch(clearCurrentUser()));
+    // auth
+    // .signInWithEmailAndPassword(userData.email, userData.password)
+    // .then(() => router.push("/"))
+    // .catch((err) => dispatch(clearCurrentUser()));
   };
 
-  useEffect(() => {
-    if (currentUser) router.push("/");
-  });
+  // useEffect(() => {
+  //   if (currentUser) router.push("/");
+  // });
 
   return (
     <>
