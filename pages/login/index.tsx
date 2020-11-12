@@ -35,15 +35,11 @@ export default function Login() {
     auth
       .signInWithEmailAndPassword(userData.email, userData.password)
       .catch((err) => dispatch(clearCurrentUser()));
-    // auth
-    // .signInWithEmailAndPassword(userData.email, userData.password)
-    // .then(() => router.push("/"))
-    // .catch((err) => dispatch(clearCurrentUser()));
   };
 
-  // useEffect(() => {
-  //   if (currentUser) router.push("/");
-  // });
+  useEffect(() => {
+    if (currentUser) router.push("/");
+  });
 
   return (
     <>
