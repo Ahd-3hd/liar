@@ -48,6 +48,7 @@ export default function NewsFeed({
     ({ auth }: { auth: any }) => auth.currentUser
   );
   useEffect(() => {
+    console.log(currentUser);
     if (page === "homepage") {
       dispatch(fetchPosts());
     } else if (page === "currentUser") {
@@ -69,6 +70,7 @@ export default function NewsFeed({
         postId: id,
         userid: currentUser.userId,
         email: currentUser.email,
+        avatar: currentUser.avatar,
       })
     );
     setCommentText("");
@@ -116,6 +118,7 @@ export default function NewsFeed({
                         key={comment.id}
                         commentorName={comment.username}
                         commentText={comment.commentText}
+                        commentorAvatar={comment.avatar}
                       />
                     ))
                   )}
@@ -124,10 +127,7 @@ export default function NewsFeed({
                   onSubmit={(e) => handleCommentSubmit(e, post.id)}
                 >
                   <UserCommentAvatarContainer>
-                    <UserCommentAvatar
-                      src="/static/img/avatar.png"
-                      alt="avatar"
-                    />
+                    <UserCommentAvatar src={currentUser?.avatar} alt="avatar" />
                   </UserCommentAvatarContainer>
                   <TextArea
                     placeholder="write your answer..."

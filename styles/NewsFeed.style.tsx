@@ -118,6 +118,7 @@ export const UserCommentAvatarContainer = styled.div`
 `;
 export const UserCommentAvatar = styled.img`
   width: 100%;
+  border-radius: 100%;
 `;
 export const CommentContainer = styled.div`
   display: flex;
@@ -134,14 +135,16 @@ export const CommentSubmitButton = styled.button`
 export const CommentComponent = ({
   commentorName,
   commentText,
+  commentorAvatar,
 }: {
   commentorName: string;
   commentText: string;
+  commentorAvatar: string;
 }) => {
   return (
     <CommentContainer>
       <CommentorAvatarContainer>
-        <CommentorAvatar src="/static/img/avatar.png" alt="avatar" />
+        <CommentorAvatar src={commentorAvatar} alt="avatar" />
       </CommentorAvatarContainer>
       <CommentorContainer>
         <CommentorName>{commentorName}</CommentorName>

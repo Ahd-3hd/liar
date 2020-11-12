@@ -126,6 +126,7 @@ export function addComment(commentData: any) {
           ...commentData,
           username: commentData.email,
           id: uuidv4(),
+          avatar: commentData.avatar,
         }),
       })
       .then(() => {

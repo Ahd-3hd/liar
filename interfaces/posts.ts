@@ -10,6 +10,7 @@ export interface IPost {
 }
 
 export interface IComment {
+  avatar: string;
   commentText: string;
   id: string;
   username: string;
