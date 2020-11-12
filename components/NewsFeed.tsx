@@ -86,7 +86,7 @@ export default function NewsFeed({
               <NewsFeedCard key={post.id}>
                 <NewsFeedPosterSection>
                   <AvatarContainer>
-                    <PosterAvatar src="/static/img/avatar.png" alt="avatar" />
+                    <PosterAvatar src={post.avatar} alt="avatar" />
                   </AvatarContainer>
                   <PostContainer>
                     <NameRevealContainer>

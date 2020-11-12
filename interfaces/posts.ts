@@ -6,6 +6,7 @@ export interface IPost {
   fakeQuestion: string;
   isRevealed: boolean;
   comments: IComment[];
+  avatar: string;
 }
 
 export interface IComment {

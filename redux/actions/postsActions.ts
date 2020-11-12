@@ -21,6 +21,7 @@ export function fetchPosts() {
             realQuestion: doc.data().realQuestion,
             isRevealed: false,
             comments: doc.data().comments,
+            avatar: doc.data().avatar,
           });
         });
       })
@@ -51,6 +52,7 @@ export function fetchPostsCurrentUser(userId: string) {
             realQuestion: doc.data().realQuestion,
             isRevealed: false,
             comments: doc.data().comments,
+            avatar: doc.data().avatar,
           });
         });
       })
@@ -81,6 +83,7 @@ export function fetchPostsUser(userId: string) {
             realQuestion: doc.data().realQuestion,
             isRevealed: false,
             comments: doc.data().comments,
+            avatar: doc.data().avatar,
           });
         });
       })
@@ -105,6 +108,7 @@ export function addPost(postData: any) {
         isRevealed: false,
         comments: [],
         createdAt: firebase.firestore.Timestamp.now().seconds,
+        avatar: postData.avatar,
       })
       .then((docRef) =>
         dispatch({ type: ADD_POST, payload: { ...postData, id: docRef.id } })

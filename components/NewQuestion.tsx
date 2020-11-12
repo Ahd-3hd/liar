@@ -28,6 +28,7 @@ export default function NewQuestion() {
         ...postData,
         userid: currentUser.userId,
         email: currentUser.email,
+        avatar: currentUser.avatar,
       })
     );
     setPostData({

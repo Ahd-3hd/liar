@@ -23,6 +23,7 @@ const postsReducer = (
           fakeQuestion: payload.fakeQuestion,
           isRevealed: false,
           comments: [],
+          avatar: payload.avatar,
         },
       ];
     }
