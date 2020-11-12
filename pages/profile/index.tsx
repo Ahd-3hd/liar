@@ -14,12 +14,13 @@ import {
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useRouter } from "next/router";
 export default function Profile() {
+  const router = useRouter();
   const currentUser = useSelector(
     ({ auth }: { auth: any }) => auth.currentUser
   );
@@ -41,8 +42,10 @@ export default function Profile() {
     13,
     14,
   ]);
-  console.log(currentUser);
-  if (!currentUser) return <div>Must Log in</div>;
+  useEffect(() => {
+    if (!currentUser) router.push("/login");
+  }, []);
+  if (!currentUser) return <div>Must Login</div>;
   return (
     <>
       <Head>
