@@ -5,6 +5,7 @@ import { setCurrentUser, clearCurrentUser } from "../redux/actions/authActions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "../config/config";
+import { fetchPosts } from "../redux/actions/postsActions";
 const Layout = ({ children }: { children?: any }) => {
   // const currentUser = useSelector(
   //   ({ auth }: { auth: any }) => auth.currentUser
@@ -35,14 +36,14 @@ const Layout = ({ children }: { children?: any }) => {
               );
             } else {
               firebase.firestore().collection("users").doc(user.uid).set({
-                avatar: "https://i.pravatar.cc/300",
+                avatar: "https://picsum.photos/200",
                 email: user.email,
                 friends: [],
               });
               dispatch(
                 setCurrentUser({
                   userId: user.uid,
-                  avatar: "https://i.pravatar.cc/300",
+                  avatar: "https://picsum.photos/200",
                   email: user.email,
                   friends: [],
                 })

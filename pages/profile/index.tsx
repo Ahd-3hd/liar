@@ -41,15 +41,16 @@ export default function Profile() {
     13,
     14,
   ]);
+  console.log(currentUser);
   if (!currentUser) return <div>Must Log in</div>;
   return (
     <>
       <Head>
-        <title>User</title>
+        <title>{currentUser.email}</title>
       </Head>
       <Wrapper>
         <UserInfoContainer>
-          <UserAvatar src="/static/img/avatar.png" alt="avatar" />
+          <UserAvatar src={currentUser.avatar} alt="avatar" />
           <Username>{currentUser.email}</Username>
         </UserInfoContainer>
         <FriendsWrapper>
