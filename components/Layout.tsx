@@ -15,7 +15,6 @@ const Layout = ({ children }: { children?: any }) => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged((user: any) => {
       if (user) {
-        console.log(user);
         dispatch(
           setCurrentUser({
             userId: user.uid,

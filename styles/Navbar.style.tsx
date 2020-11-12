@@ -4,6 +4,10 @@ import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
 import HomeIcon from "../utils/svg/HomeIcon.svg";
 import UserIcon from "../utils/svg/UserIcon.svg";
 import Link from "next/link";
+import { clearCurrentUser, setCurrentUser } from "../redux/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../config/config";
+
 export const Nav = styled.nav`
   position: fixed;
   bottom: 0;
@@ -107,13 +111,20 @@ export const NavBarButtonProfile = styled.a`
   }
 `;
 export default function NavContainer() {
+  const dispatch = useDispatch();
+  const handleSignout = () => {
+    auth
+      .signOut()
+      .then(() => dispatch(clearCurrentUser()))
+      .catch((err) => console.log(err));
+  };
   return (
     <Nav>
       <SvgContainer>
         <Navbarbg className="bg1" />
         <Navbarbg className="bg2" />
         <Navbarbg className="bg3" />
-        <NewQuestionButton>
+        <NewQuestionButton onClick={handleSignout}>
           <NewQuestionIcon />
         </NewQuestionButton>
       </SvgContainer>
