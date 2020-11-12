@@ -29,6 +29,7 @@ export const AvatarContainer = styled.div`
 export const PosterAvatar = styled.img`
   width: 100%;
   max-width: 100px;
+  border-radius: 100%;
 `;
 export const PostContainer = styled.div`
   width: 100%;
@@ -64,6 +65,7 @@ export const CommentorAvatarContainer = styled.div`
 export const CommentorAvatar = styled.img`
   width: 100%;
   max-width: 60px;
+  border-radius: 100%;
 `;
 export const CommentorContainer = styled.div`
   flex: 1;
