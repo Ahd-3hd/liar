@@ -10,8 +10,10 @@ import { Button } from "./Buttons";
 import { useDispatch } from "react-redux";
 import { addPost } from "../redux/actions/postsActions";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function NewQuestion() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const currentUser = useSelector(
     ({ auth }: { auth: any }) => auth.currentUser
@@ -23,18 +25,22 @@ export default function NewQuestion() {
 
   const addPostDispatch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    dispatch(
-      addPost({
-        ...postData,
-        userid: currentUser.userId,
-        email: currentUser.email,
-        avatar: currentUser.avatar,
-      })
-    );
-    setPostData({
-      realQuestion: "",
-      fakeQuestion: "",
-    });
+    if (currentUser) {
+      dispatch(
+        addPost({
+          ...postData,
+          userid: currentUser.userId,
+          email: currentUser.email,
+          avatar: currentUser.avatar,
+        })
+      );
+      return setPostData({
+        realQuestion: "",
+        fakeQuestion: "",
+      });
+    } else {
+      router.push("/login");
+    }
   };
 
   return (

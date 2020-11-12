@@ -115,11 +115,11 @@ export default function NavContainer() {
   const router = useRouter();
   const dispatch = useDispatch();
   const handleSignout = () => {
-    // auth
-    //   .signOut()
-    //   .then(() => dispatch(clearCurrentUser()))
-    //   .catch((err) => console.log(err));
-    router.push("/").then(() => window.scrollTo(0, 0));
+    auth
+      .signOut()
+      .then(() => dispatch(clearCurrentUser()))
+      .catch((err) => console.log(err));
+    // router.push("/").then(() => window.scrollTo(0, 0));
   };
   return (
     <Nav>
