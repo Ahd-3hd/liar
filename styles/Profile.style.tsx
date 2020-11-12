@@ -9,6 +9,7 @@ export const UserInfoContainer = styled.div`
 `;
 export const UserAvatar = styled.img`
   max-width: 100px;
+  border-radius: 100%;
 `;
 export const Username = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
