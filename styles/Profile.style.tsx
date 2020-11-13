@@ -7,6 +7,18 @@ export const UserInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+export const UserAvatarContainer = styled.div`
+  position: relative;
+`;
+export const UpdateAvatarButton = styled.input<{ ref: any; onChange: any }>`
+  position: absolute;
+  display: none;
+`;
+export const VisibleUpdateAvatarButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  right: -3rem;
+`;
 export const UserAvatar = styled.img`
   max-width: 100px;
   border-radius: 100%;
