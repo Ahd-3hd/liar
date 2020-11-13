@@ -24,8 +24,6 @@ const Layout = ({ children }: { children?: any }) => {
           .then((docSnapshot) => {
             if (docSnapshot.exists) {
               let loggedInUser = docSnapshot.data();
-              console.log("here", loggedInUser);
-              console.log(docSnapshot.id);
               dispatch(
                 setCurrentUser({
                   avatar: loggedInUser?.avatar,

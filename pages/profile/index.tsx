@@ -52,9 +52,7 @@ export default function Profile() {
   const dispatch = useDispatch();
 
   const fileInputRef: any = useRef();
-  useEffect(() => {
-    if (!currentUser) router.push("/login");
-  }, []);
+
   const handleFileChange = (e: { target: { files: any[] } }) => {
     const storageRef = firebase.storage().ref();
     const file = e.target.files[0];

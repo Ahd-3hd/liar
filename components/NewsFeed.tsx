@@ -48,7 +48,6 @@ export default function NewsFeed({
     ({ auth }: { auth: any }) => auth.currentUser
   );
   useEffect(() => {
-    console.log(currentUser);
     if (page === "homepage") {
       dispatch(fetchPosts());
     } else if (page === "currentUser") {
