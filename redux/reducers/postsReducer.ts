@@ -14,7 +14,6 @@ const postsReducer = (
     }
     case ADD_POST: {
       return [
-        ...state,
         {
           id: payload.id,
           userId: payload.userId,
@@ -25,6 +24,7 @@ const postsReducer = (
           comments: [],
           avatar: payload.avatar,
         },
+        ...state,
       ];
     }
     case ADD_COMMENT: {
