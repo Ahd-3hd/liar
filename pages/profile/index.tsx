@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import { useRef } from "react";
 import firebase from "../../config/config";
 import { setCurrentUser } from "../../redux/actions/authActions";
+import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
 export default function Profile() {
   const router = useRouter();
   const currentUser = useSelector(
@@ -143,7 +144,7 @@ export default function Profile() {
             <VisibleUpdateAvatarButton
               onClick={() => fileInputRef?.current?.click()}
             >
-              Update
+              <UpdateAvatarIcon />
             </VisibleUpdateAvatarButton>
           </UserAvatarContainer>
           <Username>{currentUser.email}</Username>

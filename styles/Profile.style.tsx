@@ -18,6 +18,14 @@ export const VisibleUpdateAvatarButton = styled.button`
   position: absolute;
   bottom: 0;
   right: -3rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  > svg {
+    width: 30px;
+  }
 `;
 export const UserAvatar = styled.img`
   max-width: 100px;
