@@ -20,6 +20,7 @@ import {
   UserCommentAvatar,
   CommentSubmitButton,
   NoPosts,
+  LoginToComment,
 } from "../styles/NewsFeed.style";
 import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
@@ -134,7 +135,7 @@ export default function NewsFeed({
                     ))
                   )}
                 </NewsFeedCommentsSection>
-                {currentUser && (
+                {currentUser ? (
                   <NewCommentContainer
                     onSubmit={(e) => handleCommentSubmit(e, post.id)}
                   >
@@ -152,6 +153,10 @@ export default function NewsFeed({
                       SEND
                     </CommentSubmitButton>
                   </NewCommentContainer>
+                ) : (
+                  <Link href="/login/" passHref>
+                    <LoginToComment>Login to answer</LoginToComment>
+                  </Link>
                 )}
               </NewsFeedCard>
             );

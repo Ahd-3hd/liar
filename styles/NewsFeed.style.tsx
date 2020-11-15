@@ -136,6 +136,7 @@ export const CommentSubmitButton = styled.button`
   color: ${({ theme: { colors } }) => colors.white};
   cursor: pointer;
 `;
+
 export const CommentComponent = ({
   commentorName,
   commentText,
@@ -157,3 +158,12 @@ export const CommentComponent = ({
     </CommentContainer>
   );
 };
+
+export const LoginToComment = styled.a`
+  display: block;
+  text-align: center;
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.darkblue};
+  text-decoration: none;
+`;

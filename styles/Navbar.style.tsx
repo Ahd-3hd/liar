@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Navbarbg from "../utils/svg/Navbg.svg";
 import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
-import HomeIcon from "../utils/svg/HomeIcon.svg";
+import LogoutIcon from "../utils/svg/LogoutIcon.svg";
 import UserIcon from "../utils/svg/UserIcon.svg";
 import Link from "next/link";
 import { clearCurrentUser, setCurrentUser } from "../redux/actions/authActions";
@@ -40,7 +40,7 @@ export const SvgContainer = styled.div`
     fill: ${({ theme: { colors } }) => colors.black};
   }
 `;
-export const NewQuestionButton = styled.button`
+export const NewQuestionLink = styled.a`
   background: ${({ theme: { colors } }) => colors.black};
   width: 8vw;
   max-width: 70px;
@@ -91,12 +91,13 @@ export const NewQuestionButton = styled.button`
     width: 90%;
   }
 `;
-export const NavBarButtonHome = styled.a`
+export const NavbarLogoutButton = styled.button`
   background: transparent;
   border: none;
   position: absolute;
   left: 0.5rem;
   bottom: 0.5rem;
+  cursor: pointer;
   svg {
     max-width: 2rem;
   }
@@ -112,7 +113,6 @@ export const NavBarButtonProfile = styled.a`
   }
 `;
 export default function NavContainer() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const handleSignout = () => {
     auth
@@ -127,15 +127,15 @@ export default function NavContainer() {
         <Navbarbg className="bg1" />
         <Navbarbg className="bg2" />
         <Navbarbg className="bg3" />
-        <NewQuestionButton onClick={handleSignout}>
-          <NewQuestionIcon />
-        </NewQuestionButton>
+        <Link href="/" passHref>
+          <NewQuestionLink>
+            <NewQuestionIcon />
+          </NewQuestionLink>
+        </Link>
       </SvgContainer>
-      <Link href="/" passHref>
-        <NavBarButtonHome>
-          <HomeIcon />
-        </NavBarButtonHome>
-      </Link>
+      <NavbarLogoutButton onClick={handleSignout}>
+        <LogoutIcon />
+      </NavbarLogoutButton>
       <Link href="/profile/" passHref>
         <NavBarButtonProfile>
           <UserIcon />
