@@ -25,7 +25,7 @@ export default function FriendProfile() {
     email: "",
     userId: "",
   });
-
+  const [isFriendExists, setIsFriendExists] = useState(false);
   const fetchFriendData = async (friendId: any) => {
     const friendData = await firebase
       .firestore()
@@ -40,10 +40,7 @@ export default function FriendProfile() {
   };
 
   const addFriend = async () => {
-    const isFriendExists = currentUser.friends.filter(
-      (frnd: any) => frnd.userid === friend.userId
-    );
-    if (isFriendExists.length > 0) {
+    if (isFriendExists) {
       await firebase
         .firestore()
         .collection("users")
@@ -97,8 +94,12 @@ export default function FriendProfile() {
     const friendId: any = router.query.id!;
     if (friendId) {
       fetchFriendData(friendId);
+      const friendExists = currentUser?.friends.filter(
+        (frnd: any) => frnd.userid === friend.userId
+      );
+      setIsFriendExists(friendExists?.length > 0);
     }
-  }, [router.query.id]);
+  }, [router.query.id, currentUser]);
 
   return (
     <>
@@ -109,8 +110,12 @@ export default function FriendProfile() {
         <UserInfoContainer>
           <UserAvatar src={friend.avatar} alt="avatar" />
           <Username>{friend.email}</Username>
-          <Button style={{ marginBottom: "1rem" }} onClick={addFriend}>
-            Add Friend
+          <Button
+            style={{ marginBottom: "1rem" }}
+            variant={isFriendExists ? "red" : "black"}
+            onClick={addFriend}
+          >
+            {isFriendExists ? "Remove Friend" : "Add Friend"}
           </Button>
         </UserInfoContainer>
         {/* <FriendsWrapper>
