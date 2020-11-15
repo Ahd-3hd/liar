@@ -11,13 +11,19 @@ import { useEffect, useState } from "react";
 import { Button } from "../../components/Buttons";
 import { useRouter } from "next/router";
 import firebase from "../../config/config";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 export default function FriendProfile() {
   const router = useRouter();
-
+  const dispatch = useDispatch();
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
   const [friend, setFriend] = useState({
     avatar: "",
     email: "",
+    userId: "",
   });
 
   const fetchFriendData = async (friendId: any) => {
@@ -26,11 +32,65 @@ export default function FriendProfile() {
       .collection("users")
       .doc(friendId)
       .get();
-    console.log(friendData.data());
     setFriend({
       avatar: friendData.data()?.avatar,
       email: friendData.data()?.email,
+      userId: friendData.id,
     });
+  };
+
+  const addFriend = async () => {
+    const isFriendExists = currentUser.friends.filter(
+      (frnd: any) => frnd.userid === friend.userId
+    );
+    if (isFriendExists.length > 0) {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayRemove({
+            avatar: friend.avatar,
+            email: friend.email,
+            userid: friend.userId,
+          }),
+        });
+      const friendsArray = currentUser.friends;
+      const friendsArrayAfterRemove = friendsArray.filter(
+        (frnd: any) => frnd === friend.userId
+      );
+      console.log(friendsArrayAfterRemove);
+      dispatch(
+        setCurrentUser({
+          ...currentUser,
+          friends: friendsArrayAfterRemove,
+        })
+      );
+    } else {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayUnion({
+            avatar: friend.avatar,
+            email: friend.email,
+            userid: friend.userId,
+          }),
+        });
+      const friendsArray = currentUser.friends;
+      friendsArray.push({
+        userid: friend.userId,
+        avatar: friend.avatar,
+        email: friend.email,
+      });
+      dispatch(
+        setCurrentUser({
+          ...currentUser,
+          friends: friendsArray,
+        })
+      );
+    }
   };
 
   useEffect(() => {
@@ -49,7 +109,9 @@ export default function FriendProfile() {
         <UserInfoContainer>
           <UserAvatar src={friend.avatar} alt="avatar" />
           <Username>{friend.email}</Username>
-          <Button style={{ marginBottom: "1rem" }}>Add Friend</Button>
+          <Button style={{ marginBottom: "1rem" }} onClick={addFriend}>
+            Add Friend
+          </Button>
         </UserInfoContainer>
         {/* <FriendsWrapper>
            <FriendsContainer>

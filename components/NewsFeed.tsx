@@ -93,7 +93,7 @@ export default function NewsFeed({
                 <NewsFeedPosterSection>
                   <Link
                     href={`/profile/${
-                      post.userId === currentUser.userId ? post.userId : ""
+                      post.userId !== currentUser?.userId ? post.userId : ""
                     }`}
                     passHref
                   >

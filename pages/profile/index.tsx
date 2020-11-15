@@ -33,22 +33,22 @@ export default function Profile() {
   );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [friendList] = useState([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-  ]);
+  // const [friendList] = useState([
+  //   1,
+  //   2,
+  //   3,
+  //   4,
+  //   5,
+  //   6,
+  //   7,
+  //   8,
+  //   9,
+  //   10,
+  //   11,
+  //   12,
+  //   13,
+  //   14,
+  // ]);
   const dispatch = useDispatch();
 
   const fileInputRef: any = useRef();
@@ -152,7 +152,7 @@ export default function Profile() {
             <SlideButton
               direction="left"
               onClick={() => {
-                if (slideIndex <= friendList.length - 5) {
+                if (slideIndex <= currentUser.friends.length - 5) {
                   setSlidePos((prevState) => prevState - 60);
                   setSlideIndex((prevState) => (prevState += 1));
                   console.log(slideIndex);
