@@ -4,3 +4,9 @@ export interface IUser {
   email: string | null;
   avatar: string | null;
 }
+
+export interface IFriend {
+  friendId: string;
+  friendEmail: string;
+  avatar: string;
+}
