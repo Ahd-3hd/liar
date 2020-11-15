@@ -95,13 +95,15 @@ export default function FriendProfile() {
   useEffect(() => {
     const friendId: any = router.query.id || "";
     fetchFriendData(friendId);
-    if (currentUser) {
-      const friendExists = currentUser.friends.filter(
-        (frnd: any) => frnd.userid === friend.userId
-      );
-      setIsFriendExists(friendExists.length > 0);
-    }
-  }, [router.query, currentUser]);
+  }, [currentUser]);
+
+  useEffect(() => {
+    const friendExists = currentUser?.friends.filter(
+      (frnd: any) => frnd.userid === friend.userId
+    );
+    setIsFriendExists(friendExists?.length > 0);
+    console.log(friendExists);
+  }, [fetchFriendData]);
 
   return (
     <>
