@@ -73,7 +73,9 @@ export default function Login() {
               }
             />
           </InputGroup>
-          <Button type="submit">Login</Button>
+          <Button type="submit" variant="black">
+            Login
+          </Button>
         </Form>
         <Link href="/signup" passHref>
           <CreateAccountLink>or create a new account</CreateAccountLink>

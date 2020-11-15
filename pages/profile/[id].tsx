@@ -27,16 +27,18 @@ export default function FriendProfile() {
   });
   const [isFriendExists, setIsFriendExists] = useState(false);
   const fetchFriendData = async (friendId: any) => {
-    const friendData = await firebase
-      .firestore()
-      .collection("users")
-      .doc(friendId)
-      .get();
-    setFriend({
-      avatar: friendData.data()?.avatar,
-      email: friendData.data()?.email,
-      userId: friendData.id,
-    });
+    if (currentUser && router.query.id) {
+      const friendData = await firebase
+        .firestore()
+        .collection("users")
+        .doc(friendId)
+        .get();
+      setFriend({
+        avatar: friendData.data()?.avatar,
+        email: friendData.data()?.email,
+        userId: friendData.id,
+      });
+    }
   };
 
   const addFriend = async () => {
@@ -91,15 +93,15 @@ export default function FriendProfile() {
   };
 
   useEffect(() => {
-    const friendId: any = router.query.id!;
-    if (friendId) {
-      fetchFriendData(friendId);
-      const friendExists = currentUser?.friends.filter(
+    const friendId: any = router.query.id || "";
+    fetchFriendData(friendId);
+    if (currentUser) {
+      const friendExists = currentUser.friends.filter(
         (frnd: any) => frnd.userid === friend.userId
       );
-      setIsFriendExists(friendExists?.length > 0);
+      setIsFriendExists(friendExists.length > 0);
     }
-  }, [router.query.id, currentUser]);
+  }, [router.query, currentUser]);
 
   return (
     <>

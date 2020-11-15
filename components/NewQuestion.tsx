@@ -72,7 +72,9 @@ export default function NewQuestion() {
           />
           <QuestionImg src="/static/img/xd.png" alt="fake" />
         </QuestionGroup>
-        <Button type="submit">SEND</Button>
+        <Button type="submit" variant="black">
+          SEND
+        </Button>
       </Form>
     </Card>
   );
