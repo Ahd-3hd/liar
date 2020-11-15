@@ -32,7 +32,7 @@ import {
   fetchPostsUser,
 } from "../redux/actions/postsActions";
 import { useRouter } from "next/router";
-
+import Link from "next/link";
 export default function NewsFeed({
   title,
   page,
@@ -91,9 +91,16 @@ export default function NewsFeed({
             return (
               <NewsFeedCard key={post.id}>
                 <NewsFeedPosterSection>
-                  <AvatarContainer>
-                    <PosterAvatar src={post.avatar} alt="avatar" />
-                  </AvatarContainer>
+                  <Link
+                    href={`/profile/${
+                      post.userId === currentUser.userId ? post.userId : ""
+                    }`}
+                    passHref
+                  >
+                    <AvatarContainer>
+                      <PosterAvatar src={post.avatar} alt="avatar" />
+                    </AvatarContainer>
+                  </Link>
                   <PostContainer>
                     <NameRevealContainer>
                       <PosterName>{post.email}</PosterName>

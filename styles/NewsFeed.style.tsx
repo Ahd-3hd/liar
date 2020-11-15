@@ -23,8 +23,10 @@ export const NewsFeedPosterSection = styled.div`
   align-items: flex-start;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 `;
-export const AvatarContainer = styled.div`
+export const AvatarContainer = styled.a`
+  display: block;
   margin-right: 1rem;
+  cursor: pointer;
 `;
 export const PosterAvatar = styled.img`
   width: 100%;
