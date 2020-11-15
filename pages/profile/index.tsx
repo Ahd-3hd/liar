@@ -33,25 +33,16 @@ export default function Profile() {
   );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  // const [friendList] = useState([
-  //   1,
-  //   2,
-  //   3,
-  //   4,
-  //   5,
-  //   6,
-  //   7,
-  //   8,
-  //   9,
-  //   10,
-  //   11,
-  //   12,
-  //   13,
-  //   14,
-  // ]);
+
   const dispatch = useDispatch();
 
   const fileInputRef: any = useRef();
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/login/");
+    }
+  }, []);
 
   const handleFileChange = (e: { target: { files: any[] } }) => {
     const storageRef = firebase.storage().ref();
