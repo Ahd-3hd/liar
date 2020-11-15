@@ -15,11 +15,13 @@ export function fetchPosts() {
         querySnapshot.forEach((doc) => {
           newState.push({
             id: doc.id,
-            userId: doc.data().userid,
+            userId: doc.data().userId,
+            email: doc.data().email,
             fakeQuestion: doc.data().fakeQuestion,
             realQuestion: doc.data().realQuestion,
             isRevealed: false,
             comments: doc.data().comments,
+            avatar: doc.data().avatar,
           });
         });
       })
@@ -28,7 +30,70 @@ export function fetchPosts() {
           type: FETCH_POSTS,
           payload: newState,
         })
-      );
+      )
+      .catch((err) => console.log(err));
+}
+
+export function fetchPostsCurrentUser(userId: string) {
+  const newState: IPost[] = [];
+  return (dispatch: any) =>
+    db
+      .collection("posts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          newState.push({
+            id: doc.id,
+            userId: doc.data().userId,
+            email: doc.data().email,
+            fakeQuestion: doc.data().fakeQuestion,
+            realQuestion: doc.data().realQuestion,
+            isRevealed: false,
+            comments: doc.data().comments,
+            avatar: doc.data().avatar,
+          });
+        });
+      })
+      .then((_) =>
+        dispatch({
+          type: FETCH_POSTS,
+          payload: newState,
+        })
+      )
+      .catch((err) => console.log(err));
+}
+
+export function fetchPostsUser(userId: string) {
+  const newState: IPost[] = [];
+  return (dispatch: any) =>
+    db
+      .collection("posts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          newState.push({
+            id: doc.id,
+            userId: doc.data().userId,
+            email: doc.data().email,
+            fakeQuestion: doc.data().fakeQuestion,
+            realQuestion: doc.data().realQuestion,
+            isRevealed: false,
+            comments: doc.data().comments,
+            avatar: doc.data().avatar,
+          });
+        });
+      })
+      .then((_) =>
+        dispatch({
+          type: FETCH_POSTS,
+          payload: newState,
+        })
+      )
+      .catch((err) => console.log(err));
 }
 
 export function addPost(postData: any) {
@@ -36,12 +101,14 @@ export function addPost(postData: any) {
     db
       .collection("posts")
       .add({
-        userId: "123",
+        userId: postData.userid,
+        email: postData.email,
         realQuestion: postData.realQuestion,
         fakeQuestion: postData.fakeQuestion,
         isRevealed: false,
         comments: [],
         createdAt: firebase.firestore.Timestamp.now().seconds,
+        avatar: postData.avatar,
       })
       .then((docRef) =>
         dispatch({ type: ADD_POST, payload: { ...postData, id: docRef.id } })
@@ -57,8 +124,9 @@ export function addComment(commentData: any) {
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion({
           ...commentData,
-          username: "ahd",
+          username: commentData.email,
           id: uuidv4(),
+          avatar: commentData.avatar,
         }),
       })
       .then(() => {
@@ -81,8 +149,5 @@ export function addComment(commentData: any) {
 
 export function toggleReveal(commentData: any) {
   return (dispatch: any) =>
-    setTimeout(
-      () => dispatch({ type: TOGGLE_REVEAL, payload: commentData }),
-      1000
-    );
+    dispatch({ type: TOGGLE_REVEAL, payload: commentData });
 }

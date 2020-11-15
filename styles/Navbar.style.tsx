@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import Navbarbg from "../utils/svg/Navbg.svg";
 import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
-import HomeIcon from "../utils/svg/HomeIcon.svg";
+import LogoutIcon from "../utils/svg/LogoutIcon.svg";
 import UserIcon from "../utils/svg/UserIcon.svg";
 import Link from "next/link";
+import { clearCurrentUser, setCurrentUser } from "../redux/actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../config/config";
+import { useRouter } from "next/router";
+
 export const Nav = styled.nav`
   position: fixed;
   bottom: 0;
@@ -35,7 +40,21 @@ export const SvgContainer = styled.div`
     fill: ${({ theme: { colors } }) => colors.black};
   }
 `;
-export const NewQuestionButton = styled.button`
+export const Tooltip = styled.span`
+  display: block;
+  position: absolute;
+  align-self: center;
+  justify-self: center;
+  top: -80%;
+  background: ${({ theme: { colors } }) => colors.darkblue};
+  color: ${({ theme: { colors } }) => colors.white};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  text-align: center;
+  border-radius: 0.3rem;
+  opacity: 0;
+  transition: 0.5s;
+`;
+export const NewQuestionLink = styled.a`
   background: ${({ theme: { colors } }) => colors.black};
   width: 8vw;
   max-width: 70px;
@@ -81,19 +100,28 @@ export const NewQuestionButton = styled.button`
     ::after {
       transform: translateX(-3px);
     }
+    > span {
+      opacity: 1;
+    }
   }
   > svg {
     width: 90%;
   }
 `;
-export const NavBarButtonHome = styled.a`
+export const NavbarLogoutButton = styled.button`
   background: transparent;
   border: none;
   position: absolute;
   left: 0.5rem;
   bottom: 0.5rem;
+  cursor: pointer;
   svg {
     max-width: 2rem;
+  }
+  :hover {
+    span {
+      opacity: 1;
+    }
   }
 `;
 export const NavBarButtonProfile = styled.a`
@@ -105,26 +133,42 @@ export const NavBarButtonProfile = styled.a`
   svg {
     max-width: 2rem;
   }
+  :hover {
+    span {
+      opacity: 1;
+    }
+  }
 `;
+
 export default function NavContainer() {
+  const dispatch = useDispatch();
+  const handleSignout = () => {
+    auth
+      .signOut()
+      .then(() => dispatch(clearCurrentUser()))
+      .catch((err) => console.log(err));
+  };
   return (
     <Nav>
       <SvgContainer>
         <Navbarbg className="bg1" />
         <Navbarbg className="bg2" />
         <Navbarbg className="bg3" />
-        <NewQuestionButton>
-          <NewQuestionIcon />
-        </NewQuestionButton>
+        <Link href="/" passHref>
+          <NewQuestionLink>
+            <NewQuestionIcon />
+            <Tooltip>New Question</Tooltip>
+          </NewQuestionLink>
+        </Link>
       </SvgContainer>
-      <Link href="/" passHref>
-        <NavBarButtonHome>
-          <HomeIcon />
-        </NavBarButtonHome>
-      </Link>
+      <NavbarLogoutButton onClick={handleSignout}>
+        <LogoutIcon />
+        <Tooltip>Logout</Tooltip>
+      </NavbarLogoutButton>
       <Link href="/profile/" passHref>
         <NavBarButtonProfile>
           <UserIcon />
+          <Tooltip>Profile</Tooltip>
         </NavBarButtonProfile>
       </Link>
     </Nav>

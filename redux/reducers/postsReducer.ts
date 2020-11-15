@@ -14,19 +14,20 @@ const postsReducer = (
     }
     case ADD_POST: {
       return [
-        ...state,
         {
           id: payload.id,
-          userId: "123",
+          userId: payload.userId,
+          email: payload.email,
           realQuestion: payload.realQuestion,
           fakeQuestion: payload.fakeQuestion,
           isRevealed: false,
           comments: [],
+          avatar: payload.avatar,
         },
+        ...state,
       ];
     }
     case ADD_COMMENT: {
-      console.log(payload);
       const copyState = [...state];
       const postIndex = copyState.findIndex(
         (item) => item.id === payload.postId

@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
 import {
   clearCurrentUser,
-  setCurrentUser,
+  setCurrentUserSignup,
 } from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
-
-export default function Login() {
+import firebase from "../../config/config";
+export default function Signup() {
   const router = useRouter();
   const dispatch = useDispatch();
   const currentUser = useSelector(
@@ -30,10 +30,11 @@ export default function Login() {
     password: "",
   });
 
-  const handleLogin = (e: { preventDefault: () => void }) => {
+  const handleSignup = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     auth
-      .signInWithEmailAndPassword(userData.email, userData.password)
+      .createUserWithEmailAndPassword(userData.email, userData.password)
+      .then(() => router.push("/"))
       .catch((err) => dispatch(clearCurrentUser()));
   };
 
@@ -44,11 +45,11 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Signup</title>
       </Head>
       <Container>
-        <Title>Login to your account</Title>
-        <Form onSubmit={handleLogin}>
+        <Title>Create a new account</Title>
+        <Form onSubmit={handleSignup}>
           <InputGroup>
             <InputLabel>Email</InputLabel>
             <InputField
@@ -74,11 +75,11 @@ export default function Login() {
             />
           </InputGroup>
           <Button type="submit" variant="black">
-            Login
+            SIGNUP
           </Button>
         </Form>
-        <Link href="/signup" passHref>
-          <CreateAccountLink>or create a new account</CreateAccountLink>
+        <Link href="/login" passHref>
+          <CreateAccountLink>already have an account?</CreateAccountLink>
         </Link>
       </Container>
     </>

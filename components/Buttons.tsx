@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const Button = styled.button<{ variant: string }>`
   align-self: center;
   padding: ${({ theme: { spaces } }) => `${spaces.sm} ${spaces.lg}`};
   margin-top: ${({ theme: { spaces } }) => spaces.sm};
-  background: ${({ theme: { colors } }) => colors.black};
+  background: ${({ theme: { colors }, variant = "black" }: any) =>
+    colors[variant]};
   border: none;
   color: ${({ theme: { colors } }) => colors.white};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
@@ -13,6 +14,7 @@ export const Button = styled.button`
   border-radius: 0.3rem;
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
   letter-spacing: 1px;
+  transition: 0.5s;
   cursor: pointer;
   ::before {
     content: "";

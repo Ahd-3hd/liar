@@ -52,10 +52,10 @@ export default function Friends() {
                   <FriendDetails>
                     <FriendName>John Doe</FriendName>
                     <FriendButtons>
-                      <FriendButton danger>
+                      <FriendButton variant="black" danger>
                         <RemoveIcon />
                       </FriendButton>
-                      <FriendButton>
+                      <FriendButton variant="black">
                         <AddFriendIcon />
                       </FriendButton>
                     </FriendButtons>
@@ -75,10 +75,10 @@ export default function Friends() {
                   <FriendDetails>
                     <FriendName>John Doe</FriendName>
                     <FriendButtons>
-                      <FriendButton danger>
+                      <FriendButton variant="black" danger>
                         <RemoveIcon />
                       </FriendButton>
-                      <FriendButton>
+                      <FriendButton variant="black">
                         <NewQuestion />
                       </FriendButton>
                     </FriendButtons>

@@ -1,5 +1,8 @@
-import firebase from "firebase";
-import "firebase/analytics";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
@@ -16,7 +19,8 @@ var firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-// if (typeof window !== undefined) {
-//   firebase.analytics();
-// }
+// firebase.analytics();
+
+export const auth = firebase.auth();
+
 export default firebase;

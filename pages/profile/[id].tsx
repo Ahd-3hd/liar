@@ -3,40 +3,108 @@ import {
   UserInfoContainer,
   UserAvatar,
   Username,
-  FriendsWrapper,
-  FriendsContainer,
-  FriendLink,
-  FriendAvatar,
-  FriendsInnerContainer,
-  SlideButton,
 } from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
-import CaretLeft from "../../utils/svg/CaretLeft.svg";
-import CaretRight from "../../utils/svg/CaretRight.svg";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/Buttons";
+import { useRouter } from "next/router";
+import firebase from "../../config/config";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 export default function FriendProfile() {
-  const [slidePos, setSlidePos] = useState(0);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [friendList] = useState([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-  ]);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
+  const [friend, setFriend] = useState({
+    avatar: "",
+    email: "",
+    userId: "",
+  });
+  const [isFriendExists, setIsFriendExists] = useState(false);
+  const fetchFriendData = async (friendId: any) => {
+    if (currentUser && router.query.id) {
+      const friendData = await firebase
+        .firestore()
+        .collection("users")
+        .doc(friendId)
+        .get();
+      setFriend({
+        avatar: friendData.data()?.avatar,
+        email: friendData.data()?.email,
+        userId: friendData.id,
+      });
+    }
+  };
+
+  const addFriend = async () => {
+    if (isFriendExists) {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayRemove({
+            avatar: friend.avatar,
+            email: friend.email,
+            userid: friend.userId,
+          }),
+        });
+      const friendsArray = currentUser.friends;
+      const friendsArrayAfterRemove = friendsArray.filter(
+        (frnd: any) => frnd === friend.userId
+      );
+      console.log(friendsArrayAfterRemove);
+      dispatch(
+        setCurrentUser({
+          ...currentUser,
+          friends: friendsArrayAfterRemove,
+        })
+      );
+    } else {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          friends: firebase.firestore.FieldValue.arrayUnion({
+            avatar: friend.avatar,
+            email: friend.email,
+            userid: friend.userId,
+          }),
+        });
+      const friendsArray = currentUser.friends;
+      friendsArray.push({
+        userid: friend.userId,
+        avatar: friend.avatar,
+        email: friend.email,
+      });
+      dispatch(
+        setCurrentUser({
+          ...currentUser,
+          friends: friendsArray,
+        })
+      );
+    }
+  };
+
+  useEffect(() => {
+    const friendId: any = router.query.id || "";
+    fetchFriendData(friendId);
+  }, [currentUser]);
+
+  useEffect(() => {
+    const friendExists = currentUser?.friends.filter(
+      (frnd: any) => frnd.userid === friend.userId
+    );
+    setIsFriendExists(friendExists?.length > 0);
+    console.log(friendExists);
+  }, [fetchFriendData]);
+
   return (
     <>
       <Head>
@@ -44,16 +112,22 @@ export default function FriendProfile() {
       </Head>
       <Wrapper>
         <UserInfoContainer>
-          <UserAvatar src="/static/img/avatar.png" alt="avatar" />
-          <Username>John Doe</Username>
-          <Button style={{ marginBottom: "1rem" }}>Add Friend</Button>
+          <UserAvatar src={friend.avatar} alt="avatar" />
+          <Username>{friend.email}</Username>
+          <Button
+            style={{ marginBottom: "1rem" }}
+            variant={isFriendExists ? "red" : "black"}
+            onClick={addFriend}
+          >
+            {isFriendExists ? "Remove Friend" : "Add Friend"}
+          </Button>
         </UserInfoContainer>
-        <FriendsWrapper>
-          <FriendsContainer>
+        {/* <FriendsWrapper>
+           <FriendsContainer>
             <SlideButton
               direction="left"
               onClick={() => {
-                if (slideIndex <= friendList.length - 5) {
+                if (slideIndex <= currentUser.friends.length - 5) {
                   setSlidePos((prevState) => prevState - 60);
                   setSlideIndex((prevState) => (prevState += 1));
                   console.log(slideIndex);
@@ -63,10 +137,14 @@ export default function FriendProfile() {
               <CaretLeft />
             </SlideButton>
             <FriendsInnerContainer slidePos={slidePos}>
-              {friendList.map((friend) => (
-                <Link href={`/profile/${friend}`} passHref key={friend}>
+              {currentUser.friends.map((friend: any) => (
+                <Link
+                  href={`/profile/${friend.userid}`}
+                  passHref
+                  key={friend.userid}
+                >
                   <FriendLink>
-                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                    <FriendAvatar src={friend.avatar} alt="avatar" />
                   </FriendLink>
                 </Link>
               ))}
@@ -82,10 +160,14 @@ export default function FriendProfile() {
             >
               <CaretRight />
             </SlideButton>
-          </FriendsContainer>
-        </FriendsWrapper>
+          </FriendsContainer> 
+        </FriendsWrapper>*/}
 
-        <NewsFeed title={"John Doe's Wall"} />
+        <NewsFeed
+          title={`Posts Wall`}
+          page="userPage"
+          friendId={router.query.id}
+        />
       </Wrapper>
     </>
   );

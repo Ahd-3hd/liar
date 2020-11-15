@@ -7,8 +7,29 @@ export const UserInfoContainer = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+export const UserAvatarContainer = styled.div`
+  position: relative;
+`;
+export const UpdateAvatarButton = styled.input<{ ref: any; onChange: any }>`
+  position: absolute;
+  display: none;
+`;
+export const VisibleUpdateAvatarButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  right: -3rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  > svg {
+    width: 30px;
+  }
+`;
 export const UserAvatar = styled.img`
   max-width: 100px;
+  border-radius: 100%;
 `;
 export const Username = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
@@ -29,6 +50,8 @@ export const FriendsInnerContainer = styled.div<{ slidePos: number }>`
   display: flex;
   transform: translateX(${({ slidePos }) => slidePos}px);
   transition: transform 0.4s ease-in;
+  background: ${({ theme: { colors } }) => colors.grey};
+  padding-left: ${({ theme: { spaces } }) => spaces.lg};
 `;
 export const SlideButton = styled.button<{ direction: string }>`
   position: absolute;
@@ -64,4 +87,9 @@ export const FriendsPageLink = styled.a`
   text-decoration: none;
   color: ${({ theme: { colors } }) => colors.darkblue};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;
+
+export const NoFriendsParagraph = styled.p`
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.text};
 `;
