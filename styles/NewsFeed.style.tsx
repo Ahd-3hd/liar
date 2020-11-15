@@ -17,6 +17,16 @@ export const NewsFeedCard = styled(Card)`
   padding: 0.5rem;
   margin: ${({ theme: { spaces } }) => spaces.lg} 0;
   color: ${({ theme: { colors } }) => colors.text};
+  animation: fade_in 1.5s forwards;
+
+  @keyframes fade_in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 export const NewsFeedPosterSection = styled.div`
   display: flex;
@@ -49,6 +59,7 @@ export const RevealButton = styled.button<{ isRevealed: boolean }>`
   padding: ${({ theme: { spaces } }) => spaces.sm};
   border-radius: 0.3rem;
   cursor: pointer;
+  transition: 1s;
 `;
 export const PosterName = styled.p`
   font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
@@ -56,8 +67,19 @@ export const PosterName = styled.p`
   margin: 0;
 `;
 export const PosterQuestion = styled.p`
+  color: ${({ theme: { colors } }) => colors.text};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
   line-height: 140%;
+  animation: fade_in 1.5s forwards;
+
+  @keyframes fade_in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const NewsFeedCommentsSection = styled.div``;
@@ -128,6 +150,16 @@ export const CommentContainer = styled.div`
   display: flex;
   align-items: flex-start;
   padding-top: ${({ theme: { spaces } }) => spaces.sm};
+  animation: fade_in 1.5s forwards;
+
+  @keyframes fade_in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 export const CommentSubmitButton = styled.button`
   background: ${({ theme: { colors } }) => colors.darkblue};

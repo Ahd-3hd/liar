@@ -114,9 +114,16 @@ export default function NewsFeed({
                         {post.isRevealed ? "Hide" : "Reveal"}
                       </RevealButton>
                     </NameRevealContainer>
-                    <PosterQuestion>
-                      {post.isRevealed ? post.realQuestion : post.fakeQuestion}
-                    </PosterQuestion>
+
+                    {post.isRevealed ? (
+                      <PosterQuestion key="real">
+                        {post.realQuestion}
+                      </PosterQuestion>
+                    ) : (
+                      <PosterQuestion key="fake">
+                        {post.fakeQuestion}
+                      </PosterQuestion>
+                    )}
                   </PostContainer>
                 </NewsFeedPosterSection>
                 <NewsFeedCommentsSection>
