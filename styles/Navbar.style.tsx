@@ -40,6 +40,20 @@ export const SvgContainer = styled.div`
     fill: ${({ theme: { colors } }) => colors.black};
   }
 `;
+export const Tooltip = styled.span`
+  display: block;
+  position: absolute;
+  align-self: center;
+  justify-self: center;
+  top: -80%;
+  background: ${({ theme: { colors } }) => colors.darkblue};
+  color: ${({ theme: { colors } }) => colors.white};
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  text-align: center;
+  border-radius: 0.3rem;
+  opacity: 0;
+  transition: 0.5s;
+`;
 export const NewQuestionLink = styled.a`
   background: ${({ theme: { colors } }) => colors.black};
   width: 8vw;
@@ -86,6 +100,9 @@ export const NewQuestionLink = styled.a`
     ::after {
       transform: translateX(-3px);
     }
+    > span {
+      opacity: 1;
+    }
   }
   > svg {
     width: 90%;
@@ -101,6 +118,11 @@ export const NavbarLogoutButton = styled.button`
   svg {
     max-width: 2rem;
   }
+  :hover {
+    span {
+      opacity: 1;
+    }
+  }
 `;
 export const NavBarButtonProfile = styled.a`
   background: transparent;
@@ -111,7 +133,13 @@ export const NavBarButtonProfile = styled.a`
   svg {
     max-width: 2rem;
   }
+  :hover {
+    span {
+      opacity: 1;
+    }
+  }
 `;
+
 export default function NavContainer() {
   const dispatch = useDispatch();
   const handleSignout = () => {
@@ -119,7 +147,6 @@ export default function NavContainer() {
       .signOut()
       .then(() => dispatch(clearCurrentUser()))
       .catch((err) => console.log(err));
-    // router.push("/").then(() => window.scrollTo(0, 0));
   };
   return (
     <Nav>
@@ -130,15 +157,18 @@ export default function NavContainer() {
         <Link href="/" passHref>
           <NewQuestionLink>
             <NewQuestionIcon />
+            <Tooltip>New Question</Tooltip>
           </NewQuestionLink>
         </Link>
       </SvgContainer>
       <NavbarLogoutButton onClick={handleSignout}>
         <LogoutIcon />
+        <Tooltip>Logout</Tooltip>
       </NavbarLogoutButton>
       <Link href="/profile/" passHref>
         <NavBarButtonProfile>
           <UserIcon />
+          <Tooltip>Profile</Tooltip>
         </NavBarButtonProfile>
       </Link>
     </Nav>
