@@ -12,8 +12,6 @@ const Layout = ({ children }: { children?: any }) => {
   // );
   const dispatch = useDispatch();
 
-  const fetchUser = async () => {};
-
   useEffect(() => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged((user: any) => {

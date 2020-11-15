@@ -36,9 +36,11 @@ import { useRouter } from "next/router";
 export default function NewsFeed({
   title,
   page,
+  friendId,
 }: {
   title: string;
   page: string;
+  friendId?: any;
 }) {
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
@@ -54,9 +56,11 @@ export default function NewsFeed({
       dispatch(fetchPostsCurrentUser(currentUser.userId));
     } else if (page === "userPage") {
       //TODO this should be changed to user id from fb
-      dispatch(fetchPostsUser("ziQ1AXLYFEe7yzSo1zT2nWIdPvw1"));
+      if (friendId) {
+        dispatch(fetchPostsUser(friendId));
+      }
     }
-  }, []);
+  }, [friendId]);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
@@ -77,6 +81,7 @@ export default function NewsFeed({
   const handleToggleReveal = (postId: string, isRevealed: boolean) => {
     dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
   };
+  if (!friendId && page === "userPage") return <div>loading</div>;
   return (
     <Wrapper>
       <Title>{title}</Title>

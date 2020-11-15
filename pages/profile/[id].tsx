@@ -3,28 +3,42 @@ import {
   UserInfoContainer,
   UserAvatar,
   Username,
-  FriendsWrapper,
-  FriendsContainer,
-  FriendLink,
-  FriendAvatar,
-  FriendsInnerContainer,
-  SlideButton,
 } from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
-import CaretLeft from "../../utils/svg/CaretLeft.svg";
-import CaretRight from "../../utils/svg/CaretRight.svg";
+import { useEffect, useState } from "react";
 import { Button } from "../../components/Buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import firebase from "../../config/config";
 
 export default function FriendProfile() {
-  const [slidePos, setSlidePos] = useState(0);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
+  const router = useRouter();
+
+  const [friend, setFriend] = useState({
+    avatar: "",
+    email: "",
+  });
+
+  const fetchFriendData = async (friendId: any) => {
+    const friendData = await firebase
+      .firestore()
+      .collection("users")
+      .doc(friendId)
+      .get();
+    console.log(friendData.data());
+    setFriend({
+      avatar: friendData.data()?.avatar,
+      email: friendData.data()?.email,
+    });
+  };
+
+  useEffect(() => {
+    const friendId: any = router.query.id!;
+    if (friendId) {
+      fetchFriendData(friendId);
+    }
+  }, [router.query.id]);
 
   return (
     <>
@@ -33,12 +47,12 @@ export default function FriendProfile() {
       </Head>
       <Wrapper>
         <UserInfoContainer>
-          <UserAvatar src="/static/img/avatar.png" alt="avatar" />
-          <Username>John Doe</Username>
+          <UserAvatar src={friend.avatar} alt="avatar" />
+          <Username>{friend.email}</Username>
           <Button style={{ marginBottom: "1rem" }}>Add Friend</Button>
         </UserInfoContainer>
-        <FriendsWrapper>
-          <FriendsContainer>
+        {/* <FriendsWrapper>
+           <FriendsContainer>
             <SlideButton
               direction="left"
               onClick={() => {
@@ -75,10 +89,14 @@ export default function FriendProfile() {
             >
               <CaretRight />
             </SlideButton>
-          </FriendsContainer>
-        </FriendsWrapper>
+          </FriendsContainer> 
+        </FriendsWrapper>*/}
 
-        <NewsFeed title="John Doe's Wall" page="userPage" />
+        <NewsFeed
+          title={`Posts Wall`}
+          page="userPage"
+          friendId={router.query.id}
+        />
       </Wrapper>
     </>
   );
