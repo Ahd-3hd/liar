@@ -162,10 +162,14 @@ export default function Profile() {
               <CaretLeft />
             </SlideButton>
             <FriendsInnerContainer slidePos={slidePos}>
-              {friendList.map((friend) => (
-                <Link href={`/profile/${friend}`} passHref key={friend}>
+              {currentUser.friends.map((friend: any) => (
+                <Link
+                  href={`/profile/${friend.userid}`}
+                  passHref
+                  key={friend.userid}
+                >
                   <FriendLink>
-                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                    <FriendAvatar src={friend.avatar} alt="avatar" />
                   </FriendLink>
                 </Link>
               ))}

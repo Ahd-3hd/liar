@@ -17,26 +17,15 @@ import { useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
 import { Button } from "../../components/Buttons";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function FriendProfile() {
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [friendList] = useState([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-  ]);
+  const currentUser = useSelector(
+    ({ auth }: { auth: any }) => auth.currentUser
+  );
+
   return (
     <>
       <Head>
@@ -53,7 +42,7 @@ export default function FriendProfile() {
             <SlideButton
               direction="left"
               onClick={() => {
-                if (slideIndex <= friendList.length - 5) {
+                if (slideIndex <= currentUser.friends.length - 5) {
                   setSlidePos((prevState) => prevState - 60);
                   setSlideIndex((prevState) => (prevState += 1));
                   console.log(slideIndex);
@@ -63,10 +52,14 @@ export default function FriendProfile() {
               <CaretLeft />
             </SlideButton>
             <FriendsInnerContainer slidePos={slidePos}>
-              {friendList.map((friend) => (
-                <Link href={`/profile/${friend}`} passHref key={friend}>
+              {currentUser.friends.map((friend: any) => (
+                <Link
+                  href={`/profile/${friend.userid}`}
+                  passHref
+                  key={friend.userid}
+                >
                   <FriendLink>
-                    <FriendAvatar src="/static/img/avatar.png" alt="avatar" />
+                    <FriendAvatar src={friend.avatar} alt="avatar" />
                   </FriendLink>
                 </Link>
               ))}
