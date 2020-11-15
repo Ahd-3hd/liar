@@ -50,6 +50,8 @@ export const FriendsInnerContainer = styled.div<{ slidePos: number }>`
   display: flex;
   transform: translateX(${({ slidePos }) => slidePos}px);
   transition: transform 0.4s ease-in;
+  background: ${({ theme: { colors } }) => colors.grey};
+  padding-left: ${({ theme: { spaces } }) => spaces.lg};
 `;
 export const SlideButton = styled.button<{ direction: string }>`
   position: absolute;
@@ -85,4 +87,9 @@ export const FriendsPageLink = styled.a`
   text-decoration: none;
   color: ${({ theme: { colors } }) => colors.darkblue};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;
+
+export const NoFriendsParagraph = styled.p`
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.text};
 `;

@@ -13,6 +13,7 @@ import {
   UserAvatarContainer,
   UpdateAvatarButton,
   VisibleUpdateAvatarButton,
+  NoFriendsParagraph,
 } from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
@@ -140,50 +141,57 @@ export default function Profile() {
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
-            <SlideButton
-              direction="left"
-              onClick={() => {
-                if (slideIndex <= currentUser.friends.length - 5) {
-                  setSlidePos((prevState) => prevState - 60);
-                  setSlideIndex((prevState) => (prevState += 1));
-                  console.log(slideIndex);
-                }
-              }}
-            >
-              <CaretLeft />
-            </SlideButton>
-            <FriendsInnerContainer slidePos={slidePos}>
-              {currentUser.friends.map((friend: any) => (
-                <Link
-                  href={`/profile/${friend.userid}`}
-                  passHref
-                  key={friend.userid}
-                >
-                  <FriendLink>
-                    <FriendAvatar src={friend.avatar} alt="avatar" />
-                  </FriendLink>
-                </Link>
-              ))}
-            </FriendsInnerContainer>
-            <SlideButton
-              direction="right"
-              onClick={() => {
-                if (slideIndex > 0) {
-                  setSlidePos((prevState) => prevState + 60);
-                  setSlideIndex((prevState) => (prevState -= 1));
-                }
-              }}
-            >
-              <CaretRight />
-            </SlideButton>
+            {currentUser.friends.length > 0 && (
+              <SlideButton
+                direction="left"
+                onClick={() => {
+                  if (slideIndex <= currentUser.friends.length - 5) {
+                    setSlidePos((prevState) => prevState - 60);
+                    setSlideIndex((prevState) => (prevState += 1));
+                  }
+                }}
+              >
+                <CaretLeft />
+              </SlideButton>
+            )}
+            {currentUser.friends.length === 0 ? (
+              <NoFriendsParagraph>You have no friends yet</NoFriendsParagraph>
+            ) : (
+              <FriendsInnerContainer slidePos={slidePos}>
+                {currentUser.friends.map((friend: any) => (
+                  <Link
+                    href={`/profile/${friend.userid}`}
+                    passHref
+                    key={friend.userid}
+                  >
+                    <FriendLink>
+                      <FriendAvatar src={friend.avatar} alt="avatar" />
+                    </FriendLink>
+                  </Link>
+                ))}
+              </FriendsInnerContainer>
+            )}
+            {currentUser.friends.length > 0 && (
+              <SlideButton
+                direction="right"
+                onClick={() => {
+                  if (slideIndex > 0) {
+                    setSlidePos((prevState) => prevState + 60);
+                    setSlideIndex((prevState) => (prevState -= 1));
+                  }
+                }}
+              >
+                <CaretRight />
+              </SlideButton>
+            )}
           </FriendsContainer>
-          <Link href="profile/friends" passHref>
+          {/* <Link href="profile/friends" passHref>
             <FriendsPageLink>
               Friends
               <br />
               Page
             </FriendsPageLink>
-          </Link>
+          </Link> */}
         </FriendsWrapper>
 
         <NewsFeed title="My wall" page="currentUser" />
