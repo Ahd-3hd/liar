@@ -11,20 +11,10 @@ import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
-import {
-  clearCurrentUser,
-  setCurrentUser,
-} from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
 
 export default function Login() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -32,14 +22,7 @@ export default function Login() {
 
   const handleLogin = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    auth
-      .signInWithEmailAndPassword(userData.email, userData.password)
-      .catch((err) => dispatch(clearCurrentUser()));
   };
-
-  useEffect(() => {
-    if (currentUser) router.push("/");
-  });
 
   return (
     <>

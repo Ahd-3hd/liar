@@ -22,16 +22,9 @@ import {
   NoPosts,
   LoginToComment,
 } from "../styles/NewsFeed.style";
-import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useEffect, useState } from "react";
-import {
-  addComment,
-  toggleReveal,
-  fetchPosts,
-  fetchPostsCurrentUser,
-  fetchPostsUser,
-} from "../redux/actions/postsActions";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 export default function NewsFeed({
@@ -45,44 +38,33 @@ export default function NewsFeed({
 }) {
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
-  const dispatch = useDispatch();
-  const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
-  useEffect(() => {
-    if (page === "homepage") {
-      dispatch(fetchPosts());
-    } else if (page === "currentUser") {
-      dispatch(fetchPostsCurrentUser(currentUser.userId));
-    } else if (page === "userPage") {
-      //TODO this should be changed to user id from fb
-      if (friendId) {
-        dispatch(fetchPostsUser(friendId));
-      }
-    }
-  }, [friendId]);
+  const currentUser = {
+    userId: "1",
+    avatar: "",
+  };
+  const posts = [
+    {
+      email: "a@a.com",
+      id: "1",
+      userId: "1",
+      realQuestion: "real question",
+      fakeQuestion: "fake question",
+      isRevealed: false,
+      comments: [],
+      avatar:
+        "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
+    },
+  ];
+
+  useEffect(() => {}, []);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
     id: string
   ) => {
     e.preventDefault();
-    dispatch(
-      addComment({
-        commentText,
-        postId: id,
-        userid: currentUser.userId,
-        email: currentUser.email,
-        avatar: currentUser.avatar,
-      })
-    );
-    setCommentText("");
   };
-  const handleToggleReveal = (postId: string, isRevealed: boolean) => {
-    dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
-  };
-  if (!friendId && page === "userPage") return <div>loading</div>;
+  const handleToggleReveal = () => {};
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -107,9 +89,7 @@ export default function NewsFeed({
                       <PosterName>{post.email}</PosterName>
                       <RevealButton
                         isRevealed={post.isRevealed}
-                        onClick={() =>
-                          handleToggleReveal(post.id, post.isRevealed)
-                        }
+                        onClick={() => handleToggleReveal()}
                       >
                         {post.isRevealed ? "Hide" : "Reveal"}
                       </RevealButton>

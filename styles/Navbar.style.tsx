@@ -4,8 +4,6 @@ import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
 import LogoutIcon from "../utils/svg/LogoutIcon.svg";
 import UserIcon from "../utils/svg/UserIcon.svg";
 import Link from "next/link";
-import { clearCurrentUser, setCurrentUser } from "../redux/actions/authActions";
-import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../config/config";
 import { useRouter } from "next/router";
 
@@ -141,13 +139,7 @@ export const NavBarButtonProfile = styled.a`
 `;
 
 export default function NavContainer() {
-  const dispatch = useDispatch();
-  const handleSignout = () => {
-    auth
-      .signOut()
-      .then(() => dispatch(clearCurrentUser()))
-      .catch((err) => console.log(err));
-  };
+  const handleSignout = () => {};
   return (
     <Nav>
       <SvgContainer>

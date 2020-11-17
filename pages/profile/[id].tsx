@@ -9,101 +9,23 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/Buttons";
-import { useRouter } from "next/router";
 import firebase from "../../config/config";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../../redux/actions/authActions";
 
 export default function FriendProfile() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
   const [friend, setFriend] = useState({
     avatar: "",
     email: "",
     userId: "",
   });
   const [isFriendExists, setIsFriendExists] = useState(false);
-  const fetchFriendData = async (friendId: any) => {
-    if (currentUser && router.query.id) {
-      const friendData = await firebase
-        .firestore()
-        .collection("users")
-        .doc(friendId)
-        .get();
-      setFriend({
-        avatar: friendData.data()?.avatar,
-        email: friendData.data()?.email,
-        userId: friendData.id,
-      });
-    }
+  const fetchFriendData = async (friendId: any) => {};
+
+  const addFriend = async () => {};
+  const currentUser = {
+    email: "",
+    avatar: "",
+    friends: [],
   };
-
-  const addFriend = async () => {
-    if (isFriendExists) {
-      await firebase
-        .firestore()
-        .collection("users")
-        .doc(currentUser.userId)
-        .update({
-          friends: firebase.firestore.FieldValue.arrayRemove({
-            avatar: friend.avatar,
-            email: friend.email,
-            userid: friend.userId,
-          }),
-        });
-      const friendsArray = currentUser.friends;
-      const friendsArrayAfterRemove = friendsArray.filter(
-        (frnd: any) => frnd === friend.userId
-      );
-      console.log(friendsArrayAfterRemove);
-      dispatch(
-        setCurrentUser({
-          ...currentUser,
-          friends: friendsArrayAfterRemove,
-        })
-      );
-    } else {
-      await firebase
-        .firestore()
-        .collection("users")
-        .doc(currentUser.userId)
-        .update({
-          friends: firebase.firestore.FieldValue.arrayUnion({
-            avatar: friend.avatar,
-            email: friend.email,
-            userid: friend.userId,
-          }),
-        });
-      const friendsArray = currentUser.friends;
-      friendsArray.push({
-        userid: friend.userId,
-        avatar: friend.avatar,
-        email: friend.email,
-      });
-      dispatch(
-        setCurrentUser({
-          ...currentUser,
-          friends: friendsArray,
-        })
-      );
-    }
-  };
-
-  useEffect(() => {
-    const friendId: any = router.query.id || "";
-    fetchFriendData(friendId);
-  }, [currentUser]);
-
-  useEffect(() => {
-    const friendExists = currentUser?.friends.filter(
-      (frnd: any) => frnd.userid === friend.userId
-    );
-    setIsFriendExists(friendExists?.length > 0);
-    console.log(friendExists);
-  }, [fetchFriendData]);
 
   return (
     <>
@@ -163,11 +85,7 @@ export default function FriendProfile() {
           </FriendsContainer> 
         </FriendsWrapper>*/}
 
-        <NewsFeed
-          title={`Posts Wall`}
-          page="userPage"
-          friendId={router.query.id}
-        />
+        <NewsFeed title={`Posts Wall`} page="userPage" />
       </Wrapper>
     </>
   );
