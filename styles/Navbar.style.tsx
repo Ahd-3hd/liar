@@ -139,7 +139,9 @@ export const NavBarButtonProfile = styled.a`
 `;
 
 export default function NavContainer() {
-  const handleSignout = () => {};
+  const handleSignout = async () => {
+    await auth.signOut();
+  };
   return (
     <Nav>
       <SvgContainer>

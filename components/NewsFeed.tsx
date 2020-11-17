@@ -27,6 +27,8 @@ import { useEffect, useState } from "react";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../redux/posts/postsSlice";
 export default function NewsFeed({
   title,
   page,
@@ -42,21 +44,15 @@ export default function NewsFeed({
     userId: "1",
     avatar: "",
   };
-  const posts = [
-    {
-      email: "a@a.com",
-      id: "1",
-      userId: "1",
-      realQuestion: "real question",
-      fakeQuestion: "fake question",
-      isRevealed: false,
-      comments: [],
-      avatar:
-        "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
-    },
-  ];
 
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  const { posts, isLoading, fetchError } = useSelector(
+    (state: any) => state.posts
+  );
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },
