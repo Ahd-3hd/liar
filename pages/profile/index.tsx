@@ -35,9 +35,17 @@ export default function Profile() {
   const fileInputRef: any = useRef();
 
   const handleFileChange = (e: { target: { files: any[] } }) => {};
-  if (!currentUser) {
+
+  if (isUserLoading) {
     return <div>Loading</div>;
+  } else if (isUserFetchError) {
+    return <div>error</div>;
   }
+
+  if (!isUserLoading && !currentUser) {
+    return <div>IsLoading</div>;
+  }
+
   return (
     <>
       <Head>
