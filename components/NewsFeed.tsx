@@ -105,14 +105,18 @@ export default function NewsFeed({
                   <PostContainer>
                     <NameRevealContainer>
                       <PosterName>{post.email}</PosterName>
-                      <RevealButton
-                        isRevealed={post.isRevealed}
-                        onClick={() =>
-                          handleToggleReveal(post.id, post.isRevealed)
-                        }
-                      >
-                        {post.isRevealed ? "Hide" : "Reveal"}
-                      </RevealButton>
+                      {post.commentorsIds.includes(currentUser?.userId) ? (
+                        <RevealButton
+                          isRevealed={post.isRevealed}
+                          onClick={() =>
+                            handleToggleReveal(post.id, post.isRevealed)
+                          }
+                        >
+                          {post.isRevealed ? "Hide" : "Reveal"}
+                        </RevealButton>
+                      ) : (
+                        <RevealButton>Answer to reveal question</RevealButton>
+                      )}
                     </NameRevealContainer>
 
                     {post.isRevealed ? (

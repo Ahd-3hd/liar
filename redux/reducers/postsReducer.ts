@@ -23,6 +23,7 @@ const postsReducer = (
           isRevealed: false,
           comments: [],
           avatar: payload.avatar,
+          commentorsIds: payload.commentorsIds,
         },
         ...state,
       ];
@@ -33,7 +34,13 @@ const postsReducer = (
         (item) => item.id === payload.postId
       );
       copyState[postIndex].comments = payload.comments;
-      return [...copyState];
+      if (copyState[postIndex].commentorsIds.includes(payload.userId)) {
+        copyState[postIndex].isRevealed = true;
+        return [...copyState];
+      } else {
+        copyState[postIndex].commentorsIds.push(payload.userId);
+        return [...copyState];
+      }
     }
     case TOGGLE_REVEAL: {
       const copyState = [...state];

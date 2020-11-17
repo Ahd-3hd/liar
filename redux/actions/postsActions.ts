@@ -22,6 +22,7 @@ export function fetchPosts() {
             isRevealed: false,
             comments: doc.data().comments,
             avatar: doc.data().avatar,
+            commentorsIds: doc.data().commentorsIds,
           });
         });
       })
@@ -53,6 +54,7 @@ export function fetchPostsCurrentUser(userId: string) {
             isRevealed: false,
             comments: doc.data().comments,
             avatar: doc.data().avatar,
+            commentorsIds: doc.data().commentorsIds,
           });
         });
       })
@@ -84,6 +86,7 @@ export function fetchPostsUser(userId: string) {
             isRevealed: false,
             comments: doc.data().comments,
             avatar: doc.data().avatar,
+            commentorsIds: doc.data().commentorsIds,
           });
         });
       })
@@ -109,9 +112,24 @@ export function addPost(postData: any) {
         comments: [],
         createdAt: firebase.firestore.Timestamp.now().seconds,
         avatar: postData.avatar,
+        commentorsIds: [],
       })
       .then((docRef) =>
-        dispatch({ type: ADD_POST, payload: { ...postData, id: docRef.id } })
+        dispatch({
+          type: ADD_POST,
+          payload: {
+            userId: postData.userid,
+            email: postData.email,
+            realQuestion: postData.realQuestion,
+            fakeQuestion: postData.fakeQuestion,
+            isRevealed: false,
+            comments: [],
+            createdAt: firebase.firestore.Timestamp.now().seconds,
+            avatar: postData.avatar,
+            commentorsIds: [],
+            id: docRef.id,
+          },
+        })
       )
       .catch((err) => console.log(err));
 }
@@ -122,6 +140,9 @@ export function addComment(commentData: any) {
       .collection("posts")
       .doc(commentData.postId)
       .update({
+        commentorsIds: firebase.firestore.FieldValue.arrayUnion(
+          commentData.userid
+        ),
         comments: firebase.firestore.FieldValue.arrayUnion({
           ...commentData,
           username: commentData.email,
