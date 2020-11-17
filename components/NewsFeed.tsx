@@ -38,12 +38,11 @@ export default function NewsFeed({
   page: string;
   friendId?: any;
 }) {
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
-  const currentUser = {
-    userId: "1",
-    avatar: "",
-  };
 
   const dispatch = useDispatch();
   const { posts, isLoading, fetchError } = useSelector(
@@ -51,8 +50,14 @@ export default function NewsFeed({
   );
 
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
+    if (page === "homepage") {
+      dispatch(fetchPosts());
+    } else if (page === "currentUser") {
+      console.log(currentUser.userId);
+      dispatch(fetchPosts(currentUser.userId));
+    } else if (page === "userPage") {
+    }
+  }, [currentUser]);
 
   const handleCommentSubmit = (
     e: { preventDefault: () => void },

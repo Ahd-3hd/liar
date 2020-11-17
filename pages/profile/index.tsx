@@ -24,19 +24,20 @@ import CaretRight from "../../utils/svg/CaretRight.svg";
 import { useRef } from "react";
 import firebase from "../../config/config";
 import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
+import { useSelector } from "react-redux";
 export default function Profile() {
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const currentUser = {
-    email: "",
-    avatar: "",
-    friends: [],
-  };
+
   const fileInputRef: any = useRef();
 
-  useEffect(() => {}, []);
-
   const handleFileChange = (e: { target: { files: any[] } }) => {};
+  if (!currentUser) {
+    return <div>Loading</div>;
+  }
   return (
     <>
       <Head>

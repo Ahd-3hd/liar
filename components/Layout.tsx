@@ -7,9 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../redux/auth/authSlice";
 const Layout = ({ children }: { children?: any }) => {
   const dispatch = useDispatch();
-  const { currentUser, isLoading, fetchError } = useSelector(
-    (state: any) => state.auth
-  );
+
   useEffect(() => {
     let unsubscribeFromAuth: any = null;
     unsubscribeFromAuth = auth.onAuthStateChanged(async (user: any) => {
@@ -19,8 +17,12 @@ const Layout = ({ children }: { children?: any }) => {
           .collection("users")
           .doc(user.uid)
           .get();
-        console.log(userData.data());
-        dispatch(setCurrentUser(userData.data()));
+        dispatch(
+          setCurrentUser({
+            ...userData.data(),
+            userId: user.uid,
+          })
+        );
       } else {
         dispatch(setCurrentUser(null));
       }

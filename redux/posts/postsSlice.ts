@@ -1,18 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import firebase from "../../config/config";
 
-export const fetchPosts = createAsyncThunk("posts", async () => {
+export const fetchPosts = createAsyncThunk("posts", async (userId?: string) => {
   const fetchedPosts: any = [];
-  const data = await firebase
-    .firestore()
-    .collection("posts")
-    .orderBy("createdAt", "desc")
-    .get();
-  data.forEach((post) => {
-    const addId = { ...post.data(), id: post.id };
-    fetchedPosts.push(addId);
-  });
-  return fetchedPosts;
+  if (userId) {
+    const data = await firebase
+      .firestore()
+      .collection("posts")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "desc")
+      .get();
+    data.forEach((post) => {
+      const addId = { ...post.data(), id: post.id };
+      fetchedPosts.push(addId);
+    });
+    return fetchedPosts;
+  } else {
+    const data = await firebase
+      .firestore()
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .get();
+    data.forEach((post) => {
+      const addId = { ...post.data(), id: post.id };
+      fetchedPosts.push(addId);
+    });
+    return fetchedPosts;
+  }
 });
 
 const postsSlice = createSlice({
