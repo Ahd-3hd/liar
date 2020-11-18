@@ -44,6 +44,13 @@ export const addComment = createAsyncThunk(
   }
 );
 
+export const toggleReveal = createAsyncThunk(
+  "toggleReveal",
+  async (postId: string) => {
+    return postId;
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -75,6 +82,16 @@ const postsSlice = createSlice({
             ...post.commentorsIds,
             action.payload.commentorId,
           ];
+          return post;
+        } else {
+          return post;
+        }
+      });
+    });
+    builder.addCase(toggleReveal.fulfilled, (state: any, action) => {
+      state.posts.map((post: IPost) => {
+        if (post.id === action.payload) {
+          post.isRevealed = !post.isRevealed;
           return post;
         } else {
           return post;

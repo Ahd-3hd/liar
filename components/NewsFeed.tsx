@@ -28,7 +28,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts, addComment } from "../redux/posts/postsSlice";
+import {
+  fetchPosts,
+  addComment,
+  toggleReveal,
+} from "../redux/posts/postsSlice";
 import firebase from "../config/config";
 import { v4 as uuidv4 } from "uuid";
 
@@ -87,7 +91,9 @@ export default function NewsFeed({
       });
     dispatch(addComment(newComment));
   };
-  const handleToggleReveal = () => {};
+  const handleToggleReveal = (postId: string) => {
+    dispatch(toggleReveal(postId));
+  };
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -113,7 +119,7 @@ export default function NewsFeed({
                       {post.commentorsIds.includes(currentUser?.userId) ? (
                         <RevealButton
                           isRevealed={post.isRevealed}
-                          onClick={() => handleToggleReveal()}
+                          onClick={() => handleToggleReveal(post.id)}
                         >
                           {post.isRevealed ? "Hide" : "Reveal"}
                         </RevealButton>
