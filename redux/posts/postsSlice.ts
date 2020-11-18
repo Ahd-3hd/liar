@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import firebase from "../../config/config";
+import { IPost } from "../../interfaces/posts";
 
 export const fetchPosts = createAsyncThunk(
   "fetchPosts",
@@ -36,6 +37,13 @@ export const addPost = createAsyncThunk("addPost", async (postData: any) => {
   return postData;
 });
 
+export const addComment = createAsyncThunk(
+  "addComment",
+  async (commentData: any) => {
+    return commentData;
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -58,6 +66,20 @@ const postsSlice = createSlice({
     });
     builder.addCase(addPost.fulfilled, (state: any, action) => {
       state.posts = [action.payload, ...state.posts];
+    });
+    builder.addCase(addComment.fulfilled, (state: any, action) => {
+      state.posts.map((post: IPost) => {
+        if (post.id === action.payload.postId) {
+          post.comments = [...post.comments, action.payload];
+          post.commentorsIds = [
+            ...post.commentorsIds,
+            action.payload.commentorId,
+          ];
+          return post;
+        } else {
+          return post;
+        }
+      });
     });
   },
 });

@@ -28,7 +28,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../redux/posts/postsSlice";
+import { fetchPosts, addComment } from "../redux/posts/postsSlice";
+import firebase from "../config/config";
+import { v4 as uuidv4 } from "uuid";
+
 export default function NewsFeed({
   title,
   page,
@@ -59,11 +62,30 @@ export default function NewsFeed({
     }
   }, [currentUser]);
 
-  const handleCommentSubmit = (
+  const handleCommentSubmit = async (
     e: { preventDefault: () => void },
     id: string
   ) => {
     e.preventDefault();
+    const newComment = {
+      commentText: commentText,
+      username: currentUser.email,
+      id: uuidv4(),
+      avatar: currentUser.avatar,
+      postId: id,
+      commentorId: currentUser.userId,
+    };
+    await firebase
+      .firestore()
+      .collection("posts")
+      .doc(id)
+      .update({
+        comments: firebase.firestore.FieldValue.arrayUnion(newComment),
+        commentorsIds: firebase.firestore.FieldValue.arrayUnion(
+          currentUser.userId
+        ),
+      });
+    dispatch(addComment(newComment));
   };
   const handleToggleReveal = () => {};
   return (
