@@ -51,7 +51,7 @@ export const NameRevealContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-export const RevealButton = styled.button<{ isRevealed: boolean }>`
+export const RevealButton = styled.button<{ isRevealed?: boolean }>`
   border: none;
   background: ${({ theme: { colors }, isRevealed }) =>
     isRevealed ? colors.darkred : colors.black};
