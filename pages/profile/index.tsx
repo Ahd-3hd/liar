@@ -212,9 +212,9 @@ export default function Profile() {
           </FriendsContainer>
           <Link href="profile/requests" passHref>
             <FriendsPageLink>
-              Friends
+              Friend
               <br />
-              Page
+              Requests
             </FriendsPageLink>
           </Link>
         </FriendsWrapper>

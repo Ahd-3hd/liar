@@ -60,7 +60,6 @@ export default function NewsFeed({
     if (page === "homepage") {
       dispatch(fetchPosts());
     } else if (page === "currentUser") {
-      console.log(currentUser.userId);
       dispatch(fetchPosts(currentUser.userId));
     } else if (page === "userPage") {
       dispatch(fetchPosts(friendId));
