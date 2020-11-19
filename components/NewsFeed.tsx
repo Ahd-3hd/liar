@@ -117,7 +117,8 @@ export default function NewsFeed({
                   <PostContainer>
                     <NameRevealContainer>
                       <PosterName>{post.email}</PosterName>
-                      {post.commentorsIds.includes(currentUser?.userId) ? (
+                      {post.commentorsIds.includes(currentUser?.userId) ||
+                      currentUser?.userId === post.userId ? (
                         <RevealButton
                           isRevealed={post.isRevealed}
                           onClick={() => handleToggleReveal(post.id)}
