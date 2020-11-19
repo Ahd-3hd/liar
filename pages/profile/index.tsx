@@ -26,6 +26,7 @@ import firebase from "../../config/config";
 import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../redux/auth/authSlice";
+import { useRouter } from "next/router";
 export default function Profile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
@@ -35,7 +36,7 @@ export default function Profile() {
   const [friendsData, setFriendsData] = useState<any>([]);
   const dispatch = useDispatch();
   const fileInputRef: any = useRef();
-
+  const router = useRouter();
   const handleFileChange = (e: { target: { files: any[] } }) => {
     const storageRef = firebase.storage().ref();
     const file = e.target.files[0];
@@ -128,6 +129,8 @@ export default function Profile() {
   useEffect(() => {
     if (currentUser) {
       currentUser.friends.forEach((frndId: string) => getFriendsData(frndId));
+    } else {
+      router.push("/login/");
     }
   }, [currentUser]);
 
