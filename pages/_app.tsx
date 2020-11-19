@@ -7,10 +7,13 @@ import { Provider } from "react-redux";
 import store from "../redux/store";
 import { useEffect } from "react";
 import firebase from "../config/config";
+import "firebase/analytics";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    firebase.analytics();
+    if (typeof window !== undefined) {
+      firebase.analytics();
+    }
   }, []);
   return (
     <Provider store={store}>
