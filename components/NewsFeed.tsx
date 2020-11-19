@@ -50,7 +50,7 @@ export default function NewsFeed({
   );
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
-
+  const [activeComment, setActiveComment] = useState<any>(null);
   const dispatch = useDispatch();
   const { posts, isLoading, fetchError } = useSelector(
     (state: any) => state.posts
@@ -90,6 +90,7 @@ export default function NewsFeed({
         ),
       });
     dispatch(addComment(newComment));
+    setCommentText("");
   };
   const handleToggleReveal = (postId: string) => {
     dispatch(toggleReveal(postId));
@@ -168,6 +169,14 @@ export default function NewsFeed({
                     <TextArea
                       placeholder="write your answer..."
                       onChange={(e) => setCommentText(e.target.value)}
+                      onFocus={() => {
+                        setCommentText("");
+                        setActiveComment(post.id);
+                      }}
+                      onBlur={() => {
+                        setActiveComment(null);
+                      }}
+                      value={post.id === activeComment ? commentText : ""}
                     />
                     <CommentSubmitButton type="submit">
                       SEND

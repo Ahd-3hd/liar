@@ -41,6 +41,10 @@ export default function NewQuestion() {
         id: docRef.id,
       })
     );
+    setPostData({
+      realQuestion: "",
+      fakeQuestion: "",
+    });
   };
 
   return (
