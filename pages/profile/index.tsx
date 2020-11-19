@@ -24,17 +24,87 @@ import CaretRight from "../../utils/svg/CaretRight.svg";
 import { useRef } from "react";
 import firebase from "../../config/config";
 import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../redux/auth/authSlice";
 export default function Profile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-
+  const dispatch = useDispatch();
   const fileInputRef: any = useRef();
 
-  const handleFileChange = (e: { target: { files: any[] } }) => {};
+  const handleFileChange = (e: { target: { files: any[] } }) => {
+    const storageRef = firebase.storage().ref();
+    const file = e.target.files[0];
+    if (file) {
+      // Create the file metadata
+      var metadata = {
+        contentType: "image/jpeg",
+      };
+
+      // Upload file and metadata to the object
+      var uploadTask = storageRef
+        .child("avatars/" + currentUser.userId + ".jpg")
+        .put(file, metadata);
+
+      // Listen for state changes, errors, and completion of the upload.
+      uploadTask.on(
+        firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+        function (snapshot) {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+              console.log("Upload is paused");
+              break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+              console.log("Upload is running");
+              break;
+          }
+        },
+        function (error) {
+          // A full list of error codes is available at
+          // https://firebase.google.com/docs/storage/web/handle-errors
+          switch (error.code) {
+            case "storage/unauthorized":
+              // User doesn't have permission to access the object
+              break;
+
+            case "storage/canceled":
+              // User canceled the upload
+              break;
+
+            case "storage/unknown":
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        },
+        function () {
+          // Upload completed successfully, now we can get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log("File available at", downloadURL);
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(currentUser.userId)
+              .update({
+                avatar: downloadURL,
+              });
+            dispatch(
+              setCurrentUser({
+                ...currentUser,
+                avatar: downloadURL,
+              })
+            );
+          });
+        }
+      );
+    }
+  };
 
   if (isUserLoading) {
     return <div>Loading</div>;
