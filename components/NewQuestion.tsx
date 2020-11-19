@@ -7,40 +7,44 @@ import {
 import { useState } from "react";
 import { Card } from "./Card";
 import { Button } from "./Buttons";
-import { useDispatch } from "react-redux";
-import { addPost } from "../redux/actions/postsActions";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
+import { addPost } from "../redux/posts/postsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import firebase, { auth } from "../config/config";
 
 export default function NewQuestion() {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
   );
+  const dispatch = useDispatch();
   const [postData, setPostData] = useState({
     realQuestion: "",
     fakeQuestion: "",
   });
 
-  const addPostDispatch = (e: { preventDefault: () => void }) => {
+  const addPostDispatch = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (currentUser) {
-      dispatch(
-        addPost({
-          ...postData,
-          userid: currentUser.userId,
-          email: currentUser.email,
-          avatar: currentUser.avatar,
-        })
-      );
-      return setPostData({
-        realQuestion: "",
-        fakeQuestion: "",
-      });
-    } else {
-      router.push("/login");
-    }
+    const newPost = {
+      userId: currentUser.userId,
+      email: currentUser.email,
+      realQuestion: postData.realQuestion,
+      fakeQuestion: postData.fakeQuestion,
+      isRevealed: false,
+      comments: [],
+      createdAt: firebase.firestore.Timestamp.now().seconds,
+      avatar: currentUser.avatar,
+      commentorsIds: [],
+    };
+    const docRef = await firebase.firestore().collection("posts").add(newPost);
+    dispatch(
+      addPost({
+        ...newPost,
+        id: docRef.id,
+      })
+    );
+    setPostData({
+      realQuestion: "",
+      fakeQuestion: "",
+    });
   };
 
   return (

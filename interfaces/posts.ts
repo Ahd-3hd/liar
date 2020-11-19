@@ -7,6 +7,7 @@ export interface IPost {
   isRevealed: boolean;
   comments: IComment[];
   avatar: string;
+  commentorsIds: string[];
 }
 
 export interface IComment {

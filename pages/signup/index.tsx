@@ -11,35 +11,59 @@ import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
-import {
-  clearCurrentUser,
-  setCurrentUserSignup,
-} from "../../redux/actions/authActions";
+
 import { useRouter } from "next/router";
 import firebase from "../../config/config";
+import { setCurrentUser } from "../../redux/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 export default function Signup() {
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const router = useRouter();
   const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
 
-  const handleSignup = (e: { preventDefault: () => void }) => {
+  const handleSignup = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(userData.email, userData.password)
-      .then(() => router.push("/"))
-      .catch((err) => dispatch(clearCurrentUser()));
+    const newUser = await auth.createUserWithEmailAndPassword(
+      userData.email,
+      userData.password
+    );
+    await firebase.firestore().collection("users").doc(newUser.user?.uid).set({
+      userId: newUser.user?.uid,
+      avatar:
+        "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
+      email: newUser.user?.email,
+      friends: [],
+      friendRequestsSent: [],
+      friendRequestsReceived: [],
+    });
+    if (newUser) {
+      dispatch(
+        setCurrentUser({
+          userId: newUser.user?.uid,
+          avatar:
+            "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
+          email: newUser.user?.email,
+          friends: [],
+          friendRequestsSent: [],
+          friendRequestsReceived: [],
+        })
+      );
+    } else {
+      dispatch(setCurrentUser(null));
+    }
   };
 
   useEffect(() => {
-    if (currentUser) router.push("/");
+    if (currentUser) {
+      router.push("/login/");
+    }
   });
 
   return (

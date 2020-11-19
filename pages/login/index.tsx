@@ -11,35 +11,29 @@ import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../config/config";
-import {
-  clearCurrentUser,
-  setCurrentUser,
-} from "../../redux/actions/authActions";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function Login() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
-  );
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+  const { currentUser, isLoading, fetchError } = useSelector(
+    (state: any) => state.auth
+  );
 
-  const handleLogin = (e: { preventDefault: () => void }) => {
+  const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    auth
-      .signInWithEmailAndPassword(userData.email, userData.password)
-      .catch((err) => dispatch(clearCurrentUser()));
+    await auth.signInWithEmailAndPassword(userData.email, userData.password);
   };
-
   useEffect(() => {
-    if (currentUser) router.push("/");
-  });
+    if (currentUser) {
+      router.push("/");
+    }
+  }, [handleLogin]);
 
   return (
     <>

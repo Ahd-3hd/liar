@@ -21,29 +21,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import CaretLeft from "../../utils/svg/CaretLeft.svg";
 import CaretRight from "../../utils/svg/CaretRight.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import { useRef } from "react";
 import firebase from "../../config/config";
-import { setCurrentUser } from "../../redux/actions/authActions";
 import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../../redux/auth/authSlice";
 export default function Profile() {
-  const router = useRouter();
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
   );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-
+  const [friendsData, setFriendsData] = useState<any>([]);
   const dispatch = useDispatch();
-
   const fileInputRef: any = useRef();
-
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/login/");
-    }
-  }, []);
 
   const handleFileChange = (e: { target: { files: any[] } }) => {
     const storageRef = firebase.storage().ref();
@@ -54,7 +45,7 @@ export default function Profile() {
         contentType: "image/jpeg",
       };
 
-      // Upload file and metadata to the object 'images/mountains.jpg'
+      // Upload file and metadata to the object
       var uploadTask = storageRef
         .child("avatars/" + currentUser.userId + ".jpg")
         .put(file, metadata);
@@ -115,7 +106,41 @@ export default function Profile() {
       );
     }
   };
-  if (!currentUser) return <div>Must Login</div>;
+
+  const getFriendsData = async (friendId: string) => {
+    const fetchedFriend = await firebase
+      .firestore()
+      .collection("users")
+      .where("userId", "==", friendId)
+      .get();
+    fetchedFriend.forEach((frnd) => {
+      setFriendsData((prevState: any) => [
+        ...prevState,
+        {
+          userId: frnd.data().userId,
+          avatar: frnd.data().avatar,
+          email: frnd.data().email,
+        },
+      ]);
+    });
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      currentUser.friends.forEach((frndId: string) => getFriendsData(frndId));
+    }
+  }, [currentUser]);
+
+  if (isUserLoading) {
+    return <div>Loading</div>;
+  } else if (isUserFetchError) {
+    return <div>error</div>;
+  }
+
+  if (!isUserLoading && !currentUser) {
+    return <div>IsLoading</div>;
+  }
+
   return (
     <>
       <Head>
@@ -141,11 +166,11 @@ export default function Profile() {
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
-            {currentUser.friends.length > 0 && (
+            {friendsData.length > 0 && (
               <SlideButton
                 direction="left"
                 onClick={() => {
-                  if (slideIndex <= currentUser.friends.length - 5) {
+                  if (slideIndex <= friendsData.length - 5) {
                     setSlidePos((prevState) => prevState - 60);
                     setSlideIndex((prevState) => (prevState += 1));
                   }
@@ -154,15 +179,15 @@ export default function Profile() {
                 <CaretLeft />
               </SlideButton>
             )}
-            {currentUser.friends.length === 0 ? (
+            {friendsData.length === 0 ? (
               <NoFriendsParagraph>You have no friends yet</NoFriendsParagraph>
             ) : (
               <FriendsInnerContainer slidePos={slidePos}>
-                {currentUser.friends.map((friend: any) => (
+                {friendsData.map((friend: any) => (
                   <Link
-                    href={`/profile/${friend.userid}`}
+                    href={`/profile/${friend.userId}`}
                     passHref
-                    key={friend.userid}
+                    key={friend.userId}
                   >
                     <FriendLink>
                       <FriendAvatar src={friend.avatar} alt="avatar" />
@@ -171,7 +196,7 @@ export default function Profile() {
                 ))}
               </FriendsInnerContainer>
             )}
-            {currentUser.friends.length > 0 && (
+            {friendsData.length > 0 && (
               <SlideButton
                 direction="right"
                 onClick={() => {
@@ -185,13 +210,13 @@ export default function Profile() {
               </SlideButton>
             )}
           </FriendsContainer>
-          {/* <Link href="profile/friends" passHref>
+          <Link href="profile/requests" passHref>
             <FriendsPageLink>
-              Friends
+              Friend
               <br />
-              Page
+              Requests
             </FriendsPageLink>
-          </Link> */}
+          </Link>
         </FriendsWrapper>
 
         <NewsFeed title="My wall" page="currentUser" />

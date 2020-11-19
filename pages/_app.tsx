@@ -3,10 +3,18 @@ import { ThemeProvider } from "styled-components";
 import theme from "../utils/theme";
 import GlobalStyles from "../utils/GlobalStyles";
 import Layout from "../components/Layout";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import store from "../redux/store";
+import { useEffect } from "react";
+import firebase from "../config/config";
+import "firebase/analytics";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      firebase.analytics();
+    }
+  }, []);
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>

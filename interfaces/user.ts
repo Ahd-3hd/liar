@@ -3,6 +3,8 @@ export interface IUser {
   username: string | null;
   email: string | null;
   avatar: string | null;
+  friendRequestsReceived: any[];
+  friendRequestsSent: any[];
 }
 
 export interface IFriend {

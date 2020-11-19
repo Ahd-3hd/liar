@@ -22,18 +22,20 @@ import {
   NoPosts,
   LoginToComment,
 } from "../styles/NewsFeed.style";
-import { useSelector, useDispatch } from "react-redux";
 import { IPost } from "../interfaces/posts";
 import { useEffect, useState } from "react";
-import {
-  addComment,
-  toggleReveal,
-  fetchPosts,
-  fetchPostsCurrentUser,
-  fetchPostsUser,
-} from "../redux/actions/postsActions";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchPosts,
+  addComment,
+  toggleReveal,
+} from "../redux/posts/postsSlice";
+import firebase from "../config/config";
+import { v4 as uuidv4 } from "uuid";
+
 export default function NewsFeed({
   title,
   page,
@@ -43,46 +45,56 @@ export default function NewsFeed({
   page: string;
   friendId?: any;
 }) {
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const router = useRouter();
   const [commentText, setCommentText] = useState("");
+  const [activeComment, setActiveComment] = useState<any>(null);
   const dispatch = useDispatch();
-  const posts = useSelector(({ posts }: { posts: IPost[] }) => posts);
-  const currentUser = useSelector(
-    ({ auth }: { auth: any }) => auth.currentUser
+  const { posts, isLoading, fetchError } = useSelector(
+    (state: any) => state.posts
   );
+
   useEffect(() => {
     if (page === "homepage") {
       dispatch(fetchPosts());
     } else if (page === "currentUser") {
-      dispatch(fetchPostsCurrentUser(currentUser.userId));
+      dispatch(fetchPosts(currentUser.userId));
     } else if (page === "userPage") {
-      //TODO this should be changed to user id from fb
-      if (friendId) {
-        dispatch(fetchPostsUser(friendId));
-      }
+      dispatch(fetchPosts(friendId));
     }
-  }, [friendId]);
+  }, [currentUser]);
 
-  const handleCommentSubmit = (
+  const handleCommentSubmit = async (
     e: { preventDefault: () => void },
     id: string
   ) => {
     e.preventDefault();
-    dispatch(
-      addComment({
-        commentText,
-        postId: id,
-        userid: currentUser.userId,
-        email: currentUser.email,
-        avatar: currentUser.avatar,
-      })
-    );
+    const newComment = {
+      commentText: commentText,
+      username: currentUser.email,
+      id: uuidv4(),
+      avatar: currentUser.avatar,
+      postId: id,
+      commentorId: currentUser.userId,
+    };
+    await firebase
+      .firestore()
+      .collection("posts")
+      .doc(id)
+      .update({
+        comments: firebase.firestore.FieldValue.arrayUnion(newComment),
+        commentorsIds: firebase.firestore.FieldValue.arrayUnion(
+          currentUser.userId
+        ),
+      });
+    dispatch(addComment(newComment));
     setCommentText("");
   };
-  const handleToggleReveal = (postId: string, isRevealed: boolean) => {
-    dispatch(toggleReveal({ postId: postId, isRevealed: isRevealed }));
+  const handleToggleReveal = (postId: string) => {
+    dispatch(toggleReveal(postId));
   };
-  if (!friendId && page === "userPage") return <div>loading</div>;
   return (
     <Wrapper>
       <Title>{title}</Title>
@@ -105,14 +117,16 @@ export default function NewsFeed({
                   <PostContainer>
                     <NameRevealContainer>
                       <PosterName>{post.email}</PosterName>
-                      <RevealButton
-                        isRevealed={post.isRevealed}
-                        onClick={() =>
-                          handleToggleReveal(post.id, post.isRevealed)
-                        }
-                      >
-                        {post.isRevealed ? "Hide" : "Reveal"}
-                      </RevealButton>
+                      {post.commentorsIds.includes(currentUser?.userId) ? (
+                        <RevealButton
+                          isRevealed={post.isRevealed}
+                          onClick={() => handleToggleReveal(post.id)}
+                        >
+                          {post.isRevealed ? "Hide" : "Reveal"}
+                        </RevealButton>
+                      ) : (
+                        <RevealButton>Answer to reveal</RevealButton>
+                      )}
                     </NameRevealContainer>
 
                     {post.isRevealed ? (
@@ -155,6 +169,14 @@ export default function NewsFeed({
                     <TextArea
                       placeholder="write your answer..."
                       onChange={(e) => setCommentText(e.target.value)}
+                      onFocus={() => {
+                        setCommentText("");
+                        setActiveComment(post.id);
+                      }}
+                      onBlur={() => {
+                        setActiveComment(null);
+                      }}
+                      value={post.id === activeComment ? commentText : ""}
                     />
                     <CommentSubmitButton type="submit">
                       SEND
