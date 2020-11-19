@@ -23,6 +23,20 @@ export const setCurrentUser = createAsyncThunk(
   }
 );
 
+export const sendFriendRequest = createAsyncThunk(
+  "sendFriendRequest",
+  async (userId: string) => {
+    return userId;
+  }
+);
+
+export const acceptFriendRequest = createAsyncThunk(
+  "acceptFriendRequest",
+  async (userId: string) => {
+    return userId;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -38,6 +52,21 @@ const authSlice = createSlice({
     });
     builder.addCase(setCurrentUser.rejected, (state, action) => {
       state.fetchError = true;
+    });
+    builder.addCase(sendFriendRequest.fulfilled, (state, action) => {
+      state.currentUser.friendRequestsSent = [
+        ...state.currentUser.friendRequestsSent,
+        action.payload,
+      ];
+    });
+    builder.addCase(acceptFriendRequest.fulfilled, (state, action) => {
+      state.currentUser.friendRequestsReceived = state.currentUser.friendRequestsReceived.filter(
+        (id: string) => id !== action.payload
+      );
+      state.currentUser.friends = [
+        ...state.currentUser.friends,
+        action.payload,
+      ];
     });
   },
 });

@@ -40,6 +40,8 @@ export default function Signup() {
         "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
       email: newUser.user?.email,
       friends: [],
+      friendRequestsSent: [],
+      friendRequestsReceived: [],
     });
     if (newUser) {
       dispatch(
@@ -49,6 +51,8 @@ export default function Signup() {
             "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
           email: newUser.user?.email,
           friends: [],
+          friendRequestsSent: [],
+          friendRequestsReceived: [],
         })
       );
     } else {
