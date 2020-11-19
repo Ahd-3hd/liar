@@ -32,6 +32,7 @@ export default function Profile() {
   );
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
+  const [friendsData, setFriendsData] = useState<any>([]);
   const dispatch = useDispatch();
   const fileInputRef: any = useRef();
 
@@ -106,6 +107,30 @@ export default function Profile() {
     }
   };
 
+  const getFriendsData = async (friendId: string) => {
+    const fetchedFriend = await firebase
+      .firestore()
+      .collection("users")
+      .where("userId", "==", friendId)
+      .get();
+    fetchedFriend.forEach((frnd) => {
+      setFriendsData((prevState: any) => [
+        ...prevState,
+        {
+          userId: frnd.data().userId,
+          avatar: frnd.data().avatar,
+          email: frnd.data().email,
+        },
+      ]);
+    });
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      currentUser.friends.forEach((frndId: string) => getFriendsData(frndId));
+    }
+  }, [currentUser]);
+
   if (isUserLoading) {
     return <div>Loading</div>;
   } else if (isUserFetchError) {
@@ -141,11 +166,11 @@ export default function Profile() {
         </UserInfoContainer>
         <FriendsWrapper>
           <FriendsContainer>
-            {currentUser.friends.length > 0 && (
+            {friendsData.length > 0 && (
               <SlideButton
                 direction="left"
                 onClick={() => {
-                  if (slideIndex <= currentUser.friends.length - 5) {
+                  if (slideIndex <= friendsData.length - 5) {
                     setSlidePos((prevState) => prevState - 60);
                     setSlideIndex((prevState) => (prevState += 1));
                   }
@@ -154,15 +179,15 @@ export default function Profile() {
                 <CaretLeft />
               </SlideButton>
             )}
-            {currentUser.friends.length === 0 ? (
+            {friendsData.length === 0 ? (
               <NoFriendsParagraph>You have no friends yet</NoFriendsParagraph>
             ) : (
               <FriendsInnerContainer slidePos={slidePos}>
-                {currentUser.friends.map((friend: any) => (
+                {friendsData.map((friend: any) => (
                   <Link
-                    href={`/profile/${friend.userid}`}
+                    href={`/profile/${friend.userId}`}
                     passHref
-                    key={friend.userid}
+                    key={friend.userId}
                   >
                     <FriendLink>
                       <FriendAvatar src={friend.avatar} alt="avatar" />
@@ -171,7 +196,7 @@ export default function Profile() {
                 ))}
               </FriendsInnerContainer>
             )}
-            {currentUser.friends.length > 0 && (
+            {friendsData.length > 0 && (
               <SlideButton
                 direction="right"
                 onClick={() => {
