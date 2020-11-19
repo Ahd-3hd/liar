@@ -10,8 +10,10 @@ import { Button } from "./Buttons";
 import { addPost } from "../redux/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import firebase, { auth } from "../config/config";
+import { useRouter } from "next/router";
 
 export default function NewQuestion() {
+  const router = useRouter();
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
@@ -22,6 +24,7 @@ export default function NewQuestion() {
   });
 
   const addPostDispatch = async (e: { preventDefault: () => void }) => {
+    if (!currentUser) return router.push("/login/");
     e.preventDefault();
     const newPost = {
       userId: currentUser.userId,
