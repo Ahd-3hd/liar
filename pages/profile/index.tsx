@@ -210,13 +210,13 @@ export default function Profile() {
               </SlideButton>
             )}
           </FriendsContainer>
-          {/* <Link href="profile/friends" passHref>
+          <Link href="profile/requests" passHref>
             <FriendsPageLink>
               Friends
               <br />
               Page
             </FriendsPageLink>
-          </Link> */}
+          </Link>
         </FriendsWrapper>
 
         <NewsFeed title="My wall" page="currentUser" />

@@ -51,6 +51,13 @@ export const removeFriend = createAsyncThunk(
   }
 );
 
+export const rejectFriendRequest = createAsyncThunk(
+  "rejectFriendRequest",
+  async (userId: string) => {
+    return userId;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
@@ -89,6 +96,11 @@ const authSlice = createSlice({
     });
     builder.addCase(removeFriend.fulfilled, (state, action) => {
       state.currentUser.friends = state.currentUser.friends.filter(
+        (id: string) => id !== action.payload
+      );
+    });
+    builder.addCase(rejectFriendRequest.fulfilled, (state, action) => {
+      state.currentUser.friendRequestsReceived = state.currentUser.friendRequestsReceived.filter(
         (id: string) => id !== action.payload
       );
     });
