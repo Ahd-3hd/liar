@@ -24,8 +24,8 @@ export default function NewQuestion() {
   });
 
   const addPostDispatch = async (e: { preventDefault: () => void }) => {
-    if (!currentUser) return router.push("/login/");
     e.preventDefault();
+    if (!currentUser) return router.push("/login/");
     const newPost = {
       userId: currentUser.userId,
       email: currentUser.email,
