@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import firebase from "../config/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../redux/auth/authSlice";
+import { ToastContainer } from "react-toastify";
 const Layout = ({ children }: { children?: any }) => {
   const dispatch = useDispatch();
 
@@ -33,6 +34,7 @@ const Layout = ({ children }: { children?: any }) => {
     <Wrapper>
       <Container>{children}</Container>
       <Navbar />
+      <ToastContainer />
     </Wrapper>
   );
 };

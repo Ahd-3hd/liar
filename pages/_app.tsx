@@ -8,6 +8,7 @@ import store from "../redux/store";
 import { useEffect } from "react";
 import firebase from "../config/config";
 import "firebase/analytics";
+import "react-toastify/dist/ReactToastify.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {

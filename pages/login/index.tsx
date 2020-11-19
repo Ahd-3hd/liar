@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { auth } from "../../config/config";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const router = useRouter();
@@ -27,7 +28,12 @@ export default function Login() {
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    await auth.signInWithEmailAndPassword(userData.email, userData.password);
+
+    try {
+      await auth.signInWithEmailAndPassword(userData.email, userData.password);
+    } catch (err) {
+      toast("something went wrong; check your credentials");
+    }
   };
   useEffect(() => {
     if (currentUser) {

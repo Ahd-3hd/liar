@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import firebase from "../../config/config";
 import { setCurrentUser } from "../../redux/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 export default function Signup() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
@@ -30,22 +31,16 @@ export default function Signup() {
 
   const handleSignup = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const newUser = await auth.createUserWithEmailAndPassword(
-      userData.email,
-      userData.password
-    );
-    await firebase.firestore().collection("users").doc(newUser.user?.uid).set({
-      userId: newUser.user?.uid,
-      avatar:
-        "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
-      email: newUser.user?.email,
-      friends: [],
-      friendRequestsSent: [],
-      friendRequestsReceived: [],
-    });
-    if (newUser) {
-      dispatch(
-        setCurrentUser({
+    try {
+      const newUser = await auth.createUserWithEmailAndPassword(
+        userData.email,
+        userData.password
+      );
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(newUser.user?.uid)
+        .set({
           userId: newUser.user?.uid,
           avatar:
             "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
@@ -53,10 +48,24 @@ export default function Signup() {
           friends: [],
           friendRequestsSent: [],
           friendRequestsReceived: [],
-        })
-      );
-    } else {
-      dispatch(setCurrentUser(null));
+        });
+      if (newUser) {
+        dispatch(
+          setCurrentUser({
+            userId: newUser.user?.uid,
+            avatar:
+              "https://firebasestorage.googleapis.com/v0/b/liar-35d32.appspot.com/o/Group%2041.png?alt=media&token=49380a39-6c10-44bb-9481-eb7d7539a99f",
+            email: newUser.user?.email,
+            friends: [],
+            friendRequestsSent: [],
+            friendRequestsReceived: [],
+          })
+        );
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+    } catch (error) {
+      toast("something went wrong; try again or use a differnt email");
     }
   };
 
