@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   sendFriendRequest,
   acceptFriendRequest,
+  removeFriendRequest,
 } from "../../redux/auth/authSlice";
 
 export default function FriendProfile() {
@@ -98,6 +99,30 @@ export default function FriendProfile() {
     }
   };
 
+  const undoFriendRequest = async () => {
+    if (router.query.id) {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(router.query.id as string)
+        .update({
+          friendRequestsReceived: firebase.firestore.FieldValue.arrayRemove(
+            currentUser.userId
+          ),
+        });
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          friendRequestsSent: firebase.firestore.FieldValue.arrayRemove(
+            router.query.id
+          ),
+        });
+      dispatch(removeFriendRequest(router.query.id as string));
+    }
+  };
+
   const renderFriendButton = () => {
     if (!currentUser || !router.query.id) return;
     if (currentUser.friendRequestsSent.includes(router.query.id)) {
@@ -105,7 +130,7 @@ export default function FriendProfile() {
         <Button
           style={{ marginBottom: "1rem" }}
           variant="red"
-          onClick={addFriend}
+          onClick={undoFriendRequest}
         >
           Remove Add
         </Button>
