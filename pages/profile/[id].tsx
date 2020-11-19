@@ -10,22 +10,40 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/Buttons";
 import firebase from "../../config/config";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function FriendProfile() {
+  const router = useRouter();
   const [friend, setFriend] = useState({
     avatar: "",
     email: "",
     userId: "",
   });
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const [isFriendExists, setIsFriendExists] = useState(false);
-  const fetchFriendData = async (friendId: any) => {};
+  const fetchFriendData = async (friendId: any) => {
+    const friendData = await firebase
+      .firestore()
+      .collection("users")
+      .doc(friendId)
+      .get();
+    setFriend({
+      avatar: friendData.data()?.avatar,
+      email: friendData.data()?.email,
+      userId: friendData.id,
+    });
+  };
+
+  useEffect(() => {
+    if (router.query.id) {
+      fetchFriendData(router.query.id);
+    }
+  }, [router.query.id]);
 
   const addFriend = async () => {};
-  const currentUser = {
-    email: "",
-    avatar: "",
-    friends: [],
-  };
 
   return (
     <>
@@ -85,7 +103,11 @@ export default function FriendProfile() {
           </FriendsContainer> 
         </FriendsWrapper>*/}
 
-        <NewsFeed title={`Posts Wall`} page="userPage" />
+        <NewsFeed
+          title={`Posts Wall`}
+          page="userPage"
+          friendId={router.query.id}
+        />
       </Wrapper>
     </>
   );
