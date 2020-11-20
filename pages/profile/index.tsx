@@ -10,6 +10,16 @@ import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../redux/auth/authSlice";
 import { useRouter } from "next/router";
+import {
+  Wrapper,
+  ProfileContainer,
+  AvatarContainer,
+  Avatar,
+  Username,
+  UpdateAvatarButton,
+  VisibleUpdateAvatarButton,
+} from "../../styles/Profile.style";
+
 export default function Profile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
@@ -20,7 +30,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const fileInputRef: any = useRef();
   const router = useRouter();
-  const handleFileChange = (e: { target: { files: any[] } }) => {
+  const handleFileChange = (e: any) => {
     const storageRef = firebase.storage().ref();
     const file = e.target.files[0];
     if (file) {
@@ -127,5 +137,31 @@ export default function Profile() {
     return <div>IsLoading</div>;
   }
 
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>{currentUser.email.split("@")[0]}</title>
+      </Head>
+      <Wrapper>
+        <ProfileContainer>
+          <AvatarContainer>
+            <Avatar src={currentUser.avatar} alt="avatar" />
+            <UpdateAvatarButton
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              accept=".jpg"
+            />
+            <VisibleUpdateAvatarButton
+              onClick={() => fileInputRef?.current?.click()}
+            >
+              <UpdateAvatarIcon />
+            </VisibleUpdateAvatarButton>
+          </AvatarContainer>
+          <Username>{currentUser.email.split("@")[0]}</Username>
+        </ProfileContainer>
+        <NewsFeed title="My Posts" page="currentUser" />
+      </Wrapper>
+    </>
+  );
 }
