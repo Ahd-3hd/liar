@@ -33,9 +33,15 @@ import {
   CommentorName,
   CommentText,
   NameCommentContainer,
+  NewCommentContainer,
+  NewCommentAvatar,
+  NewCommentInputContainer,
+  NewCommentInput,
+  NewCommentButton,
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
+import SendButton from "../utils/svg/SendIcon.svg";
 
 export default function NewsFeed({
   title,
@@ -111,15 +117,29 @@ export default function NewsFeed({
                     <RemoveIcon />
                   </PostButton>
                 </ButtonsContainer>
-                <PosterName>{post.email.split("@")[0]}</PosterName>
+                <Link
+                  href={`/profile/${
+                    post.userId !== currentUser?.userId ? post.userId : ""
+                  }`}
+                  passHref
+                >
+                  <PosterName>{post.email.split("@")[0]}</PosterName>
+                </Link>
               </NameButtonsContainer>
               <QuestionText status={post.isRevealed}>
                 {post.fakeQuestion}
               </QuestionText>
             </QuestionSection>
-            <PosterAvatarContainer>
-              <PosterAvatar src={post.avatar} alt="avatar" />
-            </PosterAvatarContainer>
+            <Link
+              href={`/profile/${
+                post.userId !== currentUser?.userId ? post.userId : ""
+              }`}
+              passHref
+            >
+              <PosterAvatarContainer>
+                <PosterAvatar src={post.avatar} alt="avatar" />
+              </PosterAvatarContainer>
+            </Link>
           </PostSection>
           <Divider>
             <DividerSpan>COMMENTS</DividerSpan>
@@ -128,17 +148,48 @@ export default function NewsFeed({
           <CommentsSection>
             {post.comments.map((comment: any) => (
               <CommentContainer key={comment.id}>
-                <CommentAvatarContainer>
-                  <CommentAvatar src={comment.avatar} alt="avatar" />
-                </CommentAvatarContainer>
+                <Link
+                  href={`/profile/${
+                    comment.commentorId !== currentUser?.userId
+                      ? comment.commentorId
+                      : ""
+                  }`}
+                  passHref
+                >
+                  <CommentAvatarContainer>
+                    <CommentAvatar src={comment.avatar} alt="avatar" />
+                  </CommentAvatarContainer>
+                </Link>
                 <NameCommentContainer>
-                  <CommentorName>
-                    {comment.username.split("@")[0]}
-                  </CommentorName>
+                  <Link
+                    href={`/profile/${
+                      comment.commentorId !== currentUser?.userId
+                        ? comment.commentorId
+                        : ""
+                    }`}
+                    passHref
+                  >
+                    <CommentorName>
+                      {comment.username.split("@")[0]}
+                    </CommentorName>
+                  </Link>
                   <CommentText>{comment.commentText}</CommentText>
                 </NameCommentContainer>
               </CommentContainer>
             ))}
+            <NewCommentContainer>
+              <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
+              <NewCommentInputContainer>
+                <NewCommentInput
+                  type="text"
+                  required
+                  placeholder="Write your answer..."
+                />
+                <NewCommentButton>
+                  <SendButton />
+                </NewCommentButton>
+              </NewCommentInputContainer>
+            </NewCommentContainer>
           </CommentsSection>
         </PostCard>
       ))}

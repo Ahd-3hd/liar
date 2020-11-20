@@ -13,24 +13,26 @@ export const PostCard = styled.div`
 export const PostSection = styled.div`
   display: flex;
 `;
-export const PosterAvatarContainer = styled.div`
+export const PosterAvatarContainer = styled.a`
   flex: 1;
   width: 70px;
   height: 70px;
   border-radius: 70px;
   margin-left: ${({ theme: { spaces } }) => spaces.md};
+  cursor: pointer;
 `;
 export const PosterAvatar = styled.img`
   width: 70px;
   height: 70px;
   border-radius: 200px;
 `;
-export const PosterName = styled.p`
+export const PosterName = styled.a`
   margin: 0;
   justify-self: flex-end;
   color: ${({ theme: { colors } }) => colors.primary};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
   text-transform: uppercase;
+  text-decoration: none;
 `;
 export const QuestionSection = styled.div`
   flex: 7;
@@ -104,7 +106,7 @@ export const CommentContainer = styled.div`
   padding-bottom: ${({ theme: { spaces } }) => spaces.md};
   border-bottom: 1px solid ${({ theme: { colors } }) => colors.dark + 10};
 `;
-export const CommentAvatarContainer = styled.div`
+export const CommentAvatarContainer = styled.a`
   flex: 1;
   width: 100%;
   height: 100%;
@@ -125,8 +127,10 @@ export const CommentAvatar = styled.img`
   max-height: 60px;
   border-radius: 60px;
 `;
-export const CommentorName = styled.p`
+export const CommentorName = styled.a`
   margin: 0;
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.dark};
 `;
 export const CommentText = styled.p`
   margin: 0;
@@ -134,4 +138,52 @@ export const CommentText = styled.p`
   background: ${({ theme: { colors } }) => colors.grey};
   padding: ${({ theme: { spaces } }) => spaces.md};
   border-radius: 3px 15px 15px 15px;
+`;
+
+export const NewCommentContainer = styled.form`
+  display: flex;
+`;
+export const NewCommentAvatar = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+export const NewCommentInputContainer = styled.div`
+  flex: 1;
+  display: flex;
+`;
+export const NewCommentInput = styled.input`
+  flex: 4;
+  margin-right: ${({ theme: { spaces } }) => spaces.sm};
+  border-radius: 10px;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  outline: none;
+  transition: all 0.5s;
+  background: ${({ theme: { colors } }) => colors.grey};
+  font-family: inherit;
+  padding-left: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.dark};
+
+  ::placeholder {
+    font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+  }
+  :focus {
+    box-shadow: 0 0 2px ${({ theme: { colors } }) => colors.primary};
+    border-color: ${({ theme: { colors } }) => colors.primary + "15"};
+  }
+`;
+export const NewCommentButton = styled.button`
+  cursor: pointer;
+  border-radius: 10px;
+  flex: 0.5;
+  background: ${({ theme: { colors } }) => colors.primary};
+  border: none;
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  svg {
+    height: 15px;
+    fill: ${({ theme: { colors } }) => colors.white};
+  }
 `;
