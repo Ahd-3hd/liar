@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   padding: 2rem 0;
   padding-bottom: 0;
-  display: flex;
+  position: relative;
 `;
 export const Container = styled.div`
   width: 100%;

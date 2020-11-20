@@ -1,4 +1,3 @@
-import Navbar from "./Navbar";
 import { Wrapper, Container } from "../styles/Layout.style";
 import { auth } from "../config/config";
 import { useEffect } from "react";
@@ -6,6 +5,7 @@ import firebase from "../config/config";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../redux/auth/authSlice";
 import { ToastContainer } from "react-toastify";
+import Navbar from "./Navbar";
 const Layout = ({ children }: { children?: any }) => {
   const dispatch = useDispatch();
 
@@ -33,6 +33,7 @@ const Layout = ({ children }: { children?: any }) => {
   return (
     <Wrapper>
       <Container>{children}</Container>
+      <Navbar />
     </Wrapper>
   );
 };

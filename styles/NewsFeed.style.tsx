@@ -204,6 +204,10 @@ export const MustCommentToReveal = styled.p`
   color: ${({ theme: { colors } }) => colors.dark};
   margin-right: ${({ theme: { spaces } }) => spaces.md};
   text-align: center;
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors } }) => colors.grey};
+  border-radius: 10px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
 `;
 
 export const FirstComment = styled.p`
