@@ -40,6 +40,7 @@ import {
   NewCommentButton,
   LoginToComment,
   MustCommentToReveal,
+  FirstComment,
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
@@ -165,21 +166,9 @@ export default function NewsFeed({
             <DividerLine />
           </Divider>
           <CommentsSection>
-            {post.comments.map((comment: any) => (
-              <CommentContainer key={comment.id}>
-                <Link
-                  href={`/profile/${
-                    comment.commentorId !== currentUser?.userId
-                      ? comment.commentorId
-                      : ""
-                  }`}
-                  passHref
-                >
-                  <CommentAvatarContainer>
-                    <CommentAvatar src={comment.avatar} alt="avatar" />
-                  </CommentAvatarContainer>
-                </Link>
-                <NameCommentContainer>
+            {post.comments.length > 0 ? (
+              post.comments.map((comment: any) => (
+                <CommentContainer key={comment.id}>
                   <Link
                     href={`/profile/${
                       comment.commentorId !== currentUser?.userId
@@ -188,14 +177,30 @@ export default function NewsFeed({
                     }`}
                     passHref
                   >
-                    <CommentorName>
-                      {comment.username.split("@")[0]}
-                    </CommentorName>
+                    <CommentAvatarContainer>
+                      <CommentAvatar src={comment.avatar} alt="avatar" />
+                    </CommentAvatarContainer>
                   </Link>
-                  <CommentText>{comment.commentText}</CommentText>
-                </NameCommentContainer>
-              </CommentContainer>
-            ))}
+                  <NameCommentContainer>
+                    <Link
+                      href={`/profile/${
+                        comment.commentorId !== currentUser?.userId
+                          ? comment.commentorId
+                          : ""
+                      }`}
+                      passHref
+                    >
+                      <CommentorName>
+                        {comment.username.split("@")[0]}
+                      </CommentorName>
+                    </Link>
+                    <CommentText>{comment.commentText}</CommentText>
+                  </NameCommentContainer>
+                </CommentContainer>
+              ))
+            ) : (
+              <FirstComment>Be The First To Comment</FirstComment>
+            )}
             {currentUser ? (
               <NewCommentContainer
                 onSubmit={(e) => handleCommentSubmit(e, post.id)}

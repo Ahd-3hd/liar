@@ -205,3 +205,9 @@ export const MustCommentToReveal = styled.p`
   margin-right: ${({ theme: { spaces } }) => spaces.md};
   text-align: center;
 `;
+
+export const FirstComment = styled.p`
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.md};
+  color: ${({ theme: { colors } }) => colors.dark};
+`;

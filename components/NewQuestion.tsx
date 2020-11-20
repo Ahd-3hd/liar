@@ -52,6 +52,7 @@ export default function NewQuestion() {
         onChange={(e) =>
           setPostData({ ...postData, fakeQuestion: e.target.value })
         }
+        value={postData.fakeQuestion}
       />
       <Input
         type="text"
@@ -60,6 +61,7 @@ export default function NewQuestion() {
         onChange={(e) =>
           setPostData({ ...postData, realQuestion: e.target.value })
         }
+        value={postData.realQuestion}
       />
       <Button type="submit">POST</Button>
     </Form>
