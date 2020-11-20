@@ -1,19 +1,5 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import {
-  Wrapper,
-  TitleContainer,
-  Title,
-  ViewRequestsLink,
-  FriendCard,
-  FriendCardsContainer,
-  FriendAvatarContainer,
-  FriendAvatar,
-  FriendDetails,
-  FriendName,
-  FriendButtons,
-  FriendButton,
-} from "../../styles/Friends.style";
 import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
 import NewQuestion from "../../utils/svg/NewQuestion.svg";
 import AddFriendIcon from "../../utils/svg/AddFriendIcon.svg";
@@ -109,43 +95,5 @@ export default function Requests() {
     });
   };
 
-  return (
-    <>
-      <Head>
-        <title>Friend Requests</title>
-      </Head>
-      <Wrapper>
-        <TitleContainer>
-          <Title>Friend Requests - {friendsData.length}</Title>
-        </TitleContainer>
-        {friendsData.map((friend: any) => (
-          <FriendCardsContainer key={friend.userId}>
-            <FriendCard>
-              <FriendAvatarContainer>
-                <FriendAvatar src={friend.avatar} alt="avatar" />
-              </FriendAvatarContainer>
-              <FriendDetails>
-                <FriendName>{friend.email}</FriendName>
-                <FriendButtons>
-                  <FriendButton
-                    variant="black"
-                    danger
-                    onClick={() => rejectFriend(friend.userId)}
-                  >
-                    <RemoveIcon />
-                  </FriendButton>
-                  <FriendButton
-                    variant="black"
-                    onClick={() => acceptFriend(friend.userId)}
-                  >
-                    <AddFriendIcon />
-                  </FriendButton>
-                </FriendButtons>
-              </FriendDetails>
-            </FriendCard>
-          </FriendCardsContainer>
-        ))}
-      </Wrapper>
-    </>
-  );
+  return <></>;
 }

@@ -1,4 +1,3 @@
-import { Wrapper, Container } from "../styles/Layout.style";
 import Navbar from "./Navbar";
 import { auth } from "../config/config";
 import { useEffect } from "react";
@@ -30,13 +29,7 @@ const Layout = ({ children }: { children?: any }) => {
     });
     return () => unsubscribeFromAuth();
   }, []);
-  return (
-    <Wrapper>
-      <Container>{children}</Container>
-      <Navbar />
-      <ToastContainer />
-    </Wrapper>
-  );
+  return <div>{children}</div>;
 };
 
 export default Layout;
