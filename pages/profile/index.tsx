@@ -18,6 +18,12 @@ import {
   Username,
   UpdateAvatarButton,
   VisibleUpdateAvatarButton,
+  FriendsWrapper,
+  FriendsInnerContainer,
+  FriendContainer,
+  FriendAvatar,
+  FriendName,
+  CarouselButton,
 } from "../../styles/Profile.style";
 
 export default function Profile() {
@@ -160,6 +166,39 @@ export default function Profile() {
           </AvatarContainer>
           <Username>{currentUser.email.split("@")[0]}</Username>
         </ProfileContainer>
+        <FriendsWrapper>
+          <CarouselButton
+            onClick={() => {
+              if (slideIndex <= friendsData.length - 5) {
+                setSlidePos((prevState) => prevState - 70);
+                setSlideIndex((prevState) => (prevState += 1));
+              }
+            }}
+          >
+            <CaretLeft />
+          </CarouselButton>
+          <FriendsInnerContainer>
+            {friendsData.map((frnd: any) => (
+              <Link href={`/profile/${frnd.userId}`} passHref>
+                <FriendContainer key={frnd.userId} pos={slidePos}>
+                  <FriendAvatar src={frnd.avatar} alt="avatar" />
+                  <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                </FriendContainer>
+              </Link>
+            ))}
+          </FriendsInnerContainer>
+          <CarouselButton
+            flip
+            onClick={() => {
+              if (slideIndex > 0) {
+                setSlidePos((prevState) => prevState + 70);
+                setSlideIndex((prevState) => (prevState -= 1));
+              }
+            }}
+          >
+            <CaretRight />
+          </CarouselButton>
+        </FriendsWrapper>
         <NewsFeed title="My Posts" page="currentUser" />
       </Wrapper>
     </>
