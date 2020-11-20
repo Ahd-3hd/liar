@@ -39,6 +39,7 @@ import {
   NewCommentInput,
   NewCommentButton,
   LoginToComment,
+  MustCommentToReveal,
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
@@ -113,15 +114,27 @@ export default function NewsFeed({
             <QuestionSection>
               <NameButtonsContainer>
                 <ButtonsContainer>
-                  <PostButton
-                    variant="primary"
-                    onClick={() => handleToggleReveal(post.id)}
-                  >
-                    {post.isRevealed ? <HideIcon /> : <RevealIcon />}
-                  </PostButton>
-                  <PostButton variant="danger">
-                    <RemoveIcon />
-                  </PostButton>
+                  {post.commentorsIds.includes(currentUser?.userId) ||
+                  currentUser?.userId === post.userId ? (
+                    <PostButton
+                      variant="primary"
+                      onClick={() => handleToggleReveal(post.id)}
+                    >
+                      {post.isRevealed ? <HideIcon /> : <RevealIcon />}
+                    </PostButton>
+                  ) : (
+                    <MustCommentToReveal>
+                      Comment to
+                      <br />
+                      reveal
+                    </MustCommentToReveal>
+                  )}
+
+                  {currentUser?.userId === post?.userId && (
+                    <PostButton variant="danger">
+                      <RemoveIcon />
+                    </PostButton>
+                  )}
                 </ButtonsContainer>
                 <Link
                   href={`/profile/${

@@ -51,7 +51,10 @@ export const QuestionText = styled.p<{ status: boolean }>`
   margin: ${({ theme: { spaces } }) => spaces.md} 0;
   transition: 0.3s;
 `;
-export const ButtonsContainer = styled.div``;
+export const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 export const PostButton = styled.button<{ variant: string }>`
   background: ${({ theme: { colors }, variant }) =>
     variant === "danger" ? colors.danger : colors.primary};
@@ -195,4 +198,10 @@ export const LoginToComment = styled.a`
   text-align: center;
   margin: ${({ theme: { spaces } }) => spaces.md} 0;
   text-decoration: none;
+`;
+
+export const MustCommentToReveal = styled.p`
+  color: ${({ theme: { colors } }) => colors.dark};
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+  text-align: center;
 `;
