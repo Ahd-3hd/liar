@@ -10,6 +10,6 @@ export const Wrapper = styled.div`
 `;
 export const Container = styled.div`
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  /* border: 1px solid rgba(0, 0, 0, 0.03); */
   padding: ${({ theme: { spaces } }) => spaces.md};
 `;
