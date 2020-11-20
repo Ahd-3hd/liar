@@ -188,3 +188,11 @@ export const NewCommentButton = styled.button`
     fill: ${({ theme: { colors } }) => colors.white};
   }
 `;
+
+export const LoginToComment = styled.a`
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.primary};
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.md} 0;
+  text-decoration: none;
+`;

@@ -38,6 +38,7 @@ import {
   NewCommentInputContainer,
   NewCommentInput,
   NewCommentButton,
+  LoginToComment,
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
@@ -182,29 +183,37 @@ export default function NewsFeed({
                 </NameCommentContainer>
               </CommentContainer>
             ))}
-            <NewCommentContainer
-              onSubmit={(e) => handleCommentSubmit(e, post.id)}
-            >
-              <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
-              <NewCommentInputContainer>
-                <NewCommentInput
-                  type="text"
-                  placeholder="Write your answer..."
-                  onChange={(e) => setCommentText(e.target.value)}
-                  onFocus={() => {
-                    setCommentText("");
-                    setActiveComment(post.id);
-                  }}
-                  onBlur={() => {
-                    setActiveComment(null);
-                  }}
-                  value={post.id === activeComment ? commentText : ""}
-                />
-                <NewCommentButton type="submit">
-                  <SendButton />
-                </NewCommentButton>
-              </NewCommentInputContainer>
-            </NewCommentContainer>
+            {currentUser ? (
+              <NewCommentContainer
+                onSubmit={(e) => handleCommentSubmit(e, post.id)}
+              >
+                <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
+                <NewCommentInputContainer>
+                  <NewCommentInput
+                    type="text"
+                    placeholder="Write your answer..."
+                    onChange={(e) => setCommentText(e.target.value)}
+                    onFocus={() => {
+                      setCommentText("");
+                      setActiveComment(post.id);
+                    }}
+                    onBlur={() => {
+                      setActiveComment(null);
+                    }}
+                    value={post.id === activeComment ? commentText : ""}
+                  />
+                  <NewCommentButton type="submit">
+                    <SendButton />
+                  </NewCommentButton>
+                </NewCommentInputContainer>
+              </NewCommentContainer>
+            ) : (
+              <Link href="/login/" passHref>
+                <LoginToComment>
+                  You need to be logged in to comment
+                </LoginToComment>
+              </Link>
+            )}
           </CommentsSection>
         </PostCard>
       ))}
