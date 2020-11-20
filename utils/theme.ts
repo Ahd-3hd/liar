@@ -13,8 +13,19 @@ export interface FontSizes {
   lg: string;
   xl: string;
 }
-export interface FontWeights {}
-export interface Colors {}
+export interface FontWeights {
+  normal: string;
+  medium: string;
+  bold: string;
+  extraBold: string;
+}
+export interface Colors {
+  primary: string;
+  secondary: string;
+  dark: string;
+  danger: string;
+  white: string;
+}
 
 export interface BreakPoints {
   sm: string;
