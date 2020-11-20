@@ -11,6 +11,31 @@ import {
 } from "../redux/posts/postsSlice";
 import firebase from "../config/config";
 import { v4 as uuidv4 } from "uuid";
+import {
+  Wrapper,
+  PostCard,
+  PostSection,
+  PosterAvatar,
+  PosterName,
+  QuestionSection,
+  QuestionText,
+  ButtonsContainer,
+  PostButton,
+  NameButtonsContainer,
+  PosterAvatarContainer,
+  Divider,
+  DividerSpan,
+  DividerLine,
+  CommentsSection,
+  CommentContainer,
+  CommentAvatarContainer,
+  CommentAvatar,
+  CommentorName,
+  CommentText,
+  NameCommentContainer,
+} from "../styles/NewsFeed.style";
+import RemoveIcon from "../utils/svg/RemoveIcon.svg";
+import HideIcon from "../utils/svg/HideIcon.svg";
 
 export default function NewsFeed({
   title,
@@ -71,5 +96,52 @@ export default function NewsFeed({
   const handleToggleReveal = (postId: string) => {
     dispatch(toggleReveal(postId));
   };
-  return <div></div>;
+  return (
+    <Wrapper>
+      {posts.map((post: IPost) => (
+        <PostCard key={post.id}>
+          <PostSection>
+            <QuestionSection>
+              <NameButtonsContainer>
+                <ButtonsContainer>
+                  <PostButton variant="primary">
+                    <HideIcon />
+                  </PostButton>
+                  <PostButton variant="danger">
+                    <RemoveIcon />
+                  </PostButton>
+                </ButtonsContainer>
+                <PosterName>{post.email.split("@")[0]}</PosterName>
+              </NameButtonsContainer>
+              <QuestionText status={post.isRevealed}>
+                {post.fakeQuestion}
+              </QuestionText>
+            </QuestionSection>
+            <PosterAvatarContainer>
+              <PosterAvatar src={post.avatar} alt="avatar" />
+            </PosterAvatarContainer>
+          </PostSection>
+          <Divider>
+            <DividerSpan>COMMENTS</DividerSpan>
+            <DividerLine />
+          </Divider>
+          <CommentsSection>
+            {post.comments.map((comment: any) => (
+              <CommentContainer key={comment.id}>
+                <CommentAvatarContainer>
+                  <CommentAvatar src={comment.avatar} alt="avatar" />
+                </CommentAvatarContainer>
+                <NameCommentContainer>
+                  <CommentorName>
+                    {comment.username.split("@")[0]}
+                  </CommentorName>
+                  <CommentText>{comment.commentText}</CommentText>
+                </NameCommentContainer>
+              </CommentContainer>
+            ))}
+          </CommentsSection>
+        </PostCard>
+      ))}
+    </Wrapper>
+  );
 }

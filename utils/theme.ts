@@ -71,7 +71,7 @@ export const colors = {
   dark: "#333333",
   danger: "#FE156E",
   white: "#ffffff",
-  grey: "#F9F9F9",
+  grey: "#f0f0f0",
 };
 
 export interface Theme {

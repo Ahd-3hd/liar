@@ -1,6 +1,5 @@
 import Document, { DocumentContext } from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import Head from "next/head";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -18,13 +17,6 @@ export default class MyDocument extends Document {
         ...initialProps,
         styles: (
           <>
-            <Head>
-              <link rel="preconnect" href="https://fonts.gstatic.com" />
-              <link
-                href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap"
-                rel="stylesheet"
-              />
-            </Head>
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>

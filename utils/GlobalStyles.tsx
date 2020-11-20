@@ -10,6 +10,5 @@ export default createGlobalStyle`
     body{
         margin:0;
         font-size:16px;
-        font-family: 'Fira Sans', sans-serif;
     }
 `;
