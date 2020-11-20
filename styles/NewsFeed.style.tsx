@@ -49,6 +49,7 @@ export const QuestionText = styled.p<{ status: boolean }>`
   border-radius: 45px 10px 45px 45px;
   color: ${({ theme: { colors } }) => colors.white};
   margin: ${({ theme: { spaces } }) => spaces.md} 0;
+  transition: 0.3s;
 `;
 export const ButtonsContainer = styled.div``;
 export const PostButton = styled.button<{ variant: string }>`

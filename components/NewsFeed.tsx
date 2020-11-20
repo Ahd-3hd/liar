@@ -41,6 +41,7 @@ import {
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
+import RevealIcon from "../utils/svg/RevealIcon.svg";
 import SendButton from "../utils/svg/SendIcon.svg";
 
 export default function NewsFeed({
@@ -78,6 +79,7 @@ export default function NewsFeed({
     id: string
   ) => {
     e.preventDefault();
+    if (commentText.length <= 0) return;
     const newComment = {
       commentText: commentText,
       username: currentUser.email,
@@ -110,8 +112,11 @@ export default function NewsFeed({
             <QuestionSection>
               <NameButtonsContainer>
                 <ButtonsContainer>
-                  <PostButton variant="primary">
-                    <HideIcon />
+                  <PostButton
+                    variant="primary"
+                    onClick={() => handleToggleReveal(post.id)}
+                  >
+                    {post.isRevealed ? <HideIcon /> : <RevealIcon />}
                   </PostButton>
                   <PostButton variant="danger">
                     <RemoveIcon />
@@ -127,7 +132,7 @@ export default function NewsFeed({
                 </Link>
               </NameButtonsContainer>
               <QuestionText status={post.isRevealed}>
-                {post.fakeQuestion}
+                {post.isRevealed ? post.realQuestion : post.fakeQuestion}
               </QuestionText>
             </QuestionSection>
             <Link
@@ -177,15 +182,25 @@ export default function NewsFeed({
                 </NameCommentContainer>
               </CommentContainer>
             ))}
-            <NewCommentContainer>
+            <NewCommentContainer
+              onSubmit={(e) => handleCommentSubmit(e, post.id)}
+            >
               <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
               <NewCommentInputContainer>
                 <NewCommentInput
                   type="text"
-                  required
                   placeholder="Write your answer..."
+                  onChange={(e) => setCommentText(e.target.value)}
+                  onFocus={() => {
+                    setCommentText("");
+                    setActiveComment(post.id);
+                  }}
+                  onBlur={() => {
+                    setActiveComment(null);
+                  }}
+                  value={post.id === activeComment ? commentText : ""}
                 />
-                <NewCommentButton>
+                <NewCommentButton type="submit">
                   <SendButton />
                 </NewCommentButton>
               </NewCommentInputContainer>
