@@ -1,4 +1,5 @@
 import Navbar from "./Navbar";
+import { Wrapper, Container } from "../styles/Layout.style";
 import { auth } from "../config/config";
 import { useEffect } from "react";
 import firebase from "../config/config";
@@ -29,7 +30,11 @@ const Layout = ({ children }: { children?: any }) => {
     });
     return () => unsubscribeFromAuth();
   }, []);
-  return <div>{children}</div>;
+  return (
+    <Wrapper>
+      <Container>{children}</Container>
+    </Wrapper>
+  );
 };
 
 export default Layout;

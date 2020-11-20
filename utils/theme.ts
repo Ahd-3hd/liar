@@ -25,6 +25,7 @@ export interface Colors {
   dark: string;
   danger: string;
   white: string;
+  grey: string;
 }
 
 export interface BreakPoints {
@@ -70,6 +71,7 @@ export const colors = {
   dark: "#333333",
   danger: "#FE156E",
   white: "#ffffff",
+  grey: "#F9F9F9",
 };
 
 export interface Theme {

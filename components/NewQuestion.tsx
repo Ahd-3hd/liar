@@ -3,6 +3,7 @@ import { addPost } from "../redux/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import firebase, { auth } from "../config/config";
 import { useRouter } from "next/router";
+import { Form, Input, Button } from "../styles/NewQuestion.style";
 
 export default function NewQuestion() {
   const router = useRouter();
@@ -42,5 +43,25 @@ export default function NewQuestion() {
     });
   };
 
-  return <div></div>;
+  return (
+    <Form onSubmit={addPostDispatch}>
+      <Input
+        type="text"
+        required
+        placeholder='FAKE QUESTION "appears first"'
+        onChange={(e) =>
+          setPostData({ ...postData, fakeQuestion: e.target.value })
+        }
+      />
+      <Input
+        type="text"
+        required
+        placeholder='REAL QUESTION "appears after comment"'
+        onChange={(e) =>
+          setPostData({ ...postData, realQuestion: e.target.value })
+        }
+      />
+      <Button type="submit">POST</Button>
+    </Form>
+  );
 }
