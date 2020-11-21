@@ -141,3 +141,13 @@ export const AddRemoveUndoButton = styled.button<{ variant: string }>`
   min-width: 100px;
   margin-top: ${({ theme: { spaces } }) => spaces.md};
 `;
+
+export const FriendRequestsLink = styled.a`
+  text-align: center;
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.primary};
+`;
+export const FriendsLinkContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;

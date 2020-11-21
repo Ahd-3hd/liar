@@ -10,7 +10,18 @@ import {
   acceptFriendRequest,
   rejectFriendRequest,
 } from "../../redux/auth/authSlice";
-
+import {
+  Wrapper,
+  Title,
+  RequestContainer,
+  FriendAvatar,
+  RequestText,
+  FriendName,
+  RequestButton,
+  Container,
+  FriendAvatarContainer,
+} from "../../styles/Friends.style";
+import Link from "next/link";
 export default function Requests() {
   const dispatch = useDispatch();
 
@@ -93,7 +104,46 @@ export default function Requests() {
       const removeRequest = prevState.filter((frnd: any) => frnd.userId !== id);
       return removeRequest;
     });
+    dispatch(rejectFriendRequest(id));
   };
 
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>Friend Requests</title>
+      </Head>
+      <Wrapper>
+        <Title>Friend Requests - {friendsData.length}</Title>
+        <Container>
+          {friendsData.map((frnd: any) => (
+            <RequestContainer key={frnd.userId}>
+              <Link href={`/profile/${frnd.userId}`} passHref>
+                <FriendAvatarContainer>
+                  <FriendAvatar src={frnd.avatar} alt="avatar" />
+                </FriendAvatarContainer>
+              </Link>
+              <RequestText>
+                <Link href={`/profile/${frnd.userId}`} passHref>
+                  <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                </Link>
+                Has sent you a friend request.
+              </RequestText>
+              <RequestButton
+                variant="primary"
+                onClick={() => acceptFriend(frnd.userId)}
+              >
+                <AddFriendIcon />
+              </RequestButton>
+              <RequestButton
+                variant="danger"
+                onClick={() => rejectFriend(frnd.userId)}
+              >
+                <RemoveIcon />
+              </RequestButton>
+            </RequestContainer>
+          ))}
+        </Container>
+      </Wrapper>
+    </>
+  );
 }

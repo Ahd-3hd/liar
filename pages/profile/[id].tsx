@@ -1,6 +1,5 @@
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import firebase from "../../config/config";
 import { useRouter } from "next/router";
@@ -31,7 +30,6 @@ export default function FriendProfile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
-  const [isFriendExists, setIsFriendExists] = useState(false);
   const fetchFriendData = async (friendId: any) => {
     const friendData = await firebase
       .firestore()
