@@ -24,6 +24,7 @@ import {
   FriendAvatar,
   FriendName,
   CarouselButton,
+  NoFriends,
 } from "../../styles/Profile.style";
 
 export default function Profile() {
@@ -114,14 +115,16 @@ export default function Profile() {
       .where("userId", "==", friendId)
       .get();
     fetchedFriend.forEach((frnd) => {
-      setFriendsData((prevState: any) => [
-        ...prevState,
-        {
-          userId: frnd.data().userId,
-          avatar: frnd.data().avatar,
-          email: frnd.data().email,
-        },
-      ]);
+      setFriendsData((prevState: any) => {
+        return [
+          ...prevState,
+          {
+            userId: frnd.data().userId,
+            avatar: frnd.data().avatar,
+            email: frnd.data().email,
+          },
+        ];
+      });
     });
   };
 
@@ -166,39 +169,47 @@ export default function Profile() {
           </AvatarContainer>
           <Username>{currentUser.email.split("@")[0]}</Username>
         </ProfileContainer>
-        <FriendsWrapper>
-          <CarouselButton
-            onClick={() => {
-              if (slideIndex <= friendsData.length - 5) {
-                setSlidePos((prevState) => prevState - 70);
-                setSlideIndex((prevState) => (prevState += 1));
-              }
-            }}
-          >
-            <CaretLeft />
-          </CarouselButton>
-          <FriendsInnerContainer>
-            {friendsData.map((frnd: any) => (
-              <Link href={`/profile/${frnd.userId}`} passHref>
-                <FriendContainer key={frnd.userId} pos={slidePos}>
-                  <FriendAvatar src={frnd.avatar} alt="avatar" />
-                  <FriendName>{frnd.email.split("@")[0]}</FriendName>
-                </FriendContainer>
-              </Link>
-            ))}
-          </FriendsInnerContainer>
-          <CarouselButton
-            flip
-            onClick={() => {
-              if (slideIndex > 0) {
-                setSlidePos((prevState) => prevState + 70);
-                setSlideIndex((prevState) => (prevState -= 1));
-              }
-            }}
-          >
-            <CaretRight />
-          </CarouselButton>
-        </FriendsWrapper>
+        {friendsData.length > 0 ? (
+          <FriendsWrapper>
+            <CarouselButton
+              onClick={() => {
+                if (slideIndex <= friendsData.length - 5) {
+                  setSlidePos((prevState) => prevState - 70);
+                  setSlideIndex((prevState) => (prevState += 1));
+                }
+              }}
+            >
+              <CaretLeft />
+            </CarouselButton>
+            <FriendsInnerContainer>
+              {friendsData.map((frnd: any) => (
+                <Link
+                  href={`/profile/${frnd.userId}`}
+                  passHref
+                  key={frnd.userId}
+                >
+                  <FriendContainer pos={slidePos}>
+                    <FriendAvatar src={frnd.avatar} alt="avatar" />
+                    <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                  </FriendContainer>
+                </Link>
+              ))}
+            </FriendsInnerContainer>
+            <CarouselButton
+              flip
+              onClick={() => {
+                if (slideIndex > 0) {
+                  setSlidePos((prevState) => prevState + 70);
+                  setSlideIndex((prevState) => (prevState -= 1));
+                }
+              }}
+            >
+              <CaretRight />
+            </CarouselButton>
+          </FriendsWrapper>
+        ) : (
+          <NoFriends>You don't have any friends yet</NoFriends>
+        )}
         <NewsFeed title="My Posts" page="currentUser" />
       </Wrapper>
     </>

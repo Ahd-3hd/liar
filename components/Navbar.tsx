@@ -13,10 +13,13 @@ import HomeIcon from "../utils/svg/HomeIcon.svg";
 import LogoutIcon from "../utils/svg/LogoutIcon.svg";
 
 export default function Navbar() {
+  const handleSignout = async () => {
+    await auth.signOut();
+  };
   return (
     <Wrapper>
       <Container>
-        <NavButton>
+        <NavButton onClick={handleSignout}>
           <LogoutIcon />
           <NavSpan>LOGOUT</NavSpan>
         </NavButton>

@@ -231,3 +231,11 @@ export const FirstComment = styled.p`
   margin: ${({ theme: { spaces } }) => spaces.md};
   color: ${({ theme: { colors } }) => colors.dark};
 `;
+
+export const NoPosts = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.xl};
+  color: ${({ theme: { colors } }) => colors.primary};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;

@@ -109,3 +109,8 @@ export const CarouselButton = styled.button<{ flip?: boolean }>`
     background: ${({ theme: { colors } }) => colors.primary};
   }
 `;
+
+export const NoFriends = styled.p`
+  text-align: center;
+  color: ${({ theme: { colors } }) => colors.dark + "95"};
+`;

@@ -41,6 +41,7 @@ import {
   LoginToComment,
   MustCommentToReveal,
   FirstComment,
+  NoPosts,
 } from "../styles/NewsFeed.style";
 import RemoveIcon from "../utils/svg/RemoveIcon.svg";
 import HideIcon from "../utils/svg/HideIcon.svg";
@@ -107,6 +108,14 @@ export default function NewsFeed({
   const handleToggleReveal = (postId: string) => {
     dispatch(toggleReveal(postId));
   };
+
+  if (posts.length === 0) {
+    return (
+      <Wrapper>
+        <NoPosts>There's no Posts yet ...</NoPosts>
+      </Wrapper>
+    );
+  }
   return (
     <Wrapper>
       {posts.map((post: IPost) => (
