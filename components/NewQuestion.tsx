@@ -3,10 +3,18 @@ import { addPost } from "../redux/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import firebase, { auth } from "../config/config";
 import { useRouter } from "next/router";
-import { Form, Input, Button } from "../styles/NewQuestion.style";
+import {
+  Form,
+  Input,
+  Button,
+  HintButton,
+  HintOverlay,
+  HintParagraph,
+} from "../styles/NewQuestion.style";
 
 export default function NewQuestion() {
   const router = useRouter();
+  const [showHint, setShowHint] = useState(false);
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
@@ -64,6 +72,34 @@ export default function NewQuestion() {
         value={postData.realQuestion}
       />
       <Button type="submit">POST</Button>
+      <HintButton
+        onClick={() => setShowHint((prevState) => !prevState)}
+        type="button"
+      >
+        What is this?
+      </HintButton>
+      <HintOverlay showHint={showHint}>
+        <HintParagraph>
+          This is a work in progress social media platform (more features
+          coming)
+        </HintParagraph>
+        <HintParagraph>
+          The Point of it is some sort of a silly game
+        </HintParagraph>
+        <HintParagraph>
+          1- the fake question is to bait answers from people eg: how old are
+          you?
+        </HintParagraph>
+        <HintParagraph>
+          2- the real question is the question that will make the answer sound
+          funny eg: What's your I.Q. ?
+        </HintParagraph>
+        <HintParagraph>
+          3- this will make it look like as if someone said that his/her I.Q. is
+          eg: 28.
+        </HintParagraph>
+        <HintParagraph>3- get creative *wink wink*</HintParagraph>
+      </HintOverlay>
     </Form>
   );
 }

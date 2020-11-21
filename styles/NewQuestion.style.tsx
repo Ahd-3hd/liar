@@ -50,3 +50,22 @@ export const Button = styled.button`
     box-shadow: 0 2px 4px ${({ theme: { colors } }) => colors.dark + "40"};
   }
 `;
+
+export const HintButton = styled.button`
+  margin-top: ${({ theme: { spaces } }) => spaces.md};
+  background: transparent;
+  border: none;
+  color: ${({ theme: { colors } }) => colors.primary};
+  cursor: pointer;
+  outline: none;
+`;
+export const HintOverlay = styled.div<{ showHint: boolean }>`
+  transition: 0.3s;
+  height: ${({ showHint }) => (showHint ? "auto" : "0")};
+  opacity: ${({ showHint }) => (showHint ? "1" : "0")};
+  overflow: hidden;
+`;
+export const HintParagraph = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  color: ${({ theme: { colors } }) => colors.dark};
+`;
