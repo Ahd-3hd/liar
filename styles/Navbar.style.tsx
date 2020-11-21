@@ -10,7 +10,6 @@ export const Wrapper = styled.nav`
   justify-content: center;
 `;
 export const Container = styled.div`
-  /* background: ${({ theme: { colors } }) => colors.white}; */
   display: flex;
   align-items: center;
   justify-content: center;

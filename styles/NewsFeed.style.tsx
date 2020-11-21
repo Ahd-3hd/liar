@@ -57,8 +57,7 @@ export const ButtonsContainer = styled.div`
   align-items: center;
 `;
 export const PostButton = styled.button<{ variant: string }>`
-  background: ${({ theme: { colors }, variant }) =>
-    variant === "danger" ? colors.danger : colors.primary};
+  background: transparent;
   border: none;
   padding: ${({ theme: { spaces } }) => spaces.sm};
   width: ${({ theme: { spaces } }) => spaces.xl};
@@ -69,13 +68,24 @@ export const PostButton = styled.button<{ variant: string }>`
   cursor: pointer;
   border-radius: 5px;
   transition: background 0.3s;
-  :hover {
-    background: ${({ theme: { colors }, variant }) =>
+  border: 1px solid
+    ${({ theme: { colors }, variant }) =>
       variant === "danger" ? colors.danger + "99" : colors.primary + "99"};
-  }
+  transition: border 0.3s;
   svg {
     height: 18px;
-    fill: ${({ theme: { colors } }) => colors.white};
+    fill: ${({ theme: { colors }, variant }) =>
+      variant === "danger" ? colors.danger + "99" : colors.primary + "99"};
+    transition: fill 0.4s;
+  }
+  :hover {
+    border: 1px solid
+      ${({ theme: { colors }, variant }) =>
+        variant === "danger" ? colors.danger : colors.primary};
+    svg {
+      fill: ${({ theme: { colors }, variant }) =>
+        variant === "danger" ? colors.danger : colors.primary};
+    }
   }
 `;
 export const NameButtonsContainer = styled.div`
