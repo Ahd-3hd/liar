@@ -14,20 +14,18 @@ export interface FontSizes {
   xl: string;
 }
 export interface FontWeights {
-  thin: string;
   normal: string;
   medium: string;
   bold: string;
+  extraBold: string;
 }
 export interface Colors {
-  black: string;
-  red: string;
-  blue: string;
-  darkblue: string;
+  primary: string;
+  secondary: string;
+  dark: string;
+  danger: string;
   white: string;
   grey: string;
-  text: string;
-  darkred: string;
 }
 
 export interface BreakPoints {
@@ -46,10 +44,10 @@ export const fontSizes: FontSizes = {
 };
 
 export const fontWeights: FontWeights = {
-  thin: "400",
-  normal: "500",
-  medium: "600",
-  bold: "700",
+  normal: "400",
+  medium: "500",
+  bold: "600",
+  extraBold: "700",
 };
 
 export const breakpoints: BreakPoints = {
@@ -68,14 +66,12 @@ export const spaces: Space = {
 };
 
 export const colors = {
-  black: "#231F20",
-  red: "#FF83CB",
-  blue: "#8CCFFA",
-  darkblue: "#1F44A4",
+  primary: "#265CFA",
+  secondary: "#404965",
+  dark: "#333333",
+  danger: "#FE156E",
   white: "#ffffff",
-  grey: "#EEEEEE",
-  text: "#333555",
-  darkred: "#F14747",
+  grey: "#f0f0f0",
 };
 
 export interface Theme {

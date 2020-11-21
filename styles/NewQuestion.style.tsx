@@ -1,39 +1,71 @@
 import styled from "styled-components";
 
 export const Form = styled.form`
-  padding: ${({ theme: { spaces } }) => spaces.md};
   display: flex;
   flex-direction: column;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  border-radius: 16px;
 `;
-export const QuestionGroup = styled.div<{ reverse?: boolean }>`
-  display: flex;
-  align-items: flex-start;
-  margin: ${({ theme: { spaces } }) => spaces.sm + " 0"};
-  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
-  > img {
-    ${({ reverse }) => (reverse ? "margin-right:1rem;" : "margin-left:1rem;")};
-  }
-`;
-export const TextArea = styled.textarea`
-  flex: 3;
-  resize: none;
-  height: 4em;
-  border-radius: 0.3rem;
-  border: 1px solid ${({ theme: { colors } }) => colors.grey + "77"};
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.text};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
 
+export const Input = styled.input`
+  height: 3em;
+  margin-bottom: ${({ theme: { spaces } }) => spaces.md};
+  border-radius: 5px;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  outline: none;
+  transition: all 0.5s;
+  background: ${({ theme: { colors } }) => colors.grey};
+  font-family: inherit;
+  padding-left: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.dark};
+
+  ::placeholder {
+    font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+  }
   :focus {
-    outline: none;
-    border: 1px solid ${({ theme: { colors } }) => colors.blue + "77"};
-    box-shadow: 0px 0px 10px ${({ theme: { colors } }) => colors.blue + "22"};
-    transition: 0.3s;
+    box-shadow: 0 0 2px ${({ theme: { colors } }) => colors.primary};
+    border-color: ${({ theme: { colors } }) => colors.primary + "15"};
   }
 `;
-export const QuestionImg = styled.img`
-  width: 60px;
-  flex: 1;
-  max-width: 60px;
+
+export const Button = styled.button`
+  height: 3em;
+  background: ${({ theme: { colors } }) => colors.primary};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
+  color: ${({ theme: { colors } }) => colors.white};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 14px ${({ theme: { colors } }) => colors.dark + "40"};
+  transition: all 0.3s;
+  outline: none;
+  :hover {
+    background: ${({ theme: { colors } }) => colors.primary + "99"};
+  }
+  :active {
+    box-shadow: 0 2px 4px ${({ theme: { colors } }) => colors.dark + "40"};
+  }
+`;
+
+export const HintButton = styled.button`
+  margin-top: ${({ theme: { spaces } }) => spaces.md};
+  background: transparent;
+  border: none;
+  color: ${({ theme: { colors } }) => colors.primary};
+  cursor: pointer;
+  outline: none;
+`;
+export const HintOverlay = styled.div<{ showHint: boolean }>`
+  transition: 0.3s;
+  height: ${({ showHint }) => (showHint ? "auto" : "0")};
+  opacity: ${({ showHint }) => (showHint ? "1" : "0")};
+  overflow: hidden;
+`;
+export const HintParagraph = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  color: ${({ theme: { colors } }) => colors.dark};
 `;

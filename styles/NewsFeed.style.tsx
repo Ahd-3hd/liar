@@ -1,201 +1,256 @@
 import styled from "styled-components";
-import { Card } from "../components/Card";
 
-export const Wrapper = styled.section``;
-export const Title = styled.p`
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.text};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
-`;
-export const NoPosts = styled.p`
-  text-align: center;
-  padding: ${({ theme: { spaces } }) => spaces.md};
-  background: ${({ theme: { colors } }) => colors.grey};
-`;
-export const CardsContainer = styled.div``;
-export const NewsFeedCard = styled(Card)`
-  padding: 0.5rem;
-  margin: ${({ theme: { spaces } }) => spaces.lg} 0;
-  color: ${({ theme: { colors } }) => colors.text};
-  animation: fade_in 1.5s forwards;
-
-  @keyframes fade_in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
-export const NewsFeedPosterSection = styled.div`
+export const Wrapper = styled.div``;
+export const PostCard = styled.div`
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.dark};
   display: flex;
-  align-items: flex-start;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  flex-direction: column;
+  background: ${({ theme: { colors } }) => colors.white};
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  border-radius: 10px;
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  margin: ${({ theme: { spaces } }) => spaces.lg} 0;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.03);
 `;
-export const AvatarContainer = styled.a`
-  display: block;
-  margin-right: 1rem;
+export const PostSection = styled.div`
+  display: flex;
+`;
+export const PosterAvatarContainer = styled.a`
+  flex: 1;
+  width: 70px;
+  height: 70px;
+  border-radius: 70px;
+  margin-left: ${({ theme: { spaces } }) => spaces.md};
   cursor: pointer;
 `;
 export const PosterAvatar = styled.img`
-  width: 100%;
-  max-width: 100px;
-  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+  border-radius: 200px;
 `;
-export const PostContainer = styled.div`
-  width: 100%;
+export const PosterName = styled.a`
+  display: block;
+  max-width: 10ch;
+  word-wrap: break-word;
+  margin: 0;
+  justify-self: flex-end;
+  color: ${({ theme: { colors } }) => colors.primary};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  text-transform: uppercase;
+  text-decoration: none;
 `;
-export const NameRevealContainer = styled.div`
+export const QuestionSection = styled.div`
+  flex: 7;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+export const QuestionText = styled.a<{ status: boolean }>`
+  text-decoration: none;
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors }, status }) =>
+    status ? colors.primary : colors.dark};
+  align-self: stretch;
+  text-align: right;
+  border-radius: 45px 10px 45px 45px;
+  color: ${({ theme: { colors } }) => colors.white};
+  margin: ${({ theme: { spaces } }) => spaces.md} 0;
+  transition: 0.3s;
+  position: relative;
+  ::after {
+    content: "Click to open post in a new tab";
+    position: absolute;
+    text-align: right;
+    bottom: -110%;
+    left: -5%;
+    width: 100%;
+    height: 100%;
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  }
+`;
+export const ButtonsContainer = styled.div`
+  display: flex;
   align-items: center;
 `;
-export const RevealButton = styled.button<{ isRevealed?: boolean }>`
+export const PostButton = styled.button<{ variant: string }>`
+  background: transparent;
   border: none;
-  background: ${({ theme: { colors }, isRevealed }) =>
-    isRevealed ? colors.darkred : colors.black};
-  color: ${({ theme: { colors } }) => colors.white};
   padding: ${({ theme: { spaces } }) => spaces.sm};
-  border-radius: 0.3rem;
-  cursor: pointer;
-  transition: 1s;
-`;
-export const PosterName = styled.p`
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
-  margin: 0;
-`;
-export const PosterQuestion = styled.p`
-  color: ${({ theme: { colors } }) => colors.text};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  line-height: 140%;
-  animation: fade_in 1.5s forwards;
-
-  @keyframes fade_in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
-
-export const NewsFeedCommentsSection = styled.div``;
-export const CommentorAvatarContainer = styled.div`
-  margin-right: 1rem;
-`;
-export const CommentorAvatar = styled.img`
-  width: 100%;
-  max-width: 60px;
-  border-radius: 100%;
-`;
-export const CommentorContainer = styled.div`
-  flex: 1;
-`;
-export const CommentorName = styled.p`
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
-  margin: 0;
-`;
-export const Comment = styled.p`
-  font-size: 15px;
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.normal};
-  line-height: 140%;
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-  background: ${({ theme: { colors } }) => colors.grey + "55"};
-  border-radius: 0.5rem;
-  margin: ${({ theme: { spaces } }) => spaces.sm} 0;
-`;
-export const NoComments = styled.p`
-  text-align: center;
-  background: ${({ theme: { colors } }) => colors.grey};
-  padding: ${({ theme: { spaces } }) => spaces.md} 0;
-`;
-
-export const NewCommentContainer = styled.form`
-  display: flex;
-  /* align-items: flex-start; */
-  margin: ${({ theme: { spaces } }) => spaces.sm};
-`;
-
-export const TextArea = styled.textarea`
-  flex: 9;
-  resize: none;
-  height: 4em;
-  border-radius: 0.3rem;
-  border: 1px solid ${({ theme: { colors } }) => colors.grey + "77"};
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.text};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
-
-  :focus {
-    outline: none;
-    border: 1px solid ${({ theme: { colors } }) => colors.blue + "77"};
-    box-shadow: 0px 0px 10px ${({ theme: { colors } }) => colors.blue + "22"};
-    transition: 0.3s;
-  }
-`;
-export const UserCommentAvatarContainer = styled.div`
-  flex: 1;
+  width: ${({ theme: { spaces } }) => spaces.xl};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin-right: ${({ theme: { spaces } }) => spaces.md};
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+  border: 1px solid
+    ${({ theme: { colors }, variant }) =>
+      variant === "danger" ? colors.danger + "99" : colors.primary + "99"};
+  transition: border 0.3s;
+  svg {
+    height: 18px;
+    fill: ${({ theme: { colors }, variant }) =>
+      variant === "danger" ? colors.danger + "99" : colors.primary + "99"};
+    transition: fill 0.4s;
+  }
+  :hover {
+    border: 1px solid
+      ${({ theme: { colors }, variant }) =>
+        variant === "danger" ? colors.danger : colors.primary};
+    svg {
+      fill: ${({ theme: { colors }, variant }) =>
+        variant === "danger" ? colors.danger : colors.primary};
+    }
+  }
 `;
-export const UserCommentAvatar = styled.img`
+export const NameButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  border-radius: 100%;
+`;
+
+export const Divider = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const DividerSpan = styled.p`
+  margin-right: ${({ theme: { spaces } }) => spaces.sm};
+  color: ${({ theme: { colors } }) => colors.dark + "80"};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+`;
+export const DividerLine = styled.div`
+  flex: 1;
+  height: 0;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "20"};
+  border-radius: 5px;
+`;
+
+export const CommentsSection = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 export const CommentContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  padding-top: ${({ theme: { spaces } }) => spaces.sm};
-  animation: fade_in 1.5s forwards;
+  margin: ${({ theme: { spaces } }) => spaces.sm} 0;
+  padding-bottom: ${({ theme: { spaces } }) => spaces.md};
+  border-bottom: 1px solid ${({ theme: { colors } }) => colors.dark + 10};
+`;
+export const CommentAvatarContainer = styled.a`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 60px;
+  /* overflow: hidden; */
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+export const NameCommentContainer = styled.div`
+  flex: 7;
+`;
 
-  @keyframes fade_in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+export const CommentAvatar = styled.img`
+  width: 60px;
+  height: 60px;
+  max-width: 60px;
+  max-height: 60px;
+  border-radius: 60px;
+`;
+export const CommentorName = styled.a`
+  margin: 0;
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.dark};
+`;
+export const CommentText = styled.p`
+  margin: 0;
+  margin-top: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors } }) => colors.grey};
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  border-radius: 3px 15px 15px 15px;
+`;
+
+export const NewCommentContainer = styled.form`
+  display: flex;
+  width: 100%;
+`;
+export const NewCommentAvatar = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+export const NewCommentInputContainer = styled.div`
+  flex: 1;
+  display: flex;
+`;
+export const NewCommentInput = styled.input`
+  flex: 4;
+  width: 100%;
+  margin-right: ${({ theme: { spaces } }) => spaces.sm};
+  border-radius: 10px;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  outline: none;
+  transition: all 0.5s;
+  background: ${({ theme: { colors } }) => colors.grey};
+  font-family: inherit;
+  padding-left: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.dark};
+
+  ::placeholder {
+    font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+  }
+  :focus {
+    box-shadow: 0 0 2px ${({ theme: { colors } }) => colors.primary};
+    border-color: ${({ theme: { colors } }) => colors.primary + "15"};
   }
 `;
-export const CommentSubmitButton = styled.button`
-  background: ${({ theme: { colors } }) => colors.darkblue};
-  border: none;
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.white};
+export const NewCommentButton = styled.button`
   cursor: pointer;
+  border-radius: 10px;
+  flex: 0.5;
+  background: ${({ theme: { colors } }) => colors.primary};
+  border: none;
+  padding: ${({ theme: { spaces } }) => spaces.sm};
+  svg {
+    height: 15px;
+    fill: ${({ theme: { colors } }) => colors.white};
+  }
 `;
 
-export const CommentComponent = ({
-  commentorName,
-  commentText,
-  commentorAvatar,
-}: {
-  commentorName: string;
-  commentText: string;
-  commentorAvatar: string;
-}) => {
-  return (
-    <CommentContainer>
-      <CommentorAvatarContainer>
-        <CommentorAvatar src={commentorAvatar} alt="avatar" />
-      </CommentorAvatarContainer>
-      <CommentorContainer>
-        <CommentorName>{commentorName}</CommentorName>
-        <Comment>{commentText}</Comment>
-      </CommentorContainer>
-    </CommentContainer>
-  );
-};
-
 export const LoginToComment = styled.a`
-  display: block;
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.primary};
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.md} 0;
+  text-decoration: none;
+`;
+
+export const MustCommentToReveal = styled.p`
+  color: ${({ theme: { colors } }) => colors.dark};
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
   text-align: center;
   padding: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors } }) => colors.grey};
+  border-radius: 10px;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+`;
+
+export const FirstComment = styled.p`
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.md};
+  color: ${({ theme: { colors } }) => colors.dark};
+`;
+
+export const NoPosts = styled.p`
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
+  text-align: center;
+  margin: ${({ theme: { spaces } }) => spaces.xl};
+  color: ${({ theme: { colors } }) => colors.primary};
   font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.darkblue};
-  text-decoration: none;
 `;

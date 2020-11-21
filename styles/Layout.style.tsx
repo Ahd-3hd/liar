@@ -6,15 +6,10 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   padding: 2rem 0;
   padding-bottom: 0;
-  display: flex;
-`;
-
-export const Container = styled.div`
-  border: 2px solid ${({ theme: { colors } }) => colors.grey + "55"};
-  border-radius: 0.5rem;
-  width: 100%;
-  padding: ${({ theme: { spaces } }) => spaces.md};
-  padding-bottom: 0;
   position: relative;
-  margin-bottom: 7rem;
+`;
+export const Container = styled.div`
+  width: 100%;
+  /* border: 1px solid rgba(0, 0, 0, 0.03); */
+  padding: ${({ theme: { spaces } }) => spaces.md};
 `;

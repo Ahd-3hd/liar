@@ -1,13 +1,3 @@
-import {
-  Container,
-  Form,
-  Title,
-  CreateAccountLink,
-  InputGroup,
-  InputField,
-  InputLabel,
-} from "../../styles/login.style";
-import { Button } from "../../components/Buttons";
 import Link from "next/link";
 import Head from "next/head";
 import { useState, useEffect } from "react";
@@ -15,7 +5,14 @@ import { auth } from "../../config/config";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
+import {
+  Wrapper,
+  LoginForm,
+  LoginTitle,
+  Input,
+  Button,
+  SignupLink,
+} from "../../styles/login.style";
 export default function Login() {
   const router = useRouter();
   const [userData, setUserData] = useState({
@@ -44,43 +41,39 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>LOGIN</title>
       </Head>
-      <Container>
-        <Title>Login to your account</Title>
-        <Form onSubmit={handleLogin}>
-          <InputGroup>
-            <InputLabel>Email</InputLabel>
-            <InputField
-              type="email"
-              onChange={(e) =>
-                setUserData((prevState) => ({
-                  ...prevState,
-                  email: e.target.value,
-                }))
-              }
-            />
-          </InputGroup>
-          <InputGroup>
-            <InputLabel>Password</InputLabel>
-            <InputField
-              type="password"
-              onChange={(e) =>
-                setUserData((prevState) => ({
-                  ...prevState,
-                  password: e.target.value,
-                }))
-              }
-            />
-          </InputGroup>
-          <Button type="submit" variant="black">
-            Login
-          </Button>
-        </Form>
-        <Link href="/signup" passHref>
-          <CreateAccountLink>or create a new account</CreateAccountLink>
-        </Link>
-      </Container>
+      <Wrapper>
+        <LoginForm onSubmit={handleLogin}>
+          <LoginTitle>Login to Got'cha</LoginTitle>
+          <Input
+            type="email"
+            required
+            placeholder="e-mail address"
+            onChange={(e) =>
+              setUserData((prevState) => ({
+                ...prevState,
+                email: e.target.value,
+              }))
+            }
+          />
+          <Input
+            type="password"
+            required
+            placeholder="password"
+            onChange={(e) =>
+              setUserData((prevState) => ({
+                ...prevState,
+                password: e.target.value,
+              }))
+            }
+          />
+          <Button type="submit">LOGIN</Button>
+          <Link href="/signup/" passHref>
+            <SignupLink>Create an account</SignupLink>
+          </Link>
+        </LoginForm>
+      </Wrapper>
     </>
   );
 }

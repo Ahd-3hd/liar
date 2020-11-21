@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import firebase from "../config/config";
 import "firebase/analytics";
 import "react-toastify/dist/ReactToastify.css";
+import "../css/main.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {

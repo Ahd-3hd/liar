@@ -37,6 +37,14 @@ export const addPost = createAsyncThunk("addPost", async (postData: any) => {
   return postData;
 });
 
+export const deletePost = createAsyncThunk(
+  "removePost",
+  async (postId: string) => {
+    await firebase.firestore().collection("posts").doc(postId).delete();
+    return postId;
+  }
+);
+
 export const addComment = createAsyncThunk(
   "addComment",
   async (commentData: any) => {
@@ -73,6 +81,12 @@ const postsSlice = createSlice({
     });
     builder.addCase(addPost.fulfilled, (state: any, action) => {
       state.posts = [action.payload, ...state.posts];
+    });
+    builder.addCase(deletePost.fulfilled, (state: any, action) => {
+      const afterDelete = state.posts.filter(
+        (post: any) => post.id !== action.payload
+      );
+      state.posts = [...afterDelete];
     });
     builder.addCase(addComment.fulfilled, (state: any, action) => {
       state.posts.map((post: IPost) => {

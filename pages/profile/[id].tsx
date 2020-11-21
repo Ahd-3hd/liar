@@ -1,14 +1,6 @@
-import {
-  Wrapper,
-  UserInfoContainer,
-  UserAvatar,
-  Username,
-} from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "../../components/Buttons";
 import firebase from "../../config/config";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +10,14 @@ import {
   removeFriendRequest,
   removeFriend,
 } from "../../redux/auth/authSlice";
+import {
+  Wrapper,
+  ProfileContainer,
+  AvatarContainer,
+  Avatar,
+  Username,
+  AddRemoveUndoButton,
+} from "../../styles/Profile.style";
 
 export default function FriendProfile() {
   const router = useRouter();
@@ -30,7 +30,6 @@ export default function FriendProfile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
-  const [isFriendExists, setIsFriendExists] = useState(false);
   const fetchFriendData = async (friendId: any) => {
     const friendData = await firebase
       .firestore()
@@ -149,45 +148,33 @@ export default function FriendProfile() {
 
   const renderFriendButton = () => {
     if (!currentUser || !router.query.id) return;
+    //remove add
     if (currentUser.friendRequestsSent.includes(router.query.id)) {
       return (
-        <Button
-          style={{ marginBottom: "1rem" }}
-          variant="red"
-          onClick={undoFriendRequest}
-        >
-          Remove Add
-        </Button>
+        <AddRemoveUndoButton variant="danger" onClick={undoFriendRequest}>
+          Undo Request
+        </AddRemoveUndoButton>
       );
     } else if (currentUser.friendRequestsReceived.includes(router.query.id)) {
+      // accept friend
       return (
-        <Button
-          style={{ marginBottom: "1rem" }}
-          variant="black"
-          onClick={acceptFriend}
-        >
-          Accept Friend
-        </Button>
+        <AddRemoveUndoButton variant="primary" onClick={acceptFriend}>
+          Accept
+        </AddRemoveUndoButton>
       );
     } else if (currentUser.friends.includes(router.query.id)) {
+      // remove friend
       return (
-        <Button
-          style={{ marginBottom: "1rem" }}
-          variant="red"
-          onClick={unfriend}
-        >
-          Remove Friend
-        </Button>
+        <AddRemoveUndoButton variant="danger" onClick={unfriend}>
+          Unfriend
+        </AddRemoveUndoButton>
       );
     } else {
+      // add friend
       return (
-        <Button
-          style={{ marginBottom: "1rem" }}
-          variant="black"
-          onClick={addFriend}
-        >
-          Add Friend
-        </Button>
+        <AddRemoveUndoButton variant="primary" onClick={addFriend}>
+          Add
+        </AddRemoveUndoButton>
       );
     }
   };
@@ -195,60 +182,17 @@ export default function FriendProfile() {
   return (
     <>
       <Head>
-        <title>User</title>
+        <title>{friend.email.split("@")[0]}</title>
       </Head>
       <Wrapper>
-        <UserInfoContainer>
-          <UserAvatar src={friend.avatar} alt="avatar" />
-          <Username>{friend.email}</Username>
+        <ProfileContainer>
+          <AvatarContainer>
+            <Avatar src={friend.avatar} alt="avatar" />
+          </AvatarContainer>
+          <Username>{friend.email.split("@")[0]}</Username>
           {renderFriendButton()}
-        </UserInfoContainer>
-        {/* <FriendsWrapper>
-           <FriendsContainer>
-            <SlideButton
-              direction="left"
-              onClick={() => {
-                if (slideIndex <= currentUser.friends.length - 5) {
-                  setSlidePos((prevState) => prevState - 60);
-                  setSlideIndex((prevState) => (prevState += 1));
-                  console.log(slideIndex);
-                }
-              }}
-            >
-              <CaretLeft />
-            </SlideButton>
-            <FriendsInnerContainer slidePos={slidePos}>
-              {currentUser.friends.map((friend: any) => (
-                <Link
-                  href={`/profile/${friend.userid}`}
-                  passHref
-                  key={friend.userid}
-                >
-                  <FriendLink>
-                    <FriendAvatar src={friend.avatar} alt="avatar" />
-                  </FriendLink>
-                </Link>
-              ))}
-            </FriendsInnerContainer>
-            <SlideButton
-              direction="right"
-              onClick={() => {
-                if (slideIndex > 0) {
-                  setSlidePos((prevState) => prevState + 60);
-                  setSlideIndex((prevState) => (prevState -= 1));
-                }
-              }}
-            >
-              <CaretRight />
-            </SlideButton>
-          </FriendsContainer> 
-        </FriendsWrapper>*/}
-
-        <NewsFeed
-          title={`Posts Wall`}
-          page="userPage"
-          friendId={router.query.id}
-        />
+        </ProfileContainer>
+        <NewsFeed title="My Posts" page="userPage" />
       </Wrapper>
     </>
   );

@@ -1,68 +1,48 @@
 import styled from "styled-components";
-import { Card } from "../components/Card";
-import { Button } from "../components/Buttons";
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-export const TitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-export const Title = styled.p`
-  margin: 0;
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
-  color: ${({ theme: { colors } }) => colors.text};
-`;
-export const ViewRequestsLink = styled.button`
-  padding: 0;
-  border: none;
-  background: transparent;
-  font-size: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  color: ${({ theme: { colors } }) => colors.darkblue};
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+
+export const Wrapper = styled.div``;
+
+export const Title = styled.h1`
+  color: ${({ theme: { colors } }) => colors.primary};
 `;
 
-export const FriendCardsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-export const FriendCard = styled(Card)`
-  display: flex;
-  margin: ${({ theme: { spaces } }) => spaces.md} 0;
-`;
-export const FriendAvatarContainer = styled.div`
-  margin-right: ${({ theme: { spaces } }) => spaces.md};
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-`;
-export const FriendAvatar = styled.img`
-  max-width: 100px;
-`;
-export const FriendDetails = styled.div`
-  flex: 1;
-  padding: 0 ${({ theme: { spaces } }) => spaces.md};
-`;
-export const FriendName = styled.p`
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.text};
-`;
-export const FriendButtons = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-export const FriendButton = styled(Button)<{ danger?: boolean }>`
+export const Container = styled.div``;
+export const RequestContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: ${({ theme: { spaces } }) => spaces.md};
+  padding: ${({ theme: { spaces } }) => spaces.sm + " " + spaces.md};
+  border: 1px solid ${({ theme: { colors } }) => colors.grey};
+  border-radius: 5px;
+`;
+export const FriendAvatarContainer = styled.a``;
+export const FriendAvatar = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+`;
+export const RequestText = styled.p`
+  color: ${({ theme: { colors } }) => colors.dark};
+`;
+export const FriendName = styled.a`
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.primary};
+  margin-right: ${({ theme: { spaces } }) => spaces.sm};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;
+export const RequestButton = styled.button<{ variant: string }>`
+  background: ${({ theme: { colors }, variant }) => {
+    //@ts-ignore
+    return colors[variant];
+  }};
+  padding: ${({ theme: { spaces } }) => spaces.sm + " " + spaces.md};
+  border: none;
+  border-radius: 5px;
+  margin: 0 ${({ theme: { spaces } }) => spaces.sm};
+  cursor: pointer;
   svg {
     fill: ${({ theme: { colors } }) => colors.white};
-    width: 24px;
+    height: 16px;
   }
-  padding: 8px 16px;
-  background: ${({ theme: { colors }, danger }) =>
-    danger ? colors.darkred : colors.black};
 `;

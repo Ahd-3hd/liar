@@ -1,19 +1,20 @@
-import {
-  Form,
-  QuestionGroup,
-  TextArea,
-  QuestionImg,
-} from "../styles/NewQuestion.style";
 import { useState } from "react";
-import { Card } from "./Card";
-import { Button } from "./Buttons";
 import { addPost } from "../redux/posts/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import firebase, { auth } from "../config/config";
 import { useRouter } from "next/router";
+import {
+  Form,
+  Input,
+  Button,
+  HintButton,
+  HintOverlay,
+  HintParagraph,
+} from "../styles/NewQuestion.style";
 
 export default function NewQuestion() {
   const router = useRouter();
+  const [showHint, setShowHint] = useState(false);
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
@@ -51,38 +52,54 @@ export default function NewQuestion() {
   };
 
   return (
-    <Card>
-      <Form onSubmit={addPostDispatch}>
-        <QuestionGroup>
-          <TextArea
-            placeholder="Write the fake question"
-            onChange={(e) =>
-              setPostData((prevState) => ({
-                ...prevState,
-                fakeQuestion: e.target.value,
-              }))
-            }
-            value={postData.fakeQuestion}
-          />
-          <QuestionImg src="/static/img/smile.png" alt="fake" />
-        </QuestionGroup>
-        <QuestionGroup reverse>
-          <TextArea
-            placeholder="Write the real question"
-            onChange={(e) =>
-              setPostData((prevState) => ({
-                ...prevState,
-                realQuestion: e.target.value,
-              }))
-            }
-            value={postData.realQuestion}
-          />
-          <QuestionImg src="/static/img/xd.png" alt="fake" />
-        </QuestionGroup>
-        <Button type="submit" variant="black">
-          SEND
-        </Button>
-      </Form>
-    </Card>
+    <Form onSubmit={addPostDispatch}>
+      <Input
+        type="text"
+        required
+        placeholder='FAKE QUESTION "appears first"'
+        onChange={(e) =>
+          setPostData({ ...postData, fakeQuestion: e.target.value })
+        }
+        value={postData.fakeQuestion}
+      />
+      <Input
+        type="text"
+        required
+        placeholder='REAL QUESTION "appears after comment"'
+        onChange={(e) =>
+          setPostData({ ...postData, realQuestion: e.target.value })
+        }
+        value={postData.realQuestion}
+      />
+      <Button type="submit">POST</Button>
+      <HintButton
+        onClick={() => setShowHint((prevState) => !prevState)}
+        type="button"
+      >
+        What is this?
+      </HintButton>
+      <HintOverlay showHint={showHint}>
+        <HintParagraph>
+          This is a work in progress social media platform (more features
+          coming)
+        </HintParagraph>
+        <HintParagraph>
+          The Point of it is some sort of a silly game
+        </HintParagraph>
+        <HintParagraph>
+          1- the fake question is to bait answers from people eg: how old are
+          you?
+        </HintParagraph>
+        <HintParagraph>
+          2- the real question is the question that will make the answer sound
+          funny eg: What's your I.Q. ?
+        </HintParagraph>
+        <HintParagraph>
+          3- this will make it look like as if someone said that his/her I.Q. is
+          eg: 28.
+        </HintParagraph>
+        <HintParagraph>3- get creative *wink wink*</HintParagraph>
+      </HintOverlay>
+    </Form>
   );
 }

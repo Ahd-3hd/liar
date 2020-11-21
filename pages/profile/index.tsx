@@ -1,20 +1,3 @@
-import {
-  Wrapper,
-  UserInfoContainer,
-  UserAvatar,
-  Username,
-  FriendsWrapper,
-  FriendsContainer,
-  FriendLink,
-  FriendAvatar,
-  FriendsPageLink,
-  FriendsInnerContainer,
-  SlideButton,
-  UserAvatarContainer,
-  UpdateAvatarButton,
-  VisibleUpdateAvatarButton,
-  NoFriendsParagraph,
-} from "../../styles/Profile.style";
 import NewsFeed from "../../components/NewsFeed";
 import Head from "next/head";
 import Link from "next/link";
@@ -27,6 +10,25 @@ import UpdateAvatarIcon from "../../utils/svg/UpdateAvatarIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../redux/auth/authSlice";
 import { useRouter } from "next/router";
+import {
+  Wrapper,
+  ProfileContainer,
+  AvatarContainer,
+  Avatar,
+  Username,
+  UpdateAvatarButton,
+  VisibleUpdateAvatarButton,
+  FriendsWrapper,
+  FriendsInnerContainer,
+  FriendContainer,
+  FriendAvatar,
+  FriendName,
+  CarouselButton,
+  NoFriends,
+  FriendRequestsLink,
+  FriendsLinkContainer,
+} from "../../styles/Profile.style";
+
 export default function Profile() {
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
@@ -37,7 +39,7 @@ export default function Profile() {
   const dispatch = useDispatch();
   const fileInputRef: any = useRef();
   const router = useRouter();
-  const handleFileChange = (e: { target: { files: any[] } }) => {
+  const handleFileChange = (e: any) => {
     const storageRef = firebase.storage().ref();
     const file = e.target.files[0];
     if (file) {
@@ -115,14 +117,16 @@ export default function Profile() {
       .where("userId", "==", friendId)
       .get();
     fetchedFriend.forEach((frnd) => {
-      setFriendsData((prevState: any) => [
-        ...prevState,
-        {
-          userId: frnd.data().userId,
-          avatar: frnd.data().avatar,
-          email: frnd.data().email,
-        },
-      ]);
+      setFriendsData((prevState: any) => {
+        return [
+          ...prevState,
+          {
+            userId: frnd.data().userId,
+            avatar: frnd.data().avatar,
+            email: frnd.data().email,
+          },
+        ];
+      });
     });
   };
 
@@ -147,12 +151,12 @@ export default function Profile() {
   return (
     <>
       <Head>
-        <title>{currentUser.email}</title>
+        <title>{currentUser.email.split("@")[0]}</title>
       </Head>
       <Wrapper>
-        <UserInfoContainer>
-          <UserAvatarContainer>
-            <UserAvatar src={currentUser.avatar} alt="avatar" />
+        <ProfileContainer>
+          <AvatarContainer>
+            <Avatar src={currentUser.avatar} alt="avatar" />
             <UpdateAvatarButton
               type="file"
               ref={fileInputRef}
@@ -164,65 +168,58 @@ export default function Profile() {
             >
               <UpdateAvatarIcon />
             </VisibleUpdateAvatarButton>
-          </UserAvatarContainer>
-          <Username>{currentUser.email}</Username>
-        </UserInfoContainer>
-        <FriendsWrapper>
-          <FriendsContainer>
-            {friendsData.length > 0 && (
-              <SlideButton
-                direction="left"
+          </AvatarContainer>
+          <Username>{currentUser.email.split("@")[0]}</Username>
+        </ProfileContainer>
+        {friendsData.length > 0 ? (
+          <FriendsLinkContainer>
+            <FriendsWrapper>
+              <CarouselButton
                 onClick={() => {
                   if (slideIndex <= friendsData.length - 5) {
-                    setSlidePos((prevState) => prevState - 60);
+                    setSlidePos((prevState) => prevState - 70);
                     setSlideIndex((prevState) => (prevState += 1));
                   }
                 }}
               >
                 <CaretLeft />
-              </SlideButton>
-            )}
-            {friendsData.length === 0 ? (
-              <NoFriendsParagraph>You have no friends yet</NoFriendsParagraph>
-            ) : (
-              <FriendsInnerContainer slidePos={slidePos}>
-                {friendsData.map((friend: any) => (
+              </CarouselButton>
+              <FriendsInnerContainer>
+                {friendsData.map((frnd: any) => (
                   <Link
-                    href={`/profile/${friend.userId}`}
+                    href={`/profile/${frnd.userId}`}
                     passHref
-                    key={friend.userId}
+                    key={frnd.userId}
                   >
-                    <FriendLink>
-                      <FriendAvatar src={friend.avatar} alt="avatar" />
-                    </FriendLink>
+                    <FriendContainer pos={slidePos}>
+                      <FriendAvatar src={frnd.avatar} alt="avatar" />
+                      <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                    </FriendContainer>
                   </Link>
                 ))}
               </FriendsInnerContainer>
-            )}
-            {friendsData.length > 0 && (
-              <SlideButton
-                direction="right"
+              <CarouselButton
+                flip
                 onClick={() => {
                   if (slideIndex > 0) {
-                    setSlidePos((prevState) => prevState + 60);
+                    setSlidePos((prevState) => prevState + 70);
                     setSlideIndex((prevState) => (prevState -= 1));
                   }
                 }}
               >
                 <CaretRight />
-              </SlideButton>
-            )}
-          </FriendsContainer>
-          <Link href="profile/requests" passHref>
-            <FriendsPageLink>
-              Friend
-              <br />
-              Requests
-            </FriendsPageLink>
-          </Link>
-        </FriendsWrapper>
-
-        <NewsFeed title="My wall" page="currentUser" />
+              </CarouselButton>
+            </FriendsWrapper>
+            <Link href="/profile/requests" passHref>
+              <FriendRequestsLink>
+                View Requests <br /> {currentUser.friendRequestsReceived.length}
+              </FriendRequestsLink>
+            </Link>
+          </FriendsLinkContainer>
+        ) : (
+          <NoFriends>You don't have any friends yet</NoFriends>
+        )}
+        <NewsFeed title="My Posts" page="currentUser" />
       </Wrapper>
     </>
   );

@@ -1,17 +1,6 @@
-import { IPost } from "../interfaces/posts";
-import { useEffect, useState } from "react";
-
-import { useRouter } from "next/router";
-import Link from "next/link";
+import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchPosts,
-  addComment,
-  toggleReveal,
-  deletePost,
-} from "../redux/posts/postsSlice";
-import firebase from "../config/config";
-import { v4 as uuidv4 } from "uuid";
+import { useState, useEffect } from "react";
 import {
   Wrapper,
   PostCard,
@@ -42,42 +31,47 @@ import {
   LoginToComment,
   MustCommentToReveal,
   FirstComment,
-  NoPosts,
-} from "../styles/NewsFeed.style";
-import RemoveIcon from "../utils/svg/RemoveIcon.svg";
-import HideIcon from "../utils/svg/HideIcon.svg";
-import RevealIcon from "../utils/svg/RevealIcon.svg";
-import SendButton from "../utils/svg/SendIcon.svg";
+} from "../../styles/NewsFeed.style";
+import { useRouter } from "next/router";
+import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
+import HideIcon from "../../utils/svg/HideIcon.svg";
+import RevealIcon from "../../utils/svg/RevealIcon.svg";
+import SendButton from "../../utils/svg/SendIcon.svg";
+import {
+  fetchPosts,
+  addComment,
+  toggleReveal,
+  deletePost,
+} from "../../redux/posts/postsSlice";
+import firebase from "../../config/config";
+import { v4 as uuidv4 } from "uuid";
+import Link from "next/link";
 
-export default function NewsFeed({
-  title,
-  page,
-  friendId,
-}: {
-  title: string;
-  page: string;
-  friendId?: any;
-}) {
+export default function Post() {
+  const router = useRouter();
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
     (state: any) => state.auth
   );
-  const router = useRouter();
   const [commentText, setCommentText] = useState("");
   const [activeComment, setActiveComment] = useState<any>(null);
-  const dispatch = useDispatch();
-  const { posts, isLoading, fetchError } = useSelector(
-    (state: any) => state.posts
-  );
-
+  const [post, setPost] = useState<any>(null);
+  const getPost = async (id: string) => {
+    const fetchedPost = await firebase
+      .firestore()
+      .collection("posts")
+      .doc(id)
+      .get();
+    setPost({
+      ...fetchedPost.data(),
+      id: fetchedPost.id,
+    });
+  };
   useEffect(() => {
-    if (page === "homepage") {
-      dispatch(fetchPosts());
-    } else if (page === "currentUser") {
-      dispatch(fetchPosts(currentUser.userId));
-    } else if (page === "userPage") {
-      dispatch(fetchPosts(friendId));
+    if (router.query.id) {
+      getPost(router.query.id as string);
     }
-  }, [currentUser]);
+  }, [router]);
+  const dispatch = useDispatch();
 
   const handleCommentSubmit = async (
     e: { preventDefault: () => void },
@@ -105,26 +99,36 @@ export default function NewsFeed({
       });
     dispatch(addComment(newComment));
     setCommentText("");
+    const fetchedPost = await firebase
+      .firestore()
+      .collection("posts")
+      .doc(id)
+      .get();
+    setPost({
+      ...fetchedPost.data(),
+      id: fetchedPost.id,
+    });
   };
   const handleToggleReveal = (postId: string) => {
     dispatch(toggleReveal(postId));
+    setPost((prevState: any) => ({
+      ...prevState,
+      isRevealed: !prevState.isRevealed,
+    }));
   };
 
-  const handleDeletePost = (postId: string) => {
-    dispatch(deletePost(postId));
+  const handleDeletePost = async (postId: string) => {
+    await dispatch(deletePost(postId));
+    router.push("/");
   };
-
-  if (posts.length === 0) {
-    return (
-      <Wrapper>
-        <NoPosts>There's no Posts yet ...</NoPosts>
-      </Wrapper>
-    );
-  }
+  if (!post) return <p>Loading..</p>;
   return (
-    <Wrapper>
-      {posts.map((post: IPost) => (
-        <PostCard key={post.id}>
+    <>
+      <Head>
+        <title>Post</title>
+      </Head>
+      <Wrapper>
+        <PostCard key={post.id} style={{ marginBottom: "10rem" }}>
           <PostSection>
             <QuestionSection>
               <NameButtonsContainer>
@@ -163,7 +167,7 @@ export default function NewsFeed({
                   <PosterName>{post.email.split("@")[0]}</PosterName>
                 </Link>
               </NameButtonsContainer>
-              <Link href={`posts/${post.id}`} passHref key={post.id}>
+              <Link href={`/posts/${post.id}`} passHref key={post.id}>
                 <QuestionText status={post.isRevealed} target="_blank">
                   {post.isRevealed ? post.realQuestion : post.fakeQuestion}
                 </QuestionText>
@@ -253,7 +257,7 @@ export default function NewsFeed({
             )}
           </CommentsSection>
         </PostCard>
-      ))}
-    </Wrapper>
+      </Wrapper>
+    </>
   );
 }

@@ -1,170 +1,96 @@
 import styled from "styled-components";
-import Navbarbg from "../utils/svg/Navbg.svg";
-import NewQuestionIcon from "../utils/svg/NewQuestion.svg";
-import LogoutIcon from "../utils/svg/LogoutIcon.svg";
-import UserIcon from "../utils/svg/UserIcon.svg";
-import Link from "next/link";
-import { auth } from "../config/config";
-import { useRouter } from "next/router";
+import { colors } from "../utils/theme";
 
-export const Nav = styled.nav`
+export const Wrapper = styled.nav`
   position: fixed;
-  bottom: 0;
+  bottom: ${({ theme: { spaces } }) => spaces.md};
   width: 100%;
   max-width: 600px;
-`;
-export const SvgContainer = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  > svg {
-    position: absolute;
-    bottom: 0rem;
-    height: 50%;
-  }
-  .bg1 {
-    transform: translateX(-5px);
-    fill: ${({ theme: { colors } }) => colors.blue};
-  }
-  .bg2 {
-    transform: translateX(5px);
-    fill: ${({ theme: { colors } }) => colors.red};
-  }
-  .bg3 {
-    fill: ${({ theme: { colors } }) => colors.black};
-  }
+  flex-direction: column;
 `;
-export const Tooltip = styled.span`
-  display: block;
-  position: absolute;
-  align-self: center;
-  justify-self: center;
-  top: -80%;
-  background: ${({ theme: { colors } }) => colors.darkblue};
-  color: ${({ theme: { colors } }) => colors.white};
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-  text-align: center;
-  border-radius: 0.3rem;
-  opacity: 0;
-  transition: 0.5s;
-`;
-export const NewQuestionLink = styled.a`
-  background: ${({ theme: { colors } }) => colors.black};
-  width: 8vw;
-  max-width: 70px;
-  max-height: 70px;
-  min-height: 60px;
-  min-width: 60px;
-  height: 8vw;
+export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8vw;
-  padding: ${({ theme: { spaces } }) => spaces.sm};
-  border: none;
-  margin-bottom: -3.5rem;
+  padding: ${({ theme: { spaces } }) => spaces.lg};
+  width: 100%;
+  max-width: 450px;
+  padding-bottom: ${({ theme: { spaces } }) => spaces.sm};
+`;
+export const NavLink = styled.a<{ center?: boolean; notification?: boolean }>`
+  margin: 0 ${({ theme: { spaces } }) => spaces.lg};
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  background: ${({ theme: { colors } }) => colors.primary};
+  border-radius: 10px;
+  transform: translateY(${({ center }) => (center ? "-1rem" : "0")});
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
-  cursor: pointer;
-  ::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: ${({ theme: { colors } }) => colors.blue};
-    z-index: -1;
-    border-radius: 100%;
-    transform: translateX(-3px);
-    transition: 0.3s;
+  svg {
+    fill: ${({ theme: { colors } }) => colors.white};
+    height: 20px;
+  }
+  :hover {
+    span {
+      bottom: -1.3rem;
+      opacity: 1;
+    }
   }
   ::after {
     content: "";
+    width: ${({ notification }) => notification && "10px"};
+    height: ${({ notification }) => notification && "10px"};
+    border-radius: ${({ notification }) => notification && "10px"};
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: ${({ theme: { colors } }) => colors.red};
-    z-index: -1;
-    border-radius: 100%;
-    transform: translateX(3px);
-    transition: 0.3s;
-  }
-  :hover {
-    ::before {
-      transform: translateX(3px);
-    }
-    ::after {
-      transform: translateX(-3px);
-    }
-    > span {
-      opacity: 1;
-    }
-  }
-  > svg {
-    width: 90%;
+    top: -5px;
+    right: -5px;
+    background: ${({ theme: { colors } }) => colors.danger};
   }
 `;
-export const NavbarLogoutButton = styled.button`
-  background: transparent;
-  border: none;
+export const NavSpan = styled.span`
   position: absolute;
-  left: 0.5rem;
-  bottom: 0.5rem;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  text-decoration: none;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  color: ${({ theme: { colors } }) => colors.dark + "dd"};
+  opacity: 0;
+  transition: 0.4s;
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;
+
+export const NavButton = styled.button`
+  margin: 0 ${({ theme: { spaces } }) => spaces.lg};
+  padding: ${({ theme: { spaces } }) => spaces.md};
+  background: none;
+  border: none;
+  background: ${({ theme: { colors } }) => colors.primary};
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  position: relative;
   svg {
-    max-width: 2rem;
+    fill: ${({ theme: { colors } }) => colors.white};
+    height: 20px;
   }
   :hover {
     span {
-      opacity: 1;
-    }
-  }
-`;
-export const NavBarButtonProfile = styled.a`
-  background: transparent;
-  border: none;
-  position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  svg {
-    max-width: 2rem;
-  }
-  :hover {
-    span {
+      bottom: -1.3rem;
       opacity: 1;
     }
   }
 `;
 
-export default function NavContainer() {
-  const handleSignout = async () => {
-    await auth.signOut();
-  };
-  return (
-    <Nav>
-      <SvgContainer>
-        <Navbarbg className="bg1" />
-        <Navbarbg className="bg2" />
-        <Navbarbg className="bg3" />
-        <Link href="/" passHref>
-          <NewQuestionLink>
-            <NewQuestionIcon />
-            <Tooltip>New Question</Tooltip>
-          </NewQuestionLink>
-        </Link>
-      </SvgContainer>
-      <NavbarLogoutButton onClick={handleSignout}>
-        <LogoutIcon />
-        <Tooltip>Logout</Tooltip>
-      </NavbarLogoutButton>
-      <Link href="/profile/" passHref>
-        <NavBarButtonProfile>
-          <UserIcon />
-          <Tooltip>Profile</Tooltip>
-        </NavBarButtonProfile>
-      </Link>
-    </Nav>
-  );
-}
+export const RightsPhrase = styled.p`
+  margin: 0;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  color: ${({ theme: { colors } }) => colors.dark};
+  > a {
+    color: ${({ theme: { colors } }) => colors.primary};
+    text-decoration: none;
+  }
+`;

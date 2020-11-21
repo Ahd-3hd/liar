@@ -1,19 +1,5 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import {
-  Wrapper,
-  TitleContainer,
-  Title,
-  ViewRequestsLink,
-  FriendCard,
-  FriendCardsContainer,
-  FriendAvatarContainer,
-  FriendAvatar,
-  FriendDetails,
-  FriendName,
-  FriendButtons,
-  FriendButton,
-} from "../../styles/Friends.style";
 import RemoveIcon from "../../utils/svg/RemoveIcon.svg";
 import NewQuestion from "../../utils/svg/NewQuestion.svg";
 import AddFriendIcon from "../../utils/svg/AddFriendIcon.svg";
@@ -24,7 +10,18 @@ import {
   acceptFriendRequest,
   rejectFriendRequest,
 } from "../../redux/auth/authSlice";
-
+import {
+  Wrapper,
+  Title,
+  RequestContainer,
+  FriendAvatar,
+  RequestText,
+  FriendName,
+  RequestButton,
+  Container,
+  FriendAvatarContainer,
+} from "../../styles/Friends.style";
+import Link from "next/link";
 export default function Requests() {
   const dispatch = useDispatch();
 
@@ -107,6 +104,7 @@ export default function Requests() {
       const removeRequest = prevState.filter((frnd: any) => frnd.userId !== id);
       return removeRequest;
     });
+    dispatch(rejectFriendRequest(id));
   };
 
   return (
@@ -115,36 +113,36 @@ export default function Requests() {
         <title>Friend Requests</title>
       </Head>
       <Wrapper>
-        <TitleContainer>
-          <Title>Friend Requests - {friendsData.length}</Title>
-        </TitleContainer>
-        {friendsData.map((friend: any) => (
-          <FriendCardsContainer key={friend.userId}>
-            <FriendCard>
-              <FriendAvatarContainer>
-                <FriendAvatar src={friend.avatar} alt="avatar" />
-              </FriendAvatarContainer>
-              <FriendDetails>
-                <FriendName>{friend.email}</FriendName>
-                <FriendButtons>
-                  <FriendButton
-                    variant="black"
-                    danger
-                    onClick={() => rejectFriend(friend.userId)}
-                  >
-                    <RemoveIcon />
-                  </FriendButton>
-                  <FriendButton
-                    variant="black"
-                    onClick={() => acceptFriend(friend.userId)}
-                  >
-                    <AddFriendIcon />
-                  </FriendButton>
-                </FriendButtons>
-              </FriendDetails>
-            </FriendCard>
-          </FriendCardsContainer>
-        ))}
+        <Title>Friend Requests - {friendsData.length}</Title>
+        <Container>
+          {friendsData.map((frnd: any) => (
+            <RequestContainer key={frnd.userId}>
+              <Link href={`/profile/${frnd.userId}`} passHref>
+                <FriendAvatarContainer>
+                  <FriendAvatar src={frnd.avatar} alt="avatar" />
+                </FriendAvatarContainer>
+              </Link>
+              <RequestText>
+                <Link href={`/profile/${frnd.userId}`} passHref>
+                  <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                </Link>
+                Has sent you a friend request.
+              </RequestText>
+              <RequestButton
+                variant="primary"
+                onClick={() => acceptFriend(frnd.userId)}
+              >
+                <AddFriendIcon />
+              </RequestButton>
+              <RequestButton
+                variant="danger"
+                onClick={() => rejectFriend(frnd.userId)}
+              >
+                <RemoveIcon />
+              </RequestButton>
+            </RequestContainer>
+          ))}
+        </Container>
       </Wrapper>
     </>
   );
