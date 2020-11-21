@@ -98,7 +98,10 @@ export default function NewQuestion() {
           3- this will make it look like as if someone said that his/her I.Q. is
           eg: 28.
         </HintParagraph>
-        <HintParagraph>3- get creative *wink wink*</HintParagraph>
+        <HintParagraph>
+          4- People can only see the real question after they comment/answer.
+        </HintParagraph>
+        <HintParagraph>5- get creative *wink wink*</HintParagraph>
       </HintOverlay>
     </Form>
   );

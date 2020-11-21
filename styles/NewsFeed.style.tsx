@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div``;
+export const Wrapper = styled.div`
+  margin-bottom: 7rem;
+`;
 export const PostCard = styled.div`
   text-decoration: none;
   color: ${({ theme: { colors } }) => colors.dark};
