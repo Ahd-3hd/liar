@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div``;
 export const PostCard = styled.div`
-  cursor: pointer;
   text-decoration: none;
   color: ${({ theme: { colors } }) => colors.dark};
   display: flex;
@@ -47,7 +46,8 @@ export const QuestionSection = styled.div`
   flex-direction: column;
   align-items: flex-end;
 `;
-export const QuestionText = styled.p<{ status: boolean }>`
+export const QuestionText = styled.a<{ status: boolean }>`
+  text-decoration: none;
   padding: ${({ theme: { spaces } }) => spaces.md};
   background: ${({ theme: { colors }, status }) =>
     status ? colors.primary : colors.dark};
@@ -57,6 +57,18 @@ export const QuestionText = styled.p<{ status: boolean }>`
   color: ${({ theme: { colors } }) => colors.white};
   margin: ${({ theme: { spaces } }) => spaces.md} 0;
   transition: 0.3s;
+  position: relative;
+  ::after {
+    content: "Click to open post in a new tab";
+    position: absolute;
+    text-align: right;
+    bottom: -110%;
+    left: -5%;
+    width: 100%;
+    height: 100%;
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+    font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  }
 `;
 export const ButtonsContainer = styled.div`
   display: flex;
