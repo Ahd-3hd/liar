@@ -46,6 +46,7 @@ export default function FriendProfile() {
   useEffect(() => {
     if (router.query.id) {
       fetchFriendData(router.query.id);
+      console.log(router.query.id);
     }
   }, [router.query.id]);
 
@@ -192,7 +193,7 @@ export default function FriendProfile() {
           <Username>{friend.username}</Username>
           {renderFriendButton()}
         </ProfileContainer>
-        <NewsFeed title="My Posts" page="userPage" />
+        <NewsFeed title="My Posts" page="userPage" friendId={router.query.id} />
       </Wrapper>
     </>
   );

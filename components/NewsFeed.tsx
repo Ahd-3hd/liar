@@ -77,7 +77,7 @@ export default function NewsFeed({
     } else if (page === "userPage") {
       dispatch(fetchPosts(friendId));
     }
-  }, [currentUser]);
+  }, [currentUser, router.query.id]);
 
   const handleCommentSubmit = async (
     e: { preventDefault: () => void },
