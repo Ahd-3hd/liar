@@ -11,6 +11,14 @@ import {
   removeFriendRequest,
   removeFriend,
 } from "../../redux/auth/authSlice";
+import {
+  Wrapper,
+  ProfileContainer,
+  AvatarContainer,
+  Avatar,
+  Username,
+  AddRemoveUndoButton,
+} from "../../styles/Profile.style";
 
 export default function FriendProfile() {
   const router = useRouter();
@@ -142,12 +150,52 @@ export default function FriendProfile() {
 
   const renderFriendButton = () => {
     if (!currentUser || !router.query.id) return;
+    //remove add
     if (currentUser.friendRequestsSent.includes(router.query.id)) {
+      return (
+        <AddRemoveUndoButton variant="danger" onClick={undoFriendRequest}>
+          Undo Request
+        </AddRemoveUndoButton>
+      );
     } else if (currentUser.friendRequestsReceived.includes(router.query.id)) {
+      // accept friend
+      return (
+        <AddRemoveUndoButton variant="primary" onClick={acceptFriend}>
+          Accept
+        </AddRemoveUndoButton>
+      );
     } else if (currentUser.friends.includes(router.query.id)) {
+      // remove friend
+      return (
+        <AddRemoveUndoButton variant="danger" onClick={unfriend}>
+          Unfriend
+        </AddRemoveUndoButton>
+      );
     } else {
+      // add friend
+      return (
+        <AddRemoveUndoButton variant="primary" onClick={addFriend}>
+          Add
+        </AddRemoveUndoButton>
+      );
     }
   };
 
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>{friend.email.split("@")[0]}</title>
+      </Head>
+      <Wrapper>
+        <ProfileContainer>
+          <AvatarContainer>
+            <Avatar src={friend.avatar} alt="avatar" />
+          </AvatarContainer>
+          <Username>{friend.email.split("@")[0]}</Username>
+          {renderFriendButton()}
+        </ProfileContainer>
+        <NewsFeed title="My Posts" page="userPage" />
+      </Wrapper>
+    </>
+  );
 }

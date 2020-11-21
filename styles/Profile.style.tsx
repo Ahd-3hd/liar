@@ -114,3 +114,30 @@ export const NoFriends = styled.p`
   text-align: center;
   color: ${({ theme: { colors } }) => colors.dark + "95"};
 `;
+export const AddRemoveUndoButton = styled.button<{ variant: string }>`
+  height: 2.5em;
+  background: ${({ theme: { colors }, variant }) => {
+    //@ts-ignore;
+    return colors[variant];
+  }};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.md};
+  color: ${({ theme: { colors } }) => colors.white};
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 14px ${({ theme: { colors } }) => colors.dark + "40"};
+  transition: all 0.3s;
+  outline: none;
+  :hover {
+    background: ${({ theme: { colors }, variant }) => {
+      //@ts-ignore;
+      return colors[variant] + "99";
+    }};
+  }
+  :active {
+    box-shadow: 0 2px 4px ${({ theme: { colors } }) => colors.dark + "40"};
+  }
+  min-width: 100px;
+  margin-top: ${({ theme: { spaces } }) => spaces.md};
+`;
