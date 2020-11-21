@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div``;
 export const PostCard = styled.div`
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme: { colors } }) => colors.dark};
   display: flex;
   flex-direction: column;
   background: ${({ theme: { colors } }) => colors.white};

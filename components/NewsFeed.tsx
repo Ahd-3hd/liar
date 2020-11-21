@@ -124,81 +124,69 @@ export default function NewsFeed({
   return (
     <Wrapper>
       {posts.map((post: IPost) => (
-        <PostCard key={post.id}>
-          <PostSection>
-            <QuestionSection>
-              <NameButtonsContainer>
-                <ButtonsContainer>
-                  {post.commentorsIds.includes(currentUser?.userId) ||
-                  currentUser?.userId === post.userId ? (
-                    <PostButton
-                      variant="primary"
-                      onClick={() => handleToggleReveal(post.id)}
-                    >
-                      {post.isRevealed ? <HideIcon /> : <RevealIcon />}
-                    </PostButton>
-                  ) : (
-                    <MustCommentToReveal>
-                      Comment to
-                      <br />
-                      reveal
-                    </MustCommentToReveal>
-                  )}
+        <Link href={`posts/${post.id}`} passHref key={post.id}>
+          <PostCard>
+            <PostSection>
+              <QuestionSection>
+                <NameButtonsContainer>
+                  <ButtonsContainer>
+                    {post.commentorsIds.includes(currentUser?.userId) ||
+                    currentUser?.userId === post.userId ? (
+                      <PostButton
+                        variant="primary"
+                        onClick={() => handleToggleReveal(post.id)}
+                      >
+                        {post.isRevealed ? <HideIcon /> : <RevealIcon />}
+                      </PostButton>
+                    ) : (
+                      <MustCommentToReveal>
+                        Comment to
+                        <br />
+                        reveal
+                      </MustCommentToReveal>
+                    )}
 
-                  {currentUser?.userId === post?.userId && (
-                    <PostButton
-                      variant="danger"
-                      onClick={() => handleDeletePost(post.id)}
-                    >
-                      <RemoveIcon />
-                    </PostButton>
-                  )}
-                </ButtonsContainer>
-                <Link
-                  href={`/profile/${
-                    post.userId !== currentUser?.userId ? post.userId : ""
-                  }`}
-                  passHref
-                >
-                  <PosterName>{post.email.split("@")[0]}</PosterName>
-                </Link>
-              </NameButtonsContainer>
-              <QuestionText status={post.isRevealed}>
-                {post.isRevealed ? post.realQuestion : post.fakeQuestion}
-              </QuestionText>
-            </QuestionSection>
-            <Link
-              href={`/profile/${
-                post.userId !== currentUser?.userId ? post.userId : ""
-              }`}
-              passHref
-            >
-              <PosterAvatarContainer>
-                <PosterAvatar src={post.avatar} alt="avatar" />
-              </PosterAvatarContainer>
-            </Link>
-          </PostSection>
-          <Divider>
-            <DividerSpan>COMMENTS</DividerSpan>
-            <DividerLine />
-          </Divider>
-          <CommentsSection>
-            {post.comments.length > 0 ? (
-              post.comments.map((comment: any) => (
-                <CommentContainer key={comment.id}>
+                    {currentUser?.userId === post?.userId && (
+                      <PostButton
+                        variant="danger"
+                        onClick={() => handleDeletePost(post.id)}
+                      >
+                        <RemoveIcon />
+                      </PostButton>
+                    )}
+                  </ButtonsContainer>
                   <Link
                     href={`/profile/${
-                      comment.commentorId !== currentUser?.userId
-                        ? comment.commentorId
-                        : ""
+                      post.userId !== currentUser?.userId ? post.userId : ""
                     }`}
                     passHref
                   >
-                    <CommentAvatarContainer>
-                      <CommentAvatar src={comment.avatar} alt="avatar" />
-                    </CommentAvatarContainer>
+                    <PosterName>{post.email.split("@")[0]}</PosterName>
                   </Link>
-                  <NameCommentContainer>
+                </NameButtonsContainer>
+                <QuestionText status={post.isRevealed}>
+                  {post.isRevealed ? post.realQuestion : post.fakeQuestion}
+                </QuestionText>
+              </QuestionSection>
+              <Link
+                href={`/profile/${
+                  post.userId !== currentUser?.userId ? post.userId : ""
+                }`}
+                passHref
+              >
+                <PosterAvatarContainer>
+                  <PosterAvatar src={post.avatar} alt="avatar" />
+                </PosterAvatarContainer>
+              </Link>
+            </PostSection>
+            <Divider>
+              <DividerSpan>COMMENTS</DividerSpan>
+              <DividerLine />
+            </Divider>
+            <CommentsSection>
+              {post.comments.length > 0 ? (
+                post.comments.map((comment: any) => (
+                  <CommentContainer key={comment.id}>
                     <Link
                       href={`/profile/${
                         comment.commentorId !== currentUser?.userId
@@ -207,50 +195,64 @@ export default function NewsFeed({
                       }`}
                       passHref
                     >
-                      <CommentorName>
-                        {comment.username.split("@")[0]}
-                      </CommentorName>
+                      <CommentAvatarContainer>
+                        <CommentAvatar src={comment.avatar} alt="avatar" />
+                      </CommentAvatarContainer>
                     </Link>
-                    <CommentText>{comment.commentText}</CommentText>
-                  </NameCommentContainer>
-                </CommentContainer>
-              ))
-            ) : (
-              <FirstComment>Be The First To Comment</FirstComment>
-            )}
-            {currentUser ? (
-              <NewCommentContainer
-                onSubmit={(e) => handleCommentSubmit(e, post.id)}
-              >
-                <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
-                <NewCommentInputContainer>
-                  <NewCommentInput
-                    type="text"
-                    placeholder="Write your answer..."
-                    onChange={(e) => setCommentText(e.target.value)}
-                    onFocus={() => {
-                      setCommentText("");
-                      setActiveComment(post.id);
-                    }}
-                    onBlur={() => {
-                      setActiveComment(null);
-                    }}
-                    value={post.id === activeComment ? commentText : ""}
-                  />
-                  <NewCommentButton type="submit">
-                    <SendButton />
-                  </NewCommentButton>
-                </NewCommentInputContainer>
-              </NewCommentContainer>
-            ) : (
-              <Link href="/login/" passHref>
-                <LoginToComment>
-                  You need to be logged in to comment
-                </LoginToComment>
-              </Link>
-            )}
-          </CommentsSection>
-        </PostCard>
+                    <NameCommentContainer>
+                      <Link
+                        href={`/profile/${
+                          comment.commentorId !== currentUser?.userId
+                            ? comment.commentorId
+                            : ""
+                        }`}
+                        passHref
+                      >
+                        <CommentorName>
+                          {comment.username.split("@")[0]}
+                        </CommentorName>
+                      </Link>
+                      <CommentText>{comment.commentText}</CommentText>
+                    </NameCommentContainer>
+                  </CommentContainer>
+                ))
+              ) : (
+                <FirstComment>Be The First To Comment</FirstComment>
+              )}
+              {currentUser ? (
+                <NewCommentContainer
+                  onSubmit={(e) => handleCommentSubmit(e, post.id)}
+                >
+                  <NewCommentAvatar src={currentUser?.avatar} alt="avatar" />
+                  <NewCommentInputContainer>
+                    <NewCommentInput
+                      type="text"
+                      placeholder="Write your answer..."
+                      onChange={(e) => setCommentText(e.target.value)}
+                      onFocus={() => {
+                        setCommentText("");
+                        setActiveComment(post.id);
+                      }}
+                      onBlur={() => {
+                        setActiveComment(null);
+                      }}
+                      value={post.id === activeComment ? commentText : ""}
+                    />
+                    <NewCommentButton type="submit">
+                      <SendButton />
+                    </NewCommentButton>
+                  </NewCommentInputContainer>
+                </NewCommentContainer>
+              ) : (
+                <Link href="/login/" passHref>
+                  <LoginToComment>
+                    You need to be logged in to comment
+                  </LoginToComment>
+                </Link>
+              )}
+            </CommentsSection>
+          </PostCard>
+        </Link>
       ))}
     </Wrapper>
   );
