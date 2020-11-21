@@ -37,6 +37,7 @@ export default function NewQuestion() {
       createdAt: firebase.firestore.Timestamp.now().seconds,
       avatar: currentUser.avatar,
       commentorsIds: [],
+      username: currentUser.username,
     };
     const docRef = await firebase.firestore().collection("posts").add(newPost);
     dispatch(

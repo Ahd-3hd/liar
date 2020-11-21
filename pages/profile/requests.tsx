@@ -43,6 +43,7 @@ export default function Requests() {
           userId: frnd.data().userId,
           avatar: frnd.data().avatar,
           email: frnd.data().email,
+          username: frnd.data().username,
         },
       ]);
     });
@@ -124,7 +125,7 @@ export default function Requests() {
               </Link>
               <RequestText>
                 <Link href={`/profile/${frnd.userId}`} passHref>
-                  <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                  <FriendName>{frnd.username}</FriendName>
                 </Link>
                 Has sent you a friend request.
               </RequestText>

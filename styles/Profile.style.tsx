@@ -19,14 +19,6 @@ export const Avatar = styled.img`
   height: 120px;
   border-radius: 120px;
 `;
-export const Username = styled.p`
-  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
-  color: ${({ theme: { colors } }) => colors.primary};
-  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
-  margin: 0;
-  margin-top: ${({ theme: { spaces } }) => spaces.md};
-  text-transform: uppercase;
-`;
 
 export const UpdateAvatarButton = styled.input`
   display: none;
@@ -150,4 +142,49 @@ export const FriendRequestsLink = styled.a`
 export const FriendsLinkContainer = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const EditNameButton = styled.button`
+  background: ${({ theme: { colors } }) => colors.primary};
+  color: ${({ theme: { colors } }) => colors.white};
+  border: none;
+  padding: ${({ theme: { spaces } }) => spaces.sm + " " + spaces.md};
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 3px;
+`;
+export const NameEditContainer = styled.div`
+  display: flex;
+  /* align-items: center; */
+  margin-top: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+`;
+export const Username = styled.p`
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.primary};
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.lg};
+  margin: 0;
+  text-transform: uppercase;
+  margin-right: ${({ theme: { spaces } }) => spaces.md};
+`;
+
+export const EditInput = styled.input`
+  border-radius: 5px;
+  border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
+  outline: none;
+  transition: all 0.5s;
+  background: ${({ theme: { colors } }) => colors.grey};
+  font-family: inherit;
+  padding-left: ${({ theme: { spaces } }) => spaces.md};
+  font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+  color: ${({ theme: { colors } }) => colors.dark};
+  margin-right: ${({ theme: { spaces } }) => spaces.sm};
+  ::placeholder {
+    font-weight: ${({ theme: { fontWeights } }) => fontWeights.bold};
+    color: ${({ theme: { colors } }) => colors.dark + "70"};
+  }
+  :focus {
+    box-shadow: 0 0 2px ${({ theme: { colors } }) => colors.primary};
+    border-color: ${({ theme: { colors } }) => colors.primary + "15"};
+  }
 `;

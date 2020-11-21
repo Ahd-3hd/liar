@@ -8,6 +8,7 @@ export interface IPost {
   comments: IComment[];
   avatar: string;
   commentorsIds: string[];
+  username: string;
 }
 
 export interface IComment {

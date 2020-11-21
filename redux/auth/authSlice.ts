@@ -1,6 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import firebase, { auth } from "../../config/config";
-import { IUser } from "../../interfaces/user";
 
 const initialState: {
   currentUser: any;

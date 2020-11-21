@@ -87,7 +87,7 @@ export default function NewsFeed({
     if (commentText.length <= 0) return;
     const newComment = {
       commentText: commentText,
-      username: currentUser.email,
+      username: currentUser.username,
       id: uuidv4(),
       avatar: currentUser.avatar,
       postId: id,
@@ -160,7 +160,7 @@ export default function NewsFeed({
                   }`}
                   passHref
                 >
-                  <PosterName>{post.email.split("@")[0]}</PosterName>
+                  <PosterName>{post.username}</PosterName>
                 </Link>
               </NameButtonsContainer>
               <Link href={`posts/${post.id}`} passHref key={post.id}>
@@ -209,9 +209,7 @@ export default function NewsFeed({
                       }`}
                       passHref
                     >
-                      <CommentorName>
-                        {comment.username.split("@")[0]}
-                      </CommentorName>
+                      <CommentorName>{comment.username}</CommentorName>
                     </Link>
                     <CommentText>{comment.commentText}</CommentText>
                   </NameCommentContainer>

@@ -164,7 +164,7 @@ export default function Post() {
                   }`}
                   passHref
                 >
-                  <PosterName>{post.email.split("@")[0]}</PosterName>
+                  <PosterName>{post.username}</PosterName>
                 </Link>
               </NameButtonsContainer>
               <Link href={`/posts/${post.id}`} passHref key={post.id}>
@@ -213,9 +213,7 @@ export default function Post() {
                       }`}
                       passHref
                     >
-                      <CommentorName>
-                        {comment.username.split("@")[0]}
-                      </CommentorName>
+                      <CommentorName>{comment.username}</CommentorName>
                     </Link>
                     <CommentText>{comment.commentText}</CommentText>
                   </NameCommentContainer>

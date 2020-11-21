@@ -27,6 +27,10 @@ import {
   NoFriends,
   FriendRequestsLink,
   FriendsLinkContainer,
+  EditNameButton,
+  SaveEditButton,
+  NameEditContainer,
+  EditInput,
 } from "../../styles/Profile.style";
 
 export default function Profile() {
@@ -36,6 +40,8 @@ export default function Profile() {
   const [slidePos, setSlidePos] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [friendsData, setFriendsData] = useState<any>([]);
+  const [editUsername, setEditUsername] = useState(false);
+  const [newUsername, setNewUsername] = useState("");
   const dispatch = useDispatch();
   const fileInputRef: any = useRef();
   const router = useRouter();
@@ -124,6 +130,7 @@ export default function Profile() {
             userId: frnd.data().userId,
             avatar: frnd.data().avatar,
             email: frnd.data().email,
+            username: frnd.data().username,
           },
         ];
       });
@@ -138,6 +145,29 @@ export default function Profile() {
     }
   }, [currentUser]);
 
+  const changeUsername = async () => {
+    if (newUsername.length >= 3) {
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .update({
+          username: newUsername,
+        });
+      const userData = await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUser.userId)
+        .get();
+      dispatch(
+        setCurrentUser({
+          ...userData.data(),
+        })
+      );
+      setEditUsername(false);
+    }
+  };
+
   if (isUserLoading) {
     return <div>Loading</div>;
   } else if (isUserFetchError) {
@@ -151,7 +181,7 @@ export default function Profile() {
   return (
     <>
       <Head>
-        <title>{currentUser.email.split("@")[0]}</title>
+        <title>{currentUser.username}</title>
       </Head>
       <Wrapper>
         <ProfileContainer>
@@ -169,7 +199,27 @@ export default function Profile() {
               <UpdateAvatarIcon />
             </VisibleUpdateAvatarButton>
           </AvatarContainer>
-          <Username>{currentUser.email.split("@")[0]}</Username>
+          <NameEditContainer>
+            {editUsername ? (
+              <EditInput
+                type="text"
+                placeholder={currentUser.username}
+                onChange={(e) => {
+                  setNewUsername(e.target.value);
+                }}
+              />
+            ) : (
+              <Username>{currentUser.username}</Username>
+            )}
+            {editUsername ? (
+              <EditNameButton onClick={changeUsername}>save</EditNameButton>
+            ) : null}
+            <EditNameButton
+              onClick={() => setEditUsername((prevState) => !prevState)}
+            >
+              {editUsername ? "cancel" : "edit"}
+            </EditNameButton>
+          </NameEditContainer>
         </ProfileContainer>
         {friendsData.length > 0 ? (
           <FriendsLinkContainer>
@@ -193,7 +243,7 @@ export default function Profile() {
                   >
                     <FriendContainer pos={slidePos}>
                       <FriendAvatar src={frnd.avatar} alt="avatar" />
-                      <FriendName>{frnd.email.split("@")[0]}</FriendName>
+                      <FriendName>{frnd.username}</FriendName>
                     </FriendContainer>
                   </Link>
                 ))}
@@ -217,7 +267,20 @@ export default function Profile() {
             </Link>
           </FriendsLinkContainer>
         ) : (
-          <NoFriends>You don't have any friends yet</NoFriends>
+          <FriendsLinkContainer
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <NoFriends>You don't have any friends yet</NoFriends>
+            <Link href="/profile/requests" passHref>
+              <FriendRequestsLink>
+                View Requests {currentUser.friendRequestsReceived.length}
+              </FriendRequestsLink>
+            </Link>
+          </FriendsLinkContainer>
         )}
         <NewsFeed title="My Posts" page="currentUser" />
       </Wrapper>

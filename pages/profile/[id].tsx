@@ -24,7 +24,7 @@ export default function FriendProfile() {
   const dispatch = useDispatch();
   const [friend, setFriend] = useState({
     avatar: "",
-    email: "",
+    username: "",
     userId: "",
   });
   const { currentUser, isUserLoading, isUserFetchError } = useSelector(
@@ -38,7 +38,7 @@ export default function FriendProfile() {
       .get();
     setFriend({
       avatar: friendData.data()?.avatar,
-      email: friendData.data()?.email,
+      username: friendData.data()?.username,
       userId: friendData.id,
     });
   };
@@ -182,14 +182,14 @@ export default function FriendProfile() {
   return (
     <>
       <Head>
-        <title>{friend.email.split("@")[0]}</title>
+        <title>{friend.username}</title>
       </Head>
       <Wrapper>
         <ProfileContainer>
           <AvatarContainer>
             <Avatar src={friend.avatar} alt="avatar" />
           </AvatarContainer>
-          <Username>{friend.email.split("@")[0]}</Username>
+          <Username>{friend.username}</Username>
           {renderFriendButton()}
         </ProfileContainer>
         <NewsFeed title="My Posts" page="userPage" />

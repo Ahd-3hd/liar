@@ -51,6 +51,7 @@ export default function Signup() {
           friends: [],
           friendRequestsSent: [],
           friendRequestsReceived: [],
+          username: newUser?.user?.email?.split("@")[0],
         });
       if (newUser) {
         dispatch(
@@ -62,8 +63,10 @@ export default function Signup() {
             friends: [],
             friendRequestsSent: [],
             friendRequestsReceived: [],
+            username: newUser?.user?.email?.split("@")[0],
           })
         );
+        router.push("/profile/");
       } else {
         dispatch(setCurrentUser(null));
       }
