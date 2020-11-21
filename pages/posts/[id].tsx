@@ -167,9 +167,11 @@ export default function Post() {
                   <PosterName>{post.email.split("@")[0]}</PosterName>
                 </Link>
               </NameButtonsContainer>
-              <QuestionText status={post.isRevealed}>
-                {post.isRevealed ? post.realQuestion : post.fakeQuestion}
-              </QuestionText>
+              <Link href={`/posts/${post.id}`} passHref key={post.id}>
+                <QuestionText status={post.isRevealed} target="_blank">
+                  {post.isRevealed ? post.realQuestion : post.fakeQuestion}
+                </QuestionText>
+              </Link>
             </QuestionSection>
             <Link
               href={`/profile/${
