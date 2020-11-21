@@ -28,7 +28,6 @@ import {
   FriendRequestsLink,
   FriendsLinkContainer,
   EditNameButton,
-  SaveEditButton,
   NameEditContainer,
   EditInput,
 } from "../../styles/Profile.style";
