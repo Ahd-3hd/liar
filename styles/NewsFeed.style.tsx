@@ -23,11 +23,14 @@ export const PosterAvatarContainer = styled.a`
   cursor: pointer;
 `;
 export const PosterAvatar = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 200px;
 `;
 export const PosterName = styled.a`
+  display: block;
+  max-width: 10ch;
+  word-wrap: break-word;
   margin: 0;
   justify-self: flex-end;
   color: ${({ theme: { colors } }) => colors.primary};
@@ -128,7 +131,7 @@ export const CommentAvatarContainer = styled.a`
   max-width: 60px;
   max-height: 60px;
   border-radius: 60px;
-  overflow: hidden;
+  /* overflow: hidden; */
   margin-right: ${({ theme: { spaces } }) => spaces.md};
 `;
 export const NameCommentContainer = styled.div`
@@ -136,8 +139,8 @@ export const NameCommentContainer = styled.div`
 `;
 
 export const CommentAvatar = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 60px;
+  height: 60px;
   max-width: 60px;
   max-height: 60px;
   border-radius: 60px;
@@ -157,6 +160,7 @@ export const CommentText = styled.p`
 
 export const NewCommentContainer = styled.form`
   display: flex;
+  width: 100%;
 `;
 export const NewCommentAvatar = styled.img`
   width: 50px;
@@ -170,6 +174,7 @@ export const NewCommentInputContainer = styled.div`
 `;
 export const NewCommentInput = styled.input`
   flex: 4;
+  width: 100%;
   margin-right: ${({ theme: { spaces } }) => spaces.sm};
   border-radius: 10px;
   border: 1px solid ${({ theme: { colors } }) => colors.dark + "15"};
