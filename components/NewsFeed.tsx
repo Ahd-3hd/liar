@@ -8,6 +8,7 @@ import {
   fetchPosts,
   addComment,
   toggleReveal,
+  deletePost,
 } from "../redux/posts/postsSlice";
 import firebase from "../config/config";
 import { v4 as uuidv4 } from "uuid";
@@ -109,6 +110,10 @@ export default function NewsFeed({
     dispatch(toggleReveal(postId));
   };
 
+  const handleDeletePost = (postId: string) => {
+    dispatch(deletePost(postId));
+  };
+
   if (posts.length === 0) {
     return (
       <Wrapper>
@@ -141,7 +146,10 @@ export default function NewsFeed({
                   )}
 
                   {currentUser?.userId === post?.userId && (
-                    <PostButton variant="danger">
+                    <PostButton
+                      variant="danger"
+                      onClick={() => handleDeletePost(post.id)}
+                    >
                       <RemoveIcon />
                     </PostButton>
                   )}
