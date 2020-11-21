@@ -11,8 +11,12 @@ import { auth } from "../config/config";
 import { useRouter } from "next/router";
 import HomeIcon from "../utils/svg/HomeIcon.svg";
 import LogoutIcon from "../utils/svg/LogoutIcon.svg";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
+  const { currentUser, isUserLoading, isUserFetchError } = useSelector(
+    (state: any) => state.auth
+  );
   const handleSignout = async () => {
     await auth.signOut();
   };
@@ -30,7 +34,9 @@ export default function Navbar() {
           </NavLink>
         </Link>
         <Link href="/profile/" passHref>
-          <NavLink>
+          <NavLink
+            notification={currentUser?.friendRequestsReceived.length > 0}
+          >
             <UserIcon />
             <NavSpan>PROFILE</NavSpan>
           </NavLink>

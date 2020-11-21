@@ -17,7 +17,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 450px;
 `;
-export const NavLink = styled.a<{ center?: boolean }>`
+export const NavLink = styled.a<{ center?: boolean; notification?: boolean }>`
   margin: 0 ${({ theme: { spaces } }) => spaces.lg};
   padding: ${({ theme: { spaces } }) => spaces.md};
   background: ${({ theme: { colors } }) => colors.primary};
@@ -34,6 +34,16 @@ export const NavLink = styled.a<{ center?: boolean }>`
       bottom: -1.3rem;
       opacity: 1;
     }
+  }
+  ::after {
+    content: "";
+    width: ${({ notification }) => notification && "10px"};
+    height: ${({ notification }) => notification && "10px"};
+    border-radius: ${({ notification }) => notification && "10px"};
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: ${({ theme: { colors } }) => colors.danger};
   }
 `;
 export const NavSpan = styled.span`
