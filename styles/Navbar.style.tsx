@@ -7,7 +7,9 @@ export const Wrapper = styled.nav`
   width: 100%;
   max-width: 600px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  flex-direction: column;
 `;
 export const Container = styled.div`
   display: flex;
@@ -16,6 +18,7 @@ export const Container = styled.div`
   padding: ${({ theme: { spaces } }) => spaces.lg};
   width: 100%;
   max-width: 450px;
+  padding-bottom: ${({ theme: { spaces } }) => spaces.sm};
 `;
 export const NavLink = styled.a<{ center?: boolean; notification?: boolean }>`
   margin: 0 ${({ theme: { spaces } }) => spaces.lg};
@@ -79,5 +82,15 @@ export const NavButton = styled.button`
       bottom: -1.3rem;
       opacity: 1;
     }
+  }
+`;
+
+export const RightsPhrase = styled.p`
+  margin: 0;
+  font-size: ${({ theme: { fontSizes } }) => fontSizes.sm};
+  color: ${({ theme: { colors } }) => colors.dark};
+  > a {
+    color: ${({ theme: { colors } }) => colors.primary};
+    text-decoration: none;
   }
 `;

@@ -4,6 +4,7 @@ import {
   NavButton,
   Container,
   NavSpan,
+  RightsPhrase,
 } from "../styles/Navbar.style";
 import Link from "next/link";
 import UserIcon from "../utils/svg/UserIcon.svg";
@@ -42,6 +43,12 @@ export default function Navbar() {
           </NavLink>
         </Link>
       </Container>
+      <RightsPhrase>
+        All Rights Reserved -{" "}
+        <a href="https://github.com/Zeus3hd" target="_blank">
+          Ahd Hani
+        </a>
+      </RightsPhrase>
     </Wrapper>
   );
 }
