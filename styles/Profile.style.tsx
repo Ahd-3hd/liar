@@ -81,7 +81,7 @@ export const FriendName = styled.p`
 `;
 
 export const CarouselButton = styled.button<{ flip?: boolean }>`
-  background: ${({ theme: { colors } }) => colors.primary};
+  background: ${({ theme: { colors } }) => colors.primary + "77"};
   border: none;
   padding: ${({ theme: { spaces } }) => spaces.sm};
   border-radius: 10px;
@@ -94,10 +94,18 @@ export const CarouselButton = styled.button<{ flip?: boolean }>`
   top: 50%;
   z-index: 3;
   transform: translateY(-50%);
+  height: 100%;
+  width: 45px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s;
   ${({ flip }) => (flip ? "right:0;" : "left:0")};
   svg {
     fill: ${({ theme: { colors } }) => colors.white};
     height: 15px;
     padding-bottom: 1px;
+  }
+  :hover {
+    background: ${({ theme: { colors } }) => colors.primary};
   }
 `;

@@ -10,12 +10,10 @@ export const Wrapper = styled.nav`
   justify-content: center;
 `;
 export const Container = styled.div`
-  background: ${({ theme: { colors } }) => colors.white};
+  /* background: ${({ theme: { colors } }) => colors.white}; */
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid ${({ theme: { colors } }) => colors.dark + "40"};
-  border-radius: 50px;
   padding: ${({ theme: { spaces } }) => spaces.lg};
   width: 100%;
   max-width: 450px;
