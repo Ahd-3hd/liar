@@ -164,7 +164,7 @@ export default function NewsFeed({
                 </Link>
               </NameButtonsContainer>
               <Link href={`posts/${post.id}`} passHref key={post.id}>
-                <QuestionText status={post.isRevealed}>
+                <QuestionText status={post.isRevealed} target="_blank">
                   {post.isRevealed ? post.realQuestion : post.fakeQuestion}
                 </QuestionText>
               </Link>
